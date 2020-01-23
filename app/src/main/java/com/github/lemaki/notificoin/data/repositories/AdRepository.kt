@@ -11,6 +11,7 @@ class AdRepository(
 	companion object {
 		private const val SUBJECT_ATTRIBUTE = "subject"
 	}
+
 	fun getAds(url: String = "https://www.leboncoin.fr/recherche/?category=2&text=voiture&locations=Nantes"): List<Ad> {
 		val document = webPageRepository.getWebPage(url)
 		return documentToAdJsonArrayTransformer.transform(document)?.let { jsonArray ->

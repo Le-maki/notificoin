@@ -4,9 +4,12 @@ import com.github.lemaki.notificoin.domain.ad.Ad
 import com.github.lemaki.notificoin.domain.home.HomeErrorType
 import com.github.lemaki.notificoin.ui.ad.AdListToAdsListViewModelTransformer
 
-class HomePresenter(private val display: HomeDisplay, private val adsListViewModelTransformer: AdListToAdsListViewModelTransformer) {
+class HomePresenter(
+	private val adsListViewModelTransformer: AdListToAdsListViewModelTransformer,
+	private val homeViewModel: HomeViewModel
+) {
 	private fun presentError(errorType: HomeErrorType) {
-		display.displayError(HomeViewModel(errorType = errorType))
+		homeViewModel.errorType.value = errorType
 	}
 
 	fun presentConnectionError() {
@@ -22,9 +25,6 @@ class HomePresenter(private val display: HomeDisplay, private val adsListViewMod
 	}
 
 	fun presentAdList(adList: List<Ad>) {
-		display.displayAdList(
-			HomeViewModel(
-				adListViewModel = adsListViewModelTransformer.transform(adList))
-		)
+		homeViewModel.adListViewModel.value = adsListViewModelTransformer.transform(adList)
 	}
 }

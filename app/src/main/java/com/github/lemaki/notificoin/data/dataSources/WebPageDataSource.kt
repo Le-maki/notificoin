@@ -18,11 +18,9 @@ class WebPageDataSource {
 		)
 
 	}
+
 	fun getWebPage(url: String): Document {
 		NotifiCoinLogger.i("Trying to GET $url")
-		return Jsoup.connect(url)
-				.headers(HEADERS)
-				.get()
-
+		return Jsoup.connect(url).headers(HEADERS).get()
 	}
 }
