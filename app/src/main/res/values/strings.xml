@@ -3,4 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="homeConnectionErrorMessage">There was an error while trying to get adds from the website, check your connection</string>
+    <string name="homeParsingErrorMessage">Unable to parse the webpage, check your url</string>
+    <string name="homeUnknownErrorMessage">Unknown error while getting ads from the website</string>
 </resources>
