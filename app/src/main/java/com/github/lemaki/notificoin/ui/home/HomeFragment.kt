@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
 import com.github.lemaki.notificoin.R
+import com.github.lemaki.notificoin.data.dataSources.AdDataSource
 import com.github.lemaki.notificoin.data.dataSources.WebPageDataSource
+import com.github.lemaki.notificoin.data.database.dao.AdDataBase
 import com.github.lemaki.notificoin.data.repositories.AdRepository
 import com.github.lemaki.notificoin.data.repositories.WebPageRepository
 import com.github.lemaki.notificoin.data.transformers.DocumentToAdJsonArrayTransformer
@@ -31,11 +34,12 @@ class HomeFragment: Fragment() {
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View? {
-		homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+		homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 		homeInteractor = HomeInteractor(
 			AdRepository(
 				WebPageRepository(WebPageDataSource()),
-				DocumentToAdJsonArrayTransformer()
+				DocumentToAdJsonArrayTransformer(),
+				AdDataSource(Room.databaseBuilder(context!!, AdDataBase::class.java, "ad.db").build().adDao())
 			),
 			HomePresenter(AdListToAdsListViewModelTransformer(), homeViewModel)
 		)

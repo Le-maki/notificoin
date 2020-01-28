@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.github.lemaki.notificoin.R
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
@@ -19,9 +19,9 @@ class DashboardFragment: Fragment() {
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View? {
-		dashboardViewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+		dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
 		val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-		dashboardViewModel.text.observe(this, Observer {
+		dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
 			text_dashboard.text = it
 		})
 		return root

@@ -18,6 +18,7 @@ class HomeInteractor(
 	fun onStart() {
 		CoroutineScope(Dispatchers.IO).launch {
 			try {
+				adRepository.updateAdsFromWebPage()
 				val ads = adRepository.getAds()
 				withContext(Dispatchers.Main) {
 					homePresenter.presentAdList(ads)
