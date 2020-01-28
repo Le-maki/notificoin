@@ -23,10 +23,9 @@ class DocumentToAdJsonArrayTransformer {
 				}?.childNode(0)
 		val dataMatcher = Pattern.compile(DATA_REGEX).matcher(dataNode.toString())
 		dataMatcher.find()
-		val dataJsonArray = Gson().fromJson(dataMatcher.group(1), JsonElement::class.java).asJsonArray
-		if (dataJsonArray.size() >= 6) {
-			val dataJson = dataJsonArray[5].asJsonObject.get(DATA_SELECTOR).asJsonObject
-			return dataJson.get(ADS_SELECTOR).asJsonArray
+		val jsonArray = Gson().fromJson(dataMatcher.group(1), JsonElement::class.java).asJsonArray
+		if (jsonArray.size() >= 6) {
+			return jsonArray[5].asJsonObject.get(DATA_SELECTOR).asJsonObject.get(ADS_SELECTOR).asJsonArray
 		} else {
 			throw ParseException("Unable to parse the webpage", 0)
 		}
