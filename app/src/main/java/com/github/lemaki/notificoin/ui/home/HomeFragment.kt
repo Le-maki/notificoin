@@ -23,8 +23,8 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment: Fragment() {
 
-	lateinit var homeInteractor: HomeInteractor
-	lateinit var homeViewModel: HomeViewModel
+	private lateinit var homeInteractor: HomeInteractor
+	private lateinit var homeViewModel: HomeViewModel
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -62,7 +62,7 @@ class HomeFragment: Fragment() {
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		textHome.movementMethod = ScrollingMovementMethod()
+		textHome?.movementMethod = ScrollingMovementMethod()
 		homeInteractor.onStart()
 		super.onViewCreated(view, savedInstanceState)
 	}
