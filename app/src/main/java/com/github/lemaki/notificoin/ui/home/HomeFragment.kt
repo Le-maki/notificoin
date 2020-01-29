@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.github.lemaki.notificoin.R
 import com.github.lemaki.notificoin.data.dataSources.AdDataSource
@@ -29,8 +29,8 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment: Fragment() {
 
 	private lateinit var homeInteractor: HomeInteractor
-	private lateinit var homeViewModel: HomeViewModel
-	private lateinit var notifiCoinDataBase: NotifiCoinDataBase
+	private val homeViewModel: HomeViewModel by viewModels()
+	lateinit var notifiCoinDataBase: NotifiCoinDataBase
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -38,7 +38,6 @@ class HomeFragment: Fragment() {
 		savedInstanceState: Bundle?
 	): View? {
 		notifiCoinDataBase = Room.databaseBuilder(context!!, NotifiCoinDataBase::class.java, "ad.db").build()
-		homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 		homeInteractor = HomeInteractor(
 			SearchRepository(SearchDataSource(notifiCoinDataBase.searchDao())),
 			AdRepository(

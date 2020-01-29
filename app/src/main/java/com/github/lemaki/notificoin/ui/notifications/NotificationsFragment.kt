@@ -5,21 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.github.lemaki.notificoin.R
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
 class NotificationsFragment: Fragment() {
-
-	private lateinit var notificationsViewModel: NotificationsViewModel
-
+	private val notificationsViewModel: NotificationsViewModel by viewModels()
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View? {
-		notificationsViewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
 		val root = inflater.inflate(R.layout.fragment_notifications, container, false)
 		notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
 			text_notifications.text = it
