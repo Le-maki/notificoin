@@ -12,9 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.github.lemaki.notificoin.R
 import com.github.lemaki.notificoin.data.dataSources.AdDataSource
+import com.github.lemaki.notificoin.data.dataSources.SearchDataSource
 import com.github.lemaki.notificoin.data.dataSources.WebPageDataSource
-import com.github.lemaki.notificoin.data.database.dao.AdDataBase
+import com.github.lemaki.notificoin.data.database.NotifiCoinDataBase
 import com.github.lemaki.notificoin.data.repositories.AdRepository
+import com.github.lemaki.notificoin.data.repositories.SearchRepository
 import com.github.lemaki.notificoin.data.repositories.WebPageRepository
 import com.github.lemaki.notificoin.data.transformers.DocumentToAdJsonArrayTransformer
 import com.github.lemaki.notificoin.domain.home.HomeErrorType.CONNECTION
@@ -28,18 +30,21 @@ class HomeFragment: Fragment() {
 
 	private lateinit var homeInteractor: HomeInteractor
 	private lateinit var homeViewModel: HomeViewModel
+	private lateinit var notifiCoinDataBase: NotifiCoinDataBase
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View? {
+		notifiCoinDataBase = Room.databaseBuilder(context!!, NotifiCoinDataBase::class.java, "ad.db").build()
 		homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 		homeInteractor = HomeInteractor(
+			SearchRepository(SearchDataSource(notifiCoinDataBase.searchDao())),
 			AdRepository(
 				WebPageRepository(WebPageDataSource()),
 				DocumentToAdJsonArrayTransformer(),
-				AdDataSource(Room.databaseBuilder(context!!, AdDataBase::class.java, "ad.db").build().adDao())
+				AdDataSource(notifiCoinDataBase.adDao())
 			),
 			HomePresenter(AdListToAdsListViewModelTransformer(), homeViewModel)
 		)

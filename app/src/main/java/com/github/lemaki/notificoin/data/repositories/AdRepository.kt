@@ -15,16 +15,16 @@ class AdRepository(
 		private const val ID_ATTRIBUTE = "list_id"
 	}
 
-	fun updateAdsFromWebPage(url: String = "https://www.leboncoin.fr/recherche/?category=2&text=voiture&locations=Nantes"): List<Ad> {
+	fun updateAdsFromWebPage(url: String): List<Ad> {
 		val document = webPageRepository.getWebPage(url)
 		val adList = documentToAdJsonArrayTransformer.transform(document)?.let { jsonArray ->
 			jsonArray.map { jsonElement ->
 				Ad(jsonElement.asJsonObject[ID_ATTRIBUTE].asInt, jsonElement.asJsonObject[SUBJECT_ATTRIBUTE].asString)
 			}
 		} ?: throw ParseException("Unable to parse $url", 0)
-		adDataSource.putAll(adList)
+		adDataSource.putAll(adList, url)
 		return adList
 	}
 
-	fun getAds(): List<Ad> = adDataSource.getAll()
+	fun getAds() = adDataSource.getAll()
 }

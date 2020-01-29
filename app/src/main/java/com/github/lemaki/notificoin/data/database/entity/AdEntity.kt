@@ -7,12 +7,14 @@ import androidx.room.PrimaryKey
 
 @Entity(
 	tableName = "ads",
-	indices = [Index(value = ["id"], unique = true)]
+	indices = [Index(value = ["adId"], unique = true)]
 )
 data class AdEntity(
 	@PrimaryKey(autoGenerate = true)
-	@ColumnInfo(name = "id")
-	val id: Int = 0,
-	@ColumnInfo(name = "title")
-	val title: String
+	@ColumnInfo(name = "adId")
+	val adId: Int = 0,
+	@ColumnInfo(name = "adTitle")
+	val adTitle: String,
+	@ColumnInfo(name ="adSearchUrl")
+	val searchUrl: String
 )
