@@ -67,4 +67,11 @@ dependencies {
     debugImplementation 'com.facebook.soloader:soloader:0.8.0'
     releaseImplementation 'com.facebook.flipper:flipper-noop:0.30.2'
     debugImplementation 'com.facebook.flipper:flipper-network-plugin:0.30.2'
+
+    def koin_version = '2.1.0-alpha-7'
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-ext:$koin_version"
+    implementation "org.koin:koin-androidx-fragment:$koin_version"
+
 }

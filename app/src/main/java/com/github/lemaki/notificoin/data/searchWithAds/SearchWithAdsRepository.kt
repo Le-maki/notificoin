@@ -1,6 +1,4 @@
-package com.github.lemaki.notificoin.data.repositories
-
-import com.github.lemaki.notificoin.data.dataSources.SearchWithAdsDataSource
+package com.github.lemaki.notificoin.data.searchWithAds
 
 class SearchWithAdsRepository(private val searchWithAdsDataSource: SearchWithAdsDataSource) {
 	fun getSearchWithAds() = searchWithAdsDataSource.getSearchWithAds()

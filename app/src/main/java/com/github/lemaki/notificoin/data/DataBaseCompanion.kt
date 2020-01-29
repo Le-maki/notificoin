@@ -1,4 +1,4 @@
-package com.github.lemaki.notificoin.data.database
+package com.github.lemaki.notificoin.data
 
 import androidx.room.migration.Migration
 

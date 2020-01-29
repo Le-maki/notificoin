@@ -1,4 +1,4 @@
-package com.github.lemaki.notificoin.data.database.dao
+package com.github.lemaki.notificoin.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

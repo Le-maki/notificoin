@@ -1,9 +1,8 @@
-package com.github.lemaki.notificoin.data.database.dao
+package com.github.lemaki.notificoin.data.searchWithAds
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.github.lemaki.notificoin.data.database.entity.SearchWithAdsEntity
 
 @Dao
 abstract class SearchWithAdsDao {

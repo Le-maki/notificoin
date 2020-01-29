@@ -1,6 +1,5 @@
-package com.github.lemaki.notificoin.data.repositories
+package com.github.lemaki.notificoin.data.search
 
-import com.github.lemaki.notificoin.data.dataSources.SearchDataSource
 import com.github.lemaki.notificoin.domain.search.Search
 
 class SearchRepository(private val searchDataSource: SearchDataSource) {

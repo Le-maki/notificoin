@@ -1,8 +1,8 @@
-package com.github.lemaki.notificoin.data.database.dao
+package com.github.lemaki.notificoin.data.ad
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.github.lemaki.notificoin.data.database.entity.AdEntity
+import com.github.lemaki.notificoin.data.dao.BaseDao
 
 @Dao
 abstract class AdDao: BaseDao<AdEntity>() {

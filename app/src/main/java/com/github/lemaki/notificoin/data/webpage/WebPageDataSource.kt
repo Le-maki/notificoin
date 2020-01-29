@@ -1,4 +1,4 @@
-package com.github.lemaki.notificoin.data.dataSources
+package com.github.lemaki.notificoin.data.webpage
 
 import com.github.lemaki.notificoin.logger.NotifiCoinLogger
 import org.jsoup.Jsoup

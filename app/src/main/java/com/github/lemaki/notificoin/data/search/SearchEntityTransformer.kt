@@ -1,6 +1,5 @@
-package com.github.lemaki.notificoin.data.transformers
+package com.github.lemaki.notificoin.data.search
 
-import com.github.lemaki.notificoin.data.database.entity.SearchEntity
 import com.github.lemaki.notificoin.domain.search.Search
 
 fun SearchEntity.toSearch() = Search(url = searchUrl, title = searchTitle)

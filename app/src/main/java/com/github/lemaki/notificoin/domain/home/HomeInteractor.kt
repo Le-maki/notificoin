@@ -1,7 +1,7 @@
 package com.github.lemaki.notificoin.domain.home
 
-import com.github.lemaki.notificoin.data.repositories.AdRepository
-import com.github.lemaki.notificoin.data.repositories.SearchRepository
+import com.github.lemaki.notificoin.data.ad.AdRepository
+import com.github.lemaki.notificoin.data.search.SearchRepository
 import com.github.lemaki.notificoin.domain.search.Search
 import com.github.lemaki.notificoin.logger.NotifiCoinLogger
 import com.github.lemaki.notificoin.ui.home.HomePresenter

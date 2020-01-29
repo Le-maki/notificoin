@@ -1,4 +1,4 @@
-package com.github.lemaki.notificoin.data.transformers
+package com.github.lemaki.notificoin.data.webpage
 
 import com.google.gson.Gson
 import com.google.gson.JsonArray
@@ -25,7 +25,9 @@ class DocumentToAdJsonArrayTransformer {
 		dataMatcher.find()
 		val jsonArray = Gson().fromJson(dataMatcher.group(1), JsonElement::class.java).asJsonArray
 		if (jsonArray.size() >= 6) {
-			return jsonArray[5].asJsonObject.get(DATA_SELECTOR).asJsonObject.get(ADS_SELECTOR).asJsonArray
+			return jsonArray[5].asJsonObject.get(DATA_SELECTOR).asJsonObject.get(
+				ADS_SELECTOR
+			).asJsonArray
 		} else {
 			throw ParseException("Unable to parse the webpage", 0)
 		}

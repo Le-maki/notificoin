@@ -1,4 +1,4 @@
-package com.github.lemaki.notificoin.data.database.entity
+package com.github.lemaki.notificoin.data.ad
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

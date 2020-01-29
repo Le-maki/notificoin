@@ -1,6 +1,5 @@
-package com.github.lemaki.notificoin.data.repositories
+package com.github.lemaki.notificoin.data.webpage
 
-import com.github.lemaki.notificoin.data.dataSources.WebPageDataSource
 import org.jsoup.nodes.Document
 
 class WebPageRepository(private val webPageDataSource: WebPageDataSource) {

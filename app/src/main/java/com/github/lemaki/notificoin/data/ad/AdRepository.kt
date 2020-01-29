@@ -1,7 +1,7 @@
-package com.github.lemaki.notificoin.data.repositories
+package com.github.lemaki.notificoin.data.ad
 
-import com.github.lemaki.notificoin.data.dataSources.AdDataSource
-import com.github.lemaki.notificoin.data.transformers.DocumentToAdJsonArrayTransformer
+import com.github.lemaki.notificoin.data.webpage.WebPageRepository
+import com.github.lemaki.notificoin.data.webpage.DocumentToAdJsonArrayTransformer
 import com.github.lemaki.notificoin.domain.ad.Ad
 import java.text.ParseException
 

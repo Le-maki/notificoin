@@ -6,6 +6,6 @@ import com.github.lemaki.notificoin.domain.home.HomeErrorType
 import com.github.lemaki.notificoin.ui.ad.AdListViewModel
 
 data class HomeViewModel(
-	val adListViewModel: MutableLiveData<AdListViewModel> = MutableLiveData(),
-	val errorType: MutableLiveData<HomeErrorType> = MutableLiveData()
+	val adListViewModel: MutableLiveData<AdListViewModel>,
+	val errorType: MutableLiveData<HomeErrorType>
 ): ViewModel()
