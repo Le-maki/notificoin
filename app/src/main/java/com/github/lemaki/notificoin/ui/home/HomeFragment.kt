@@ -13,12 +13,17 @@ import com.github.lemaki.notificoin.domain.home.HomeErrorType.CONNECTION
 import com.github.lemaki.notificoin.domain.home.HomeErrorType.PARSING
 import com.github.lemaki.notificoin.domain.home.HomeErrorType.UNKNOWN
 import com.github.lemaki.notificoin.domain.home.HomeInteractor
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.github.lemaki.notificoin.ui.notificationPush.NotificationManager
+import kotlinx.android.synthetic.main.fragment_home.notificationButton
+import kotlinx.android.synthetic.main.fragment_home.progressBarHome
+import kotlinx.android.synthetic.main.fragment_home.textHome
 import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
 class HomeFragment: Fragment() {
 	private val homeInteractor: HomeInteractor by inject()
 	private val homeViewModel: HomeViewModel by inject()
+	private val notificationManager: NotificationManager by inject { parametersOf(this.context) }
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -48,7 +53,7 @@ class HomeFragment: Fragment() {
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		textHome?.movementMethod = ScrollingMovementMethod()
+		notificationButton?.setOnClickListener { notificationManager.sendNotification("HELLO THERE", "General Kenobi") }
 		homeInteractor.onStart()
 		super.onViewCreated(view, savedInstanceState)
 	}
