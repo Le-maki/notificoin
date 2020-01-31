@@ -1,7 +1,7 @@
 package com.github.lemaki.notificoin.ui.home
 
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +13,7 @@ import com.github.lemaki.notificoin.domain.home.HomeErrorType.CONNECTION
 import com.github.lemaki.notificoin.domain.home.HomeErrorType.PARSING
 import com.github.lemaki.notificoin.domain.home.HomeErrorType.UNKNOWN
 import com.github.lemaki.notificoin.domain.home.HomeInteractor
+import com.github.lemaki.notificoin.ui.alarmManager.NotifiCoinAlarmManager
 import com.github.lemaki.notificoin.ui.notificationPush.NotificationManager
 import kotlinx.android.synthetic.main.fragment_home.notificationButton
 import kotlinx.android.synthetic.main.fragment_home.progressBarHome
@@ -24,6 +25,7 @@ class HomeFragment: Fragment() {
 	private val homeInteractor: HomeInteractor by inject()
 	private val homeViewModel: HomeViewModel by inject()
 	private val notificationManager: NotificationManager by inject { parametersOf(this.context) }
+	private val alarmManager: NotifiCoinAlarmManager by inject { parametersOf(this.context) }
 
 	override fun onCreateView(
 		inflater: LayoutInflater,
@@ -54,7 +56,18 @@ class HomeFragment: Fragment() {
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		notificationButton?.setOnClickListener { notificationManager.sendNotification("HELLO THERE", "General Kenobi") }
+		object: CountDownTimer(1000 * 60 * 1, 1000) {
+			override fun onFinish() {
+				this.start()
+			}
+
+			override fun onTick(p0: Long) {
+				notificationButton?.text = p0.toString()
+			}
+
+		}.start()
 		homeInteractor.onStart()
+		alarmManager.setAlarmManager()
 		super.onViewCreated(view, savedInstanceState)
 	}
 

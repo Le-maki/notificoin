@@ -14,12 +14,13 @@ import com.facebook.flipper.plugins.inspector.InspectorFlipperPlugin
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.facebook.soloader.SoLoader
 import com.github.lemaki.notificoin.injection.adModule
+import com.github.lemaki.notificoin.injection.alarmManagerModule
 import com.github.lemaki.notificoin.injection.homeModule
 import com.github.lemaki.notificoin.injection.notificationModule
 import com.github.lemaki.notificoin.injection.searchModule
 import com.github.lemaki.notificoin.injection.webPageModule
 import com.github.lemaki.notificoin.logger.NotifiCoinLogger
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.navView
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.koin.fragmentFactory
@@ -35,7 +36,16 @@ class MainActivity: AppCompatActivity() {
 				androidLogger()
 				fragmentFactory()
 				androidContext(this@MainActivity)
-				modules(listOf(homeModule, adModule, searchModule, webPageModule, notificationModule))
+				modules(
+					listOf(
+						homeModule,
+						adModule,
+						searchModule,
+						webPageModule,
+						notificationModule,
+						alarmManagerModule
+					)
+				)
 			}
 		} catch (exception: KoinAppAlreadyStartedException) {
 			NotifiCoinLogger.i("Koin already started, skipping startKoin")
