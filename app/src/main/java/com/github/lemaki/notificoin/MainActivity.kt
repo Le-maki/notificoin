@@ -50,7 +50,7 @@ class MainActivity: AppCompatActivity() {
 				)
 			}
 		} catch (exception: KoinAppAlreadyStartedException) {
-			NotifiCoinLogger.i("Koin already started, skipping startKoin")
+			NotifiCoinLogger.i(this.applicationContext.resources.getString(R.string.koin_already_started))
 		}
 
 		setContentView(R.layout.activity_main)
