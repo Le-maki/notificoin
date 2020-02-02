@@ -18,6 +18,7 @@ import com.github.lemaki.notificoin.injection.alarmManagerModule
 import com.github.lemaki.notificoin.injection.homeModule
 import com.github.lemaki.notificoin.injection.notificationModule
 import com.github.lemaki.notificoin.injection.searchModule
+import com.github.lemaki.notificoin.injection.searchWithAdsModule
 import com.github.lemaki.notificoin.injection.webPageModule
 import com.github.lemaki.notificoin.logger.NotifiCoinLogger
 import kotlinx.android.synthetic.main.activity_main.navView
@@ -43,7 +44,8 @@ class MainActivity: AppCompatActivity() {
 						searchModule,
 						webPageModule,
 						notificationModule,
-						alarmManagerModule
+						alarmManagerModule,
+						searchWithAdsModule
 					)
 				)
 			}

@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.core.app.NotificationCompat
@@ -16,6 +17,7 @@ import com.github.lemaki.notificoin.MainActivity
 import com.github.lemaki.notificoin.R
 import kotlin.random.Random
 
+@Suppress("SameParameterValue")
 class NotificationManager(private val context: Context) {
 	companion object {
 		const val CHANNEL_ID: String = "NotifiCoin"
@@ -33,6 +35,7 @@ class NotificationManager(private val context: Context) {
 		val builder = NotificationCompat.Builder(context, CHANNEL_ID)
 				.setLargeIcon(generateBitmapFromVectorDrawable(context, R.drawable.ic_duck))
 				.setSmallIcon(R.drawable.ic_duck)
+				.setColor(Color.YELLOW)
 				.setDefaults(NotificationCompat.DEFAULT_ALL)
 				.setContentTitle(title)
 				.setContentText(text)

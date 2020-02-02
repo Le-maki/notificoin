@@ -18,4 +18,6 @@ class AdDataSource(
 	}
 
 	fun getAll() = adDao.getAll().map { it.toAd() }
+
+	fun deleteAll() = adDao.deleteAll()
 }

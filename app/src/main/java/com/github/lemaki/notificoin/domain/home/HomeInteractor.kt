@@ -1,7 +1,7 @@
 package com.github.lemaki.notificoin.domain.home
 
-import com.github.lemaki.notificoin.data.ad.AdRepository
 import com.github.lemaki.notificoin.data.search.SearchRepository
+import com.github.lemaki.notificoin.data.searchWithAds.SearchWithAdsRepository
 import com.github.lemaki.notificoin.domain.search.Search
 import com.github.lemaki.notificoin.logger.NotifiCoinLogger
 import com.github.lemaki.notificoin.ui.home.HomePresenter
@@ -14,22 +14,25 @@ import java.net.UnknownHostException
 import java.text.ParseException
 
 class HomeInteractor(
-	private val searchRepository: SearchRepository,
-	private val adRepository: AdRepository,
 	private val homePresenter: HomePresenter,
+	private val searchRepository: SearchRepository,
+	private val searchWithAdsRepository: SearchWithAdsRepository,
 	private val searches: Map<String, String> = mapOf(
-		"https://www.leboncoin.fr/recherche/?text=mario%20maker%202&locations=Nantes" to "Mario Maker",
+		"https://www.leboncoin.fr/recherche/?text=Jeu%20switch&locations=Nantes" to "Mario Maker",
 		"https://www.leboncoin.fr/recherche/?category=2&text=voiture&locations=Nantes" to "Voiture"
 	)
+
 ) {
 	fun onStart() {
 		CoroutineScope(Dispatchers.IO).launch {
 			try {
-				searches.forEach { searchRepository.addSearch(Search(it.key, it.value)) }
-				adRepository.updateAdsFromWebPage(searches.keys.elementAt((0..1).random()))
-				val ads = adRepository.getAds()
+				searches.forEach {
+					searchRepository.addSearch(Search(it.key, it.value))
+				}
+				searchWithAdsRepository.updateAllSearchWithAds()
+				val searchWithAds = searchWithAdsRepository.getSearchWithAds()
 				withContext(Dispatchers.Main) {
-					homePresenter.presentAdList(ads)
+					homePresenter.presentAdList(searchWithAds.map { it.ads }.flatten())
 				}
 			} catch (error: Exception) {
 				when (error) {

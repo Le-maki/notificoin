@@ -27,4 +27,6 @@ class AdRepository(
 	}
 
 	fun getAds() = adDataSource.getAll()
+
+	fun deleteAll() = adDataSource.deleteAll()
 }
