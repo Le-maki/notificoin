@@ -15,6 +15,7 @@ import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.facebook.soloader.SoLoader
 import com.github.lemaki.notificoin.injection.adModule
 import com.github.lemaki.notificoin.injection.alarmManagerModule
+import com.github.lemaki.notificoin.injection.databaseModule
 import com.github.lemaki.notificoin.injection.homeModule
 import com.github.lemaki.notificoin.injection.notificationModule
 import com.github.lemaki.notificoin.injection.searchModule
@@ -40,6 +41,7 @@ class MainActivity: AppCompatActivity() {
 				modules(
 					listOf(
 						homeModule,
+						databaseModule,
 						adModule,
 						searchModule,
 						webPageModule,

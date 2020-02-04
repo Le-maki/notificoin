@@ -9,7 +9,6 @@ import com.github.lemaki.notificoin.ui.home.HomeViewModel
 import org.koin.dsl.module
 
 val homeModule = module {
-	single { Room.databaseBuilder<NotifiCoinDataBase>(get(), NotifiCoinDataBase::class.java, "ad.db").build() }
 	single { HomeInteractor(get(), get(), get()) }
 	single { HomePresenter(get(), get()) }
 	single { HomeViewModel(MutableLiveData(), MutableLiveData()) }

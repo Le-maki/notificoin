@@ -19,7 +19,7 @@ class HomeInteractor(
 	private val searchWithAdsRepository: SearchWithAdsRepository,
 	private val searches: Map<String, String> = mapOf(
 		"https://www.leboncoin.fr/recherche/?text=Jeu%20switch&locations=Nantes" to "Jeu Switch",
-		"https://www.leboncoin.fr/recherche/?category=2&text=voiture&locations=Nantes" to "Voiture"
+		"https://www.leboncoin.fr/recherche/?category=2&locations=Nantes&regdate=2010-max" to "Voiture"
 	)
 
 ) {

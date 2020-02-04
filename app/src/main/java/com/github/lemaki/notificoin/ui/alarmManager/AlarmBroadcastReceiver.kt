@@ -6,6 +6,7 @@ import android.content.Intent
 import com.github.lemaki.notificoin.R
 import com.github.lemaki.notificoin.data.searchWithAds.SearchWithAdsRepository
 import com.github.lemaki.notificoin.injection.adModule
+import com.github.lemaki.notificoin.injection.databaseModule
 import com.github.lemaki.notificoin.injection.searchModule
 import com.github.lemaki.notificoin.injection.searchWithAdsModule
 import com.github.lemaki.notificoin.injection.webPageModule
@@ -28,6 +29,7 @@ class AlarmBroadcastReceiver: BroadcastReceiver(), KoinComponent {
 	private val searchWithAdsRepository: SearchWithAdsRepository by inject()
 
 	override fun onReceive(context: Context, intent: Intent) {
+		NotifiCoinLogger.i("Entering OnReceive in AlarmManager")
 		try {
 			startKoin {
 				androidLogger()
@@ -35,6 +37,7 @@ class AlarmBroadcastReceiver: BroadcastReceiver(), KoinComponent {
 				androidContext(context)
 				modules(
 					listOf(
+						databaseModule,
 						adModule,
 						searchModule,
 						webPageModule,
@@ -47,19 +50,26 @@ class AlarmBroadcastReceiver: BroadcastReceiver(), KoinComponent {
 		}
 
 		CoroutineScope(Dispatchers.IO).launch {
-			val oldSearchWithAdsList = searchWithAdsRepository.getSearchWithAds()
-			searchWithAdsRepository.updateAllSearchWithAds()
-			val newSearchWithAdsList = searchWithAdsRepository.getSearchWithAds()
-			newSearchWithAdsList.forEach { newSearchWithAds ->
-				if (newSearchWithAds.ads.any { ad ->
-						oldSearchWithAdsList.find {
-							it.search.url == newSearchWithAds.search.url
-						}?.ads?.contains(ad) != true
-					}) {
-					withContext(Dispatchers.Main) {
-						NotificationManager(context).sendNotification("New Ad !", "New ad for your search : \"${newSearchWithAds.search.title}\"")
+			try {
+				val oldSearchWithAdsList = searchWithAdsRepository.getSearchWithAds()
+				searchWithAdsRepository.updateAllSearchWithAds()
+				val newSearchWithAdsList = searchWithAdsRepository.getSearchWithAds()
+				newSearchWithAdsList.forEach { newSearchWithAds ->
+					if (newSearchWithAds.ads.any { ad ->
+							oldSearchWithAdsList.find {
+								it.search.url == newSearchWithAds.search.url
+							}?.ads?.contains(ad) != true
+						}) {
+						NotifiCoinLogger.i("AlarmManager found new ads, sending notifications")
+						withContext(Dispatchers.Main) {
+							NotificationManager(context).sendNotification("New Ad !", "New ad for your search : \"${newSearchWithAds.search.title}\"")
+						}
+					} else {
+						NotifiCoinLogger.i("AlarmManager didn't found new ads")
 					}
 				}
+			} catch (exception: Exception) {
+				NotifiCoinLogger.e("EXCEPTION", exception)
 			}
 		}
 	}
