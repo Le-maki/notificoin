@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import org.joda.time.DateTime
 
 @Entity(
 	tableName = "ads",
@@ -15,6 +16,8 @@ data class AdEntity(
 	val adId: Int = 0,
 	@ColumnInfo(name = "adTitle")
 	val adTitle: String,
+	@ColumnInfo(name = "adPublicationDate")
+	val publicationDate: DateTime,
 	@ColumnInfo(name ="adSearchUrl")
 	val searchUrl: String
 )

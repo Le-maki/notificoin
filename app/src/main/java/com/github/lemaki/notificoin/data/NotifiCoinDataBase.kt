@@ -2,11 +2,13 @@ package com.github.lemaki.notificoin.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.room.migration.Migration
 import com.github.lemaki.notificoin.data.ad.AdDao
 import com.github.lemaki.notificoin.data.search.SearchDao
 import com.github.lemaki.notificoin.data.searchWithAds.SearchWithAdsDao
 import com.github.lemaki.notificoin.data.ad.AdEntity
+import com.github.lemaki.notificoin.data.ad.AdTypeConverter
 import com.github.lemaki.notificoin.data.search.SearchEntity
 
 @Database(
@@ -14,6 +16,8 @@ import com.github.lemaki.notificoin.data.search.SearchEntity
 	version = 1,
 	exportSchema = true
 )
+
+@TypeConverters(AdTypeConverter::class)
 abstract class NotifiCoinDataBase: RoomDatabase() {
 
 	companion object: DatabaseCompanion {

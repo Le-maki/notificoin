@@ -16,6 +16,6 @@ abstract class AdDao: BaseDao<AdEntity>() {
 	@Query("DELETE FROM ads")
 	abstract fun deleteAll()
 
-	@Query("SELECT * FROM ads")
+	@Query("SELECT * FROM ads ORDER BY adPublicationDate")
 	abstract fun getAll(): List<AdEntity>
 }
