@@ -12,4 +12,8 @@ class SearchDataSource(
 	fun put(search: Search) {
 		searchDao.insertOrReplace(search.toEntity())
 	}
+
+	fun deleteAll() {
+		searchDao.deleteAll()
+	}
 }
