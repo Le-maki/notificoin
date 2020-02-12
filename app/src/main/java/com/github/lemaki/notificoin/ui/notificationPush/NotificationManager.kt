@@ -33,7 +33,6 @@ class NotificationManager(private val context: Context) {
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                //.setLargeIcon(generateBitmapFromVectorDrawable(context, R.drawable.ic_duck))
                 .setSmallIcon(R.drawable.ic_duck)
                 .setColor(Color.YELLOW)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
@@ -55,7 +54,6 @@ class NotificationManager(private val context: Context) {
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                //.setLargeIcon(generateBitmapFromVectorDrawable(context, R.drawable.ic_duck))
                 .setSmallIcon(R.drawable.ic_duck)
                 .setColor(Color.YELLOW)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)

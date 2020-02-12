@@ -18,7 +18,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.joda.time.DateTime
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.koin.fragmentFactory
@@ -31,7 +30,7 @@ class AlarmBroadcastReceiver: BroadcastReceiver(), KoinComponent {
     private val searchWithAdsRepository: SearchWithAdsRepository by inject()
 
     override fun onReceive(context: Context, intent: Intent) {
-        NotifiCoinLogger.i("Entering OnReceive in AlarmManager")
+        NotifiCoinLogger.i(context.getString(R.string.enteringOnReceive))
         try {
             startKoin {
                 androidLogger()
@@ -53,66 +52,56 @@ class AlarmBroadcastReceiver: BroadcastReceiver(), KoinComponent {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                writeLastUpdate(context)
-                val remoteSearchWithAdsList = searchWithAdsRepository.getRemoteSearchWithAds()
-                val localSearchWithAdsList = searchWithAdsRepository.getSearchWithAds()
+                val remoteSearchWithAdsList = searchWithAdsRepository.getRemoteSortedSearchWithAds()
+                val localSearchWithAdsList = searchWithAdsRepository.getAllSortedSearchWithAds()
                 if (remoteSearchWithAdsList == localSearchWithAdsList) {
-                    NotifiCoinLogger.i("AlarmManager didn't found new ads")
+                    NotifiCoinLogger.i(context.getString(R.string.noNewAds))
                 } else {
                     remoteSearchWithAdsList.forEach { remoteSearchWithAds ->
-                        val newAds = remoteSearchWithAds.ads.minus(
-                            localSearchWithAdsList.find { localSearchWithAds ->
-                                remoteSearchWithAds.search.url == localSearchWithAds.search.url
-                            }?.ads ?: run {
-                                // TODO
-                                throw Exception()
-                            }
-                        )
+                        val newAds = getNewAds(remoteSearchWithAds, localSearchWithAdsList)
                         if (newAds.isNotEmpty()) {
                             sendNewAdNotifications(remoteSearchWithAds, newAds, context)
                         } else {
-                            NotifiCoinLogger.i("AlarmManager didn't found new ads, some were deleted")
+                            NotifiCoinLogger.i(context.getString(R.string.noNewAds) + context.getString(R.string.someAdsDeleted))
                         }
                     }
                 }
                 searchWithAdsRepository.replaceAll(remoteSearchWithAdsList)
             } catch (exception: Exception) {
-                NotifiCoinLogger.e("EXCEPTION", exception)
+                NotifiCoinLogger.e(context.getString(R.string.errorInAlarmManager), exception)
             }
-        }
-    }
-
-    private fun writeLastUpdate(context: Context) {
-        val sharedPref = context.getSharedPreferences("Notificoin", Context.MODE_PRIVATE)
-        val oldUpdateTimeString = ""
-        sharedPref.getString("lastUpdate", oldUpdateTimeString)
-        with(sharedPref.edit()) {
-            putString("lastUpdate", DateTime.now().toString("HH:mm"))
-            commit()
-        }
-        if (oldUpdateTimeString.isNotEmpty()) {
-            NotifiCoinLogger.i("last update: $oldUpdateTimeString, now: ${DateTime.now().toString("HH:mm")}")
         }
     }
 
     private suspend fun sendNewAdNotifications(searchWithAds: SearchWithAds, newAds: List<Ad>, context: Context) {
         if (newAds.size == 1) {
-            NotifiCoinLogger.i("AlarmManager found 1 new ad ${newAds[0].title.take(15)} ${newAds[0].publicationDate.toString("HH:mm")}, sending notification")
+            val titlesString: String = newAds[0].title.take(15)
+            NotifiCoinLogger.i(context.resources.getQuantityString(R.plurals.newAdNotificationLog, 1, titlesString + newAds[0].publicationDate.toString("HH:mm")))
             withContext(Dispatchers.Main) {
                 NotificationManager(context).sendNotification(
-                    "New Ad !",
-                    context.resources.getQuantityString(R.plurals.newAdsFoundMessage, newAds.size, searchWithAds.search.title, newAds[0].title.take(15))
+                    context.getString(R.string.newAdNotificationTitle),
+                    context.resources.getQuantityString(R.plurals.newAdNotificationText, newAds.size, searchWithAds.search.title, titlesString)
                 )
             }
         } else {
-            NotifiCoinLogger.i("AlarmManager found ${newAds.size} new ads : ${newAds.map { it.title }.joinToString { "," }}, sending notifications")
+            val size = newAds.size
+            val titlesString: String = newAds.joinToString(", ") { it.title }
+            NotifiCoinLogger.i(context.resources.getQuantityString(R.plurals.newAdNotificationLog, size, size, titlesString))
             withContext(Dispatchers.Main) {
                 NotificationManager(context).sendBigtextNotification(
-                    "New Ads !",
-                    context.resources.getQuantityString(R.plurals.newAdsFoundMessage, newAds.size, newAds.size, searchWithAds.search.title),
-                    "Ads found : ${newAds.map { it.title }.joinToString { "," }}"
+                    context.getString(R.string.newAdNotificationTitle),
+                    context.resources.getQuantityString(R.plurals.newAdNotificationText, size, size, searchWithAds.search.title),
+                    context.getString(R.string.newAdNotificationBigText, titlesString)
                 )
             }
         }
+    }
+
+    private fun getNewAds(remoteSearchWithAds: SearchWithAds, localSearchWithAdsList: List<SearchWithAds>): List<Ad> {
+        return remoteSearchWithAds.ads.minus(
+            localSearchWithAdsList.find { localSearchWithAds ->
+                remoteSearchWithAds.search.url == localSearchWithAds.search.url
+            }?.ads ?: emptyList()
+        )
     }
 }

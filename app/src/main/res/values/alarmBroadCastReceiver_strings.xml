@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="noNewAds">AlarmManager didn\'t found new ads</string>
+    <string name="someAdsDeleted">, some were deleted</string>
+    <string name="newAdNotificationTitle">New Ad !</string>
+    <plurals name="newAdNotificationText">
+        <item quantity="one">New ad found for your search %s : %s</item>
+        <item quantity="other">%s new ads found for your search %s</item>
+    </plurals>
+    <plurals name="newAdNotificationLog">
+        <item quantity="one">AlarmManager found 1 new ad %s, sending notification</item>
+        <item quantity="other">AlarmManager found %s new ads : %s, sending notifications"</item>
+    </plurals>
+    <string name="newAdNotificationBigText">Ads found : %s</string>
+    <string name="enteringOnReceive">Entering OnReceive in AlarmManager</string>
+    <string name="errorInAlarmManager">Alarm Manager couldn\'t check new ads or send notifications</string>
+</resources>

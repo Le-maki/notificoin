@@ -13,6 +13,6 @@ abstract class BaseDao<in T> {
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	abstract fun insertAllOrReplace(typeList: List<T>): List<Long>
 
-	@Update(onConflict = OnConflictStrategy.ABORT)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
 	abstract fun update(type: T): Int
 }

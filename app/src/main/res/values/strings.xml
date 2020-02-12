@@ -9,8 +9,4 @@
     <string name="channel_name">notificoin</string>
     <string name="channel_description">channel for the app NotifiCoin</string>
     <string name="koin_already_started">Koin already started, skipping startKoin</string>
-    <plurals name="newAdsFoundMessage">
-        <item quantity="one">New ad found for your search %s : %s </item>
-        <item quantity="other">%s new ads found for your search %s</item>
-    </plurals>
 </resources>

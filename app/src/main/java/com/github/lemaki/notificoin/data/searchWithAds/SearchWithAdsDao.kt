@@ -8,5 +8,5 @@ import androidx.room.Transaction
 abstract class SearchWithAdsDao {
 	@Transaction
 	@Query("SELECT * FROM search")
-	abstract fun getSearchWithAds(): List<SearchWithAdsEntity>
+    abstract fun getAllSearchWithAds(): List<SearchWithAdsEntity>
 }

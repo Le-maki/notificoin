@@ -6,7 +6,7 @@ import com.github.lemaki.notificoin.data.searchWithAds.SearchWithAdsRepository
 import org.koin.dsl.module
 
 val searchWithAdsModule = module {
-	single { SearchWithAdsRepository(get(), get(), get()) }
+    single { SearchWithAdsRepository(get(), get(), get(), get()) }
 	single { SearchWithAdsDataSource(get()) }
 	single { get<NotifiCoinDataBase>().searchWithAdsDao() }
 }

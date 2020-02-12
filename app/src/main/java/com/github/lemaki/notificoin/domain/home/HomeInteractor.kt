@@ -29,7 +29,7 @@ class HomeInteractor(
 					searchRepository.addSearch(Search(it.key, it.value))
 				}
 				searchWithAdsRepository.updateAllSearchWithAds()
-				val searchWithAds = searchWithAdsRepository.getSearchWithAds()
+                val searchWithAds = searchWithAdsRepository.getAllSortedSearchWithAds()
 				withContext(Dispatchers.Main) {
 					homePresenter.presentAdList(searchWithAds.map { it.ads }.flatten())
 				}
