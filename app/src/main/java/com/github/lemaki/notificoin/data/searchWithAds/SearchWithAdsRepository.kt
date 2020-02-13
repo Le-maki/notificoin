@@ -11,8 +11,8 @@ class SearchWithAdsRepository(
     private val adRepository: AdRepository,
     private val adComparator: Comparator<Ad>
 ) {
-    fun getAllSortedSearchWithAds() = searchWithAdsDataSource.getAllSearchWithAds().apply {
-        this.forEach { it.ads.sortedWith(adComparator) }
+    fun getAllSortedSearchWithAds() = searchWithAdsDataSource.getAllSearchWithAds().map {
+        it.copy(ads = it.ads.sortedWith(adComparator))
     }
 
     fun getRemoteSortedSearchWithAds() = searchRepository.getAllSearches().map { search ->

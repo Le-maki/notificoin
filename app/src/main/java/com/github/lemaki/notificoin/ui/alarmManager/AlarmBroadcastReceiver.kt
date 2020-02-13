@@ -18,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.joda.time.DateTime
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.koin.fragmentFactory
@@ -69,11 +70,16 @@ class AlarmBroadcastReceiver: BroadcastReceiver(), KoinComponent {
                 searchWithAdsRepository.replaceAll(remoteSearchWithAdsList)
             } catch (exception: Exception) {
                 NotifiCoinLogger.e(context.getString(R.string.errorInAlarmManager), exception)
+                NotificationManager(context).sendBigtextNotification(
+                    "Oops",
+                    "Error at ${DateTime.now().toString("HH:mm")}, you were offline maybe ?",
+                    exception.toString()
+                )
             }
         }
     }
 
-    private suspend fun sendNewAdNotifications(searchWithAds: SearchWithAds, newAds: List<Ad>, context: Context) {
+    private fun sendNewAdNotifications(searchWithAds: SearchWithAds, newAds: List<Ad>, context: Context) {
         if (newAds.size == 1) {
             val titlesString: String = newAds[0].title.take(15)
             NotifiCoinLogger.i(context.resources.getQuantityString(R.plurals.newAdNotificationLog, 1, titlesString + newAds[0].publicationDate.toString("HH:mm")))
