@@ -48,6 +48,21 @@ class NotificationManager(private val context: Context) {
 
     }
 
+    fun sendNewAdNotifications(adsNumber: Int, titleString: String, searchTitleString: String) {
+        if (adsNumber == 1) {
+            sendNotification(
+                context.getString(R.string.newAdNotificationTitle),
+                context.resources.getQuantityString(R.plurals.newAdNotificationText, adsNumber, searchTitleString, titleString)
+            )
+        } else {
+            sendBigtextNotification(
+                context.getString(R.string.newAdNotificationTitle),
+                context.resources.getQuantityString(R.plurals.newAdNotificationText, adsNumber, adsNumber, searchTitleString),
+                context.getString(R.string.newAdNotificationBigText, titleString)
+            )
+        }
+    }
+
     fun sendBigtextNotification(title: String, text: String, bigText: String) {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

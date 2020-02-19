@@ -33,7 +33,7 @@
             android:process=":remote" />
 
         <service
-            android:name="com.github.lemaki.notificoin.ui.DetectNewAdsService"
+            android:name="com.github.lemaki.notificoin.ui.detectNewAds.DetectNewAdsService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
