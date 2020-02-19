@@ -6,6 +6,7 @@
     <dist:module dist:instant="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -30,6 +31,10 @@
         <receiver
             android:name="com.github.lemaki.notificoin.ui.alarmManager.AlarmBroadcastReceiver"
             android:process=":remote" />
+
+        <service
+            android:name="com.github.lemaki.notificoin.ui.DetectNewAdsService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
             android:name="com.facebook.flipper.android.diagnostics.FlipperDiagnosticActivity"

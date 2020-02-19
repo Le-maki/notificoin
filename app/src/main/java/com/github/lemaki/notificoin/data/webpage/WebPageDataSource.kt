@@ -16,11 +16,11 @@ class WebPageDataSource {
 			"Accept-Encoding" to " gzip, deflate, br",
 			"Accept-Language" to " fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7"
 		)
-
+        private const val TIMEOUT = 10 * 1000
 	}
 
 	fun getWebPage(url: String): Document {
 		NotifiCoinLogger.i("Trying to GET $url")
-		return Jsoup.connect(url).headers(HEADERS).get()
+        return Jsoup.connect(url).headers(HEADERS).timeout(TIMEOUT).get()
 	}
 }
