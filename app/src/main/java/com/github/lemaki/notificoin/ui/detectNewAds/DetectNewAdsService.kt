@@ -7,6 +7,7 @@ import com.github.lemaki.notificoin.R
 import com.github.lemaki.notificoin.domain.DetectNewAdsInteractor
 import com.github.lemaki.notificoin.injection.adModule
 import com.github.lemaki.notificoin.injection.databaseModule
+import com.github.lemaki.notificoin.injection.detectNewAdsModule
 import com.github.lemaki.notificoin.injection.notificationModule
 import com.github.lemaki.notificoin.injection.searchModule
 import com.github.lemaki.notificoin.injection.searchWithAdsModule
@@ -22,7 +23,7 @@ import org.koin.core.error.KoinAppAlreadyStartedException
 import org.koin.core.parameter.parametersOf
 
 class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
-    private val detectNewAdsInteractor: DetectNewAdsInteractor by inject()
+    private val detectNewAdsInteractor: DetectNewAdsInteractor by inject { parametersOf(this) }
     private val notificationManager: NotificationManager by inject { parametersOf(this) }
 
     override fun onHandleWork(intent: Intent) {
@@ -38,7 +39,8 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
                         searchModule,
                         webPageModule,
                         searchWithAdsModule,
-                        notificationModule
+                        notificationModule,
+                        detectNewAdsModule
                     )
                 )
             }
