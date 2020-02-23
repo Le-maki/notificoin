@@ -56,7 +56,11 @@ class DetectNewAdsInteractor(
     private suspend fun sendNotifications(searchWithAds: SearchWithAds, newAds: List<Ad>) {
         if (newAds.size == 1) {
             val titlesString: String = newAds[0].title.take(15)
-            NotifiCoinLogger.i("AlarmManager found 1 new ad: $titlesString + ${newAds[0].publicationDate.toString("HH:mm")}")
+            NotifiCoinLogger.i(
+                "AlarmManager found 1 new ad: $titlesString ${newAds[0].publicationDate.toString(
+                    "HH:mm"
+                )}"
+            )
             withContext(Dispatchers.Main) {
                 detectNewAdsPresenter.presentNewAdNotifications(newAds.size, titlesString, searchWithAds.search.title)
             }

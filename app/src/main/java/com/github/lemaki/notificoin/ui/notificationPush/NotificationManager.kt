@@ -27,7 +27,7 @@ class NotificationManager(private val context: Context) {
         createNotificationChannel()
     }
 
-    fun sendNotification(title: String, text: String) {
+    private fun sendNotification(title: String, text: String) {
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
