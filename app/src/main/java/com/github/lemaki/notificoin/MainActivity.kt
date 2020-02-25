@@ -79,7 +79,12 @@ class MainActivity: AppCompatActivity() {
 
         if (BuildConfig.DEBUG && FlipperUtils.shouldEnableFlipper(this)) {
             val client = AndroidFlipperClient.getInstance(this)
-            client.addPlugin(InspectorFlipperPlugin(this.applicationContext, DescriptorMapping.withDefaults()))
+            client.addPlugin(
+                InspectorFlipperPlugin(
+                    this.applicationContext,
+                    DescriptorMapping.withDefaults()
+                )
+            )
             val networkFlipperPlugin = NetworkFlipperPlugin()
             client.addPlugin(DatabasesFlipperPlugin(this))
             client.addPlugin(networkFlipperPlugin)
@@ -95,8 +100,8 @@ class MainActivity: AppCompatActivity() {
             val builder: AlertDialog.Builder = AlertDialog.Builder(context)
             val view: View = View.inflate(context, R.layout.battery_whitelist_alertdialog, null)
             Glide.with(context)
-                    .load(R.raw.battery_whitelist)
-                    .into(view.findViewById(R.id.batteryWhiteListGif))
+                .load(R.raw.battery_whitelist)
+                .into(view.findViewById(R.id.batteryWhiteListGif))
             builder.setView(view)
             builder.setMessage(alertMessage)
             builder.setPositiveButton("OK") { _, _ ->
