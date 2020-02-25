@@ -21,6 +21,7 @@ import com.facebook.flipper.plugins.databases.DatabasesFlipperPlugin
 import com.facebook.flipper.plugins.inspector.DescriptorMapping
 import com.facebook.flipper.plugins.inspector.InspectorFlipperPlugin
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
+import com.facebook.flipper.plugins.sharedpreferences.SharedPreferencesFlipperPlugin
 import com.facebook.soloader.SoLoader
 import com.github.lemaki.notificoin.injection.adModule
 import com.github.lemaki.notificoin.injection.alarmManagerModule
@@ -85,6 +86,7 @@ class MainActivity: AppCompatActivity() {
                     DescriptorMapping.withDefaults()
                 )
             )
+            client.addPlugin(SharedPreferencesFlipperPlugin(this, SharedPreferencesRepository.PREFERENCE_FILE))
             val networkFlipperPlugin = NetworkFlipperPlugin()
             client.addPlugin(DatabasesFlipperPlugin(this))
             client.addPlugin(networkFlipperPlugin)
@@ -95,7 +97,8 @@ class MainActivity: AppCompatActivity() {
 
     private fun requestBatteryWhiteListPermission(context: Context) {
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
-        if (powerManager != null && !powerManager.isIgnoringBatteryOptimizations(packageName)) {
+        val sharedPreferencesRepository = SharedPreferencesRepository(this)
+        if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && powerManager != null && !powerManager.isIgnoringBatteryOptimizations(packageName)) {
             val alertMessage = getString(R.string.battery_white_list_explanation)
             val builder: AlertDialog.Builder = AlertDialog.Builder(context)
             val view: View = View.inflate(context, R.layout.battery_whitelist_alertdialog, null)
@@ -111,8 +114,11 @@ class MainActivity: AppCompatActivity() {
                     goToBatteryWhiteList()
                 }
             }
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
+            builder.setNeutralButton("Maybe later") { _, _ -> }
+            builder.setNegativeButton("Never") { _, _ ->
+                sharedPreferencesRepository.shouldShowBatteryWhiteListDialog = false
+            }
+            builder.create().show()
         }
 
     }
