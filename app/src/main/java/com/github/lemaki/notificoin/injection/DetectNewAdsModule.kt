@@ -5,5 +5,10 @@ import com.github.lemaki.notificoin.ui.detectNewAds.DetectNewAdsPresenter
 import org.koin.dsl.module
 
 val detectNewAdsModule = module {
-    single { (detectNewAdsPresenter: DetectNewAdsPresenter) -> DetectNewAdsInteractor(get(), detectNewAdsPresenter) }
+    single { (detectNewAdsPresenter: DetectNewAdsPresenter) ->
+        DetectNewAdsInteractor(
+            get(),
+            detectNewAdsPresenter
+        )
+    }
 }

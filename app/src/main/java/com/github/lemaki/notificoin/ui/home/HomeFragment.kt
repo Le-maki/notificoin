@@ -22,12 +22,11 @@ import com.github.lemaki.notificoin.ui.alarmManager.NotifiCoinAlarmManager
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 class HomeFragment : Fragment() {
     private val homeInteractor: HomeInteractor by inject()
     private val homeViewModel: HomeViewModel by viewModel()
-    private val alarmManager: NotifiCoinAlarmManager by inject { parametersOf(this.context) }
+    private val alarmManager: NotifiCoinAlarmManager by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,

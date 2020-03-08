@@ -8,5 +8,5 @@ import org.koin.dsl.module
 val searchModule = module {
 	single { get<NotifiCoinDataBase>().searchDao() }
 	single { SearchDataSource(get()) }
-	single {SearchRepository(get()) }
+	single { SearchRepository(get()) }
 }
