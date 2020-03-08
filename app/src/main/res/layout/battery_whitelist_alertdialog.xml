@@ -9,7 +9,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_margin="10dp"
-        android:contentDescription="@string/battery_white_list_explanation"
+        android:contentDescription="@string/batteryWhiteListExplanation"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

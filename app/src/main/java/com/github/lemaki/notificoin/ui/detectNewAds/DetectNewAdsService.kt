@@ -44,7 +44,7 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
                 )
             }
         } catch (exception: KoinAppAlreadyStartedException) {
-            NotifiCoinLogger.i(getString(R.string.koin_already_started))
+            NotifiCoinLogger.i(getString(R.string.koinAlreadyStarted))
         }
         detectNewAdsInteractor.onServiceStarted()
     }

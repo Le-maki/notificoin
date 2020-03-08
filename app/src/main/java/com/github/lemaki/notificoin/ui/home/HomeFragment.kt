@@ -70,6 +70,7 @@ class HomeFragment : Fragment() {
             Observer {
                 if (it) {
                     presentBatteryWhitelistRequestAlertDialog()
+                    homeViewModel.shouldShowBatteryWhiteListAlertDialog.value = false
                 }
             })
     }
@@ -80,7 +81,7 @@ class HomeFragment : Fragment() {
 
     private fun presentBatteryWhitelistRequestAlertDialog() {
         val context = requireContext()
-        val alertMessage = getString(R.string.battery_white_list_explanation)
+        val alertMessage = getString(R.string.batteryWhiteListExplanation)
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         val view: View = View.inflate(context, R.layout.battery_whitelist_alertdialog, null)
         Glide.with(context)
@@ -88,16 +89,17 @@ class HomeFragment : Fragment() {
             .into(view.findViewById(R.id.batteryWhiteListGif))
         builder.setView(view)
         builder.setMessage(alertMessage)
-        builder.setPositiveButton("OK") { _, _ ->
+        builder.setPositiveButton(getString(R.string.OK)) { _, _ ->
             try {
                 goToBatteryWhiteListOfTheApp(context)
             } catch (exception: ActivityNotFoundException) {
                 goToBatteryWhiteList()
             }
         }
-        builder.setNeutralButton("Maybe later") { _, _ -> }
-        builder.setNegativeButton("Never") { _, _ ->
-            homeInteractor.onBatteryWhiteListAlertDialogNegativeButtonPressed()
+        builder.setNeutralButton(getString(R.string.alertDialogStopAsking)) { _, _ ->
+            homeInteractor.onBatteryWhiteListAlertDialogNeutralButtonPressed()
+        }
+        builder.setNegativeButton(getString(R.string.alertDialogMaybeLater)) { _, _ ->
         }
         builder.create().show()
     }

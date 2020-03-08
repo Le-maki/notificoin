@@ -22,12 +22,14 @@ class HomeInteractor(
     private val searches: Map<String, String> = mapOf(
         "https://www.leboncoin.fr/recherche/?category=2&locations=Nantes&regdate=2010-max" to "Voiture"
     )
-
 ) {
+    private var batteryPermissionWasAskedOnce = false
+
     fun onStart(isBatteryWhiteListAlreadyGranted: Boolean) {
-        if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && !isBatteryWhiteListAlreadyGranted
+        if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && !isBatteryWhiteListAlreadyGranted && !batteryPermissionWasAskedOnce
         ) {
             homePresenter.presentBatteryWhitelistPermissionAlertDialog()
+            batteryPermissionWasAskedOnce = true
         }
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -64,7 +66,7 @@ class HomeInteractor(
         }
     }
 
-    fun onBatteryWhiteListAlertDialogNegativeButtonPressed() {
+    fun onBatteryWhiteListAlertDialogNeutralButtonPressed() {
         sharedPreferencesRepository.shouldShowBatteryWhiteListDialog = false
     }
 }

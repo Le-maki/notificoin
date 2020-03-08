@@ -87,8 +87,8 @@ class NotificationManager(private val context: Context) {
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = context.resources.getString(R.string.channel_name)
-            val descriptionText = context.resources.getString(R.string.channel_description)
+            val name = context.resources.getString(R.string.channelName)
+            val descriptionText = context.resources.getString(R.string.channelDescription)
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
