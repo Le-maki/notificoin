@@ -1,9 +1,11 @@
 package com.github.lemaki.notificoin.data.sharedPreferences
 
-import android.content.Context
-import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 
-class SharedPreferencesRepository(private val context: Context) {
+class SharedPreferencesRepository(
+    private val sharedPreferencesEditor: SharedPreferences.Editor,
+    private val sharedPreferences: SharedPreferences
+) {
     companion object {
         private const val SHOULD_SHOW_BATTERY_WHITE_LIST_DIALOG =
             "SHOULD_SHOW_BATTERY_WHITE_LIST_DIALOG"
@@ -12,12 +14,10 @@ class SharedPreferencesRepository(private val context: Context) {
 
     var shouldShowBatteryWhiteListDialog: Boolean
         get() {
-            return context.getSharedPreferences(PREFERENCE_FILE, MODE_PRIVATE)
-                .getBoolean(SHOULD_SHOW_BATTERY_WHITE_LIST_DIALOG, true)
+            return sharedPreferences.getBoolean(SHOULD_SHOW_BATTERY_WHITE_LIST_DIALOG, true)
         }
         set(value) {
-            context.getSharedPreferences(PREFERENCE_FILE, MODE_PRIVATE).edit()
-                .putBoolean(SHOULD_SHOW_BATTERY_WHITE_LIST_DIALOG, value).apply()
+            sharedPreferencesEditor.putBoolean(SHOULD_SHOW_BATTERY_WHITE_LIST_DIALOG, value).apply()
         }
 
 

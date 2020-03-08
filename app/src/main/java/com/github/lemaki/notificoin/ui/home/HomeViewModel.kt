@@ -6,6 +6,7 @@ import com.github.lemaki.notificoin.domain.home.HomeErrorType
 import com.github.lemaki.notificoin.ui.ad.AdListViewModel
 
 data class HomeViewModel(
-	val adListViewModel: MutableLiveData<AdListViewModel>,
-	val errorType: MutableLiveData<HomeErrorType>
-): ViewModel()
+    val adListViewModel: MutableLiveData<AdListViewModel>,
+    val errorType: MutableLiveData<HomeErrorType>,
+    val shouldShowBatteryWhiteListAlertDialog: MutableLiveData<Boolean>
+) : ViewModel()

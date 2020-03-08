@@ -14,5 +14,4 @@ class AlarmBroadcastReceiver: BroadcastReceiver(), KoinComponent {
         NotifiCoinLogger.i(context.getString(R.string.enteringOnReceive))
         DetectNewAdsService.enqueueWork(context, Intent())
     }
-
 }

@@ -5,15 +5,7 @@ import android.content.Intent
 import androidx.core.app.JobIntentService
 import com.github.lemaki.notificoin.R
 import com.github.lemaki.notificoin.domain.DetectNewAdsInteractor
-import com.github.lemaki.notificoin.injection.adModule
-import com.github.lemaki.notificoin.injection.alarmManagerModule
-import com.github.lemaki.notificoin.injection.databaseModule
-import com.github.lemaki.notificoin.injection.detectNewAdsModule
-import com.github.lemaki.notificoin.injection.homeModule
-import com.github.lemaki.notificoin.injection.notificationModule
-import com.github.lemaki.notificoin.injection.searchModule
-import com.github.lemaki.notificoin.injection.searchWithAdsModule
-import com.github.lemaki.notificoin.injection.webPageModule
+import com.github.lemaki.notificoin.injection.*
 import com.github.lemaki.notificoin.logger.NotifiCoinLogger
 import com.github.lemaki.notificoin.ui.notificationPush.NotificationManager
 import org.koin.android.ext.android.inject
@@ -44,7 +36,8 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
                         searchWithAdsModule,
                         notificationModule,
                         alarmManagerModule,
-                        detectNewAdsModule
+                        detectNewAdsModule,
+                        sharedPreferencesModule
                     )
                 )
             }

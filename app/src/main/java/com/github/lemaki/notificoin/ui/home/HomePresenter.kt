@@ -27,4 +27,8 @@ class HomePresenter(
 	fun presentAdList(adList: List<Ad>) {
 		homeViewModel.adListViewModel.value = adsListViewModelTransformer.transform(adList)
 	}
+
+	fun presentBatteryWhitelistPermissionAlertDialog() {
+		homeViewModel.shouldShowBatteryWhiteListAlertDialog.value = true
+	}
 }
