@@ -11,13 +11,15 @@ import org.joda.time.DateTime
 	indices = [Index(value = ["adId"], unique = true)]
 )
 data class AdEntity(
-	@PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = true)
 	@ColumnInfo(name = "adId")
 	val adId: Int = 0,
-	@ColumnInfo(name = "adTitle")
+    @ColumnInfo(name = "adTitle")
 	val adTitle: String,
-	@ColumnInfo(name = "adPublicationDate")
+    @ColumnInfo(name = "adPublicationDate")
 	val publicationDate: DateTime,
-	@ColumnInfo(name ="adSearchUrl")
-	val searchUrl: String
+    @ColumnInfo(name ="adSearchUrl")
+    val searchUrl: String,
+    @ColumnInfo(name = "url")
+    val url: String
 )

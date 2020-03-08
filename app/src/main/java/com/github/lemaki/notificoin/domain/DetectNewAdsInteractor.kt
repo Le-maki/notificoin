@@ -62,14 +62,24 @@ class DetectNewAdsInteractor(
                 )}"
             )
             withContext(Dispatchers.Main) {
-                detectNewAdsPresenter.presentNewAdNotifications(newAds.size, titlesString, searchWithAds.search.title)
+                detectNewAdsPresenter.presentNewAdNotifications(
+                    newAds.size,
+                    titlesString,
+                    searchWithAds.search.title,
+                    newAds[0].url
+                )
             }
         } else {
             val size = newAds.size
             val titlesString: String = newAds.joinToString(", ") { it.title }
             NotifiCoinLogger.i("AlarmManager found $size new ads : $titlesString, sending notifications")
             withContext(Dispatchers.Main) {
-                detectNewAdsPresenter.presentNewAdNotifications(size, titlesString, searchWithAds.search.title)
+                detectNewAdsPresenter.presentNewAdNotifications(
+                    size,
+                    titlesString,
+                    searchWithAds.search.title,
+                    searchWithAds.search.url
+                )
             }
         }
     }

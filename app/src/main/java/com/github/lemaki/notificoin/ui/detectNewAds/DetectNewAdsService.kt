@@ -68,7 +68,12 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
         notificationManager.sendBigtextNotification(title, text, bigText)
     }
 
-    override fun presentNewAdNotifications(size: Int, titlesString: String, title: String) {
-        notificationManager.sendNewAdNotifications(size, titlesString, title)
+    override fun presentNewAdNotifications(
+        size: Int,
+        titlesString: String,
+        title: String,
+        url: String
+    ) {
+        notificationManager.sendNewAdNotifications(size, titlesString, title, url)
     }
 }

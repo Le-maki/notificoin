@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -16,6 +17,7 @@ import androidx.core.content.ContextCompat
 import com.github.lemaki.notificoin.MainActivity
 import com.github.lemaki.notificoin.R
 import kotlin.random.Random
+
 
 @Suppress("SameParameterValue")
 class NotificationManager(private val context: Context) {
@@ -27,58 +29,91 @@ class NotificationManager(private val context: Context) {
         createNotificationChannel()
     }
 
-    private fun sendNotification(title: String, text: String) {
-        val intent = Intent(context, MainActivity::class.java).apply {
+    private fun sendNotification(title: String, text: String, url: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        intent.apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_duck)
-                .setColor(Color.YELLOW)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setContentTitle(title)
-                .setContentText(text)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setSmallIcon(R.drawable.ic_duck)
+            .setColor(Color.YELLOW)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setContentTitle(title)
+            .setContentText(text)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
         with(NotificationManagerCompat.from(context)) {
             notify(Random.nextInt(0, 10000000), builder.build())
         }
 
     }
 
-    fun sendNewAdNotifications(adsNumber: Int, titleString: String, searchTitleString: String) {
+    fun sendNewAdNotifications(
+        adsNumber: Int,
+        titleString: String,
+        searchTitleString: String,
+        url: String
+    ) {
         if (adsNumber == 1) {
             sendNotification(
                 context.getString(R.string.newAdNotificationTitle),
-                context.resources.getQuantityString(R.plurals.newAdNotificationText, adsNumber, searchTitleString, titleString)
+                context.resources.getQuantityString(
+                    R.plurals.newAdNotificationText,
+                    adsNumber,
+                    searchTitleString,
+                    titleString
+                ),
+                url
             )
         } else {
             sendBigtextNotification(
                 context.getString(R.string.newAdNotificationTitle),
-                context.resources.getQuantityString(R.plurals.newAdNotificationText, adsNumber, adsNumber, searchTitleString),
-                context.getString(R.string.newAdNotificationBigText, titleString)
+                context.resources.getQuantityString(
+                    R.plurals.newAdNotificationText,
+                    adsNumber,
+                    adsNumber,
+                    searchTitleString
+                ),
+                context.getString(R.string.newAdNotificationBigText, titleString),
+                url
             )
         }
     }
 
-    fun sendBigtextNotification(title: String, text: String, bigText: String) {
-        val intent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    fun sendBigtextNotification(
+        title: String,
+        text: String,
+        bigText: String,
+        searchUrl: String? = null
+    ) {
+        var intent = Intent()
+        searchUrl?.let {
+            intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(searchUrl)
+            intent.apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+        } ?: run {
+            intent = Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_duck)
-                .setColor(Color.YELLOW)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setContentTitle(title)
-                .setContentText(text)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
+            .setSmallIcon(R.drawable.ic_duck)
+            .setColor(Color.YELLOW)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setContentTitle(title)
+            .setContentText(text)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(bigText))
         with(NotificationManagerCompat.from(context)) {
             notify(Random.nextInt(0, 10000000), builder.build())
         }
@@ -93,7 +128,8 @@ class NotificationManager(private val context: Context) {
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
             }
-            val notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val notificationManager: NotificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
