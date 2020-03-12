@@ -7,23 +7,13 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
     buildToolsVersion "29.0.3"
+    compileSdkVersion parent.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.github.lemaki.notificoin"
-        minSdkVersion 23
-        targetSdkVersion 29
-        versionCode 1
+        minSdkVersion parent.ext.minSdkVersion
+        targetSdkVersion parent.ext.targetSdkVersion
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [
-                        "room.schemaLocation":"$projectDir/schemas".toString(),
-                        "room.incremental":"true"
-                ]
-            }
-        }
     }
     buildTypes {
         release {
@@ -39,67 +29,70 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    packagingOptions {
+        exclude 'META-INF/metadata.jvm.kotlin_module'
+        exclude 'META-INF/gradle/incremental.annotation.processors'
+        exclude 'META-INF/metadata.kotlin_module'
+    }
 }
+
 repositories {
     jcenter()
 }
 
 dependencies {
+    implementation project(':logger')
+    implementation project(':core')
+    implementation project(':repository')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
+
+    // Kotlin
+    implementation parent.ext.kotlinStdLib
+    implementation parent.ext.appCompat
+    implementation parent.ext.kotlinCore
 
     // Views
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation parent.ext.material
+    implementation parent.ext.constraintLayout
 
     // Navigation
-    implementation 'androidx.navigation:navigation-fragment:2.2.1'
-    implementation 'androidx.navigation:navigation-ui:2.2.1'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
-
-    // Jsoup
-    implementation 'org.jsoup:jsoup:1.12.1'
-
-    // Gson
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation parent.ext.navigationFragment
+    implementation parent.ext.navigationUi
+    implementation parent.ext.lifecycle
+    implementation parent.ext.navigationFragmentKotlin
+    implementation parent.ext.navigationUiKotlin
 
     // Tests
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-
-    // Room
-    def room_version = "2.2.4"
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    kapt "android.arch.persistence.room:compiler:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-    testImplementation "androidx.room:room-testing:$room_version"
+    implementation parent.ext.junit
+    implementation parent.ext.androidJunit
+    implementation parent.ext.androidEspresso
 
     // Flipper
-    debugImplementation 'com.facebook.flipper:flipper:0.30.2'
-    debugImplementation 'com.facebook.soloader:soloader:0.8.0'
-    releaseImplementation 'com.facebook.flipper:flipper-noop:0.30.2'
-    debugImplementation 'com.facebook.flipper:flipper-network-plugin:0.30.2'
+    implementation parent.ext.flipper
+    implementation parent.ext.soloader
+    implementation parent.ext.flipperNetworkPlugin
+
+    // Room
+    implementation parent.ext.roomRuntime
+    kapt parent.ext.roomCompiler
+    annotationProcessor parent.roomCompiler
+    kapt parent.ext.roomPersistenceCompiler
+    implementation parent.ext.roomKotlin
+    testImplementation parent.ext.roomTesting
 
     // Koin
-    def koin_version = '2.1.3'
-    implementation "org.koin:koin-androidx-scope:$koin_version"
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    implementation "org.koin:koin-androidx-ext:$koin_version"
-    implementation "org.koin:koin-androidx-fragment:$koin_version"
-
+    implementation parent.ext.koin
+    implementation parent.ext.koinViewmodel
+    implementation parent.ext.koinExt
+    implementation parent.ext.koinFragment
 
     // Joda time
-    implementation 'joda-time:joda-time:2.10.4'
+    implementation parent.ext.jodaTime
 
     // Glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation parent.ext.glide
+    kapt parent.ext.glideCompiler
+    annotationProcessor parent.ext.glideCompiler
 
 
 }

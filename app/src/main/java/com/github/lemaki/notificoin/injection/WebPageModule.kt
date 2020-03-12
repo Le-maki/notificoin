@@ -1,8 +1,8 @@
 package com.github.lemaki.notificoin.injection
 
-import com.github.lemaki.notificoin.data.webpage.DocumentToAdJsonArrayTransformer
-import com.github.lemaki.notificoin.data.webpage.WebPageDataSource
-import com.github.lemaki.notificoin.data.webpage.WebPageRepository
+import com.github.lemaki.repository.webpage.DocumentToAdJsonArrayTransformer
+import com.github.lemaki.repository.webpage.WebPageDataSource
+import com.github.lemaki.repository.webpage.WebPageRepository
 import org.koin.dsl.module
 
 val webPageModule = module {

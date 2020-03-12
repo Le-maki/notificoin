@@ -1,0 +1,31 @@
+apply plugin: 'kotlin'
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':logger')
+
+    //Kotlin
+    implementation parent.ext.kotlinStdLib
+    implementation parent.ext.appCompat
+    implementation parent.ext.kotlinCore
+    implementation parent.ext.kotlinCoroutines
+
+    // Tests
+    implementation parent.ext.junit
+    implementation  parent.ext.androidJunit
+    implementation  parent.ext.androidEspresso
+
+    // Koin
+    implementation parent.ext.koin
+    implementation parent.ext.koinViewmodel
+    implementation parent.ext.koinExt
+    implementation parent.ext.koinFragment
+
+    // Joda time
+    implementation parent.ext.jodaTime
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

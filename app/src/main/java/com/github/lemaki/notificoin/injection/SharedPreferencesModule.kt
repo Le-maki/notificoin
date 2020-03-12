@@ -2,11 +2,12 @@ package com.github.lemaki.notificoin.injection
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.github.lemaki.notificoin.data.sharedPreferences.SharedPreferencesRepository
+import com.github.lemaki.core.repository.SharedPreferencesRepository
+import com.github.lemaki.repository.sharedPreferences.SharedPreferencesRepositoryImpl
 import org.koin.dsl.module
 
 val sharedPreferencesModule = module {
-    single { SharedPreferencesRepository(get(), get()) }
+    single<SharedPreferencesRepository> { SharedPreferencesRepositoryImpl(get(), get()) }
     single {
         getSharedPrefs(get())
     }

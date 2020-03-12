@@ -3,8 +3,8 @@ package com.github.lemaki.notificoin.ui.alarmManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.github.lemaki.logger.NotifiCoinLogger
 import com.github.lemaki.notificoin.R
-import com.github.lemaki.notificoin.logger.NotifiCoinLogger
 import com.github.lemaki.notificoin.ui.detectNewAds.DetectNewAdsService
 import org.koin.core.KoinComponent
 

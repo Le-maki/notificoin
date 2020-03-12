@@ -11,16 +11,16 @@ import com.github.lemaki.notificoin.R
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
 class NotificationsFragment: Fragment() {
-	private val notificationsViewModel: NotificationsViewModel by viewModels()
-	override fun onCreateView(
-		inflater: LayoutInflater,
-		container: ViewGroup?,
-		savedInstanceState: Bundle?
-	): View? {
-		val root = inflater.inflate(R.layout.fragment_notifications, container, false)
-		notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-			text_notifications.text = it
-		})
-		return root
-	}
+    private val notificationsViewModel: NotificationsViewModel by viewModels()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val root = inflater.inflate(R.layout.fragment_notifications, container, false)
+        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
+            text_notifications.text = it
+        })
+        return root
+    }
 }

@@ -1,6 +1,6 @@
 package com.github.lemaki.notificoin.ui.ad
 
-import com.github.lemaki.notificoin.domain.ad.Ad
+import com.github.lemaki.core.ad.Ad
 
 class AdListToAdsListViewModelTransformer {
     fun transform(adList: List<Ad>): AdListViewModel {

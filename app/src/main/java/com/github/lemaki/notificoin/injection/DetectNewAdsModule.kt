@@ -1,7 +1,7 @@
 package com.github.lemaki.notificoin.injection
 
-import com.github.lemaki.notificoin.domain.DetectNewAdsInteractor
-import com.github.lemaki.notificoin.ui.detectNewAds.DetectNewAdsPresenter
+import com.github.lemaki.core.DetectNewAdsInteractor
+import com.github.lemaki.core.ui.detectNewAds.DetectNewAdsPresenter
 import org.koin.dsl.module
 
 val detectNewAdsModule = module {

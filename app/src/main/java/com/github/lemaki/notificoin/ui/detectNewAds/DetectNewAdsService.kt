@@ -3,10 +3,11 @@ package com.github.lemaki.notificoin.ui.detectNewAds
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.JobIntentService
+import com.github.lemaki.core.DetectNewAdsInteractor
+import com.github.lemaki.core.ui.detectNewAds.DetectNewAdsPresenter
+import com.github.lemaki.logger.NotifiCoinLogger
 import com.github.lemaki.notificoin.R
-import com.github.lemaki.notificoin.domain.DetectNewAdsInteractor
 import com.github.lemaki.notificoin.injection.*
-import com.github.lemaki.notificoin.logger.NotifiCoinLogger
 import com.github.lemaki.notificoin.ui.notificationPush.NotificationManager
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -51,6 +52,7 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
 
     companion object {
         private const val JOB_ID = 1
+
         @JvmStatic
         fun enqueueWork(context: Context?, work: Intent?) {
             context?.let {

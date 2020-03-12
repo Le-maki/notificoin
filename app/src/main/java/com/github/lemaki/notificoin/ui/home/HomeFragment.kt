@@ -15,15 +15,15 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.github.lemaki.core.home.HomeErrorType.*
+import com.github.lemaki.core.home.HomeInteractor
 import com.github.lemaki.notificoin.R
-import com.github.lemaki.notificoin.domain.home.HomeErrorType.*
-import com.github.lemaki.notificoin.domain.home.HomeInteractor
 import com.github.lemaki.notificoin.ui.alarmManager.NotifiCoinAlarmManager
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class HomeFragment : Fragment() {
+class HomeFragment: Fragment() {
     private val homeInteractor: HomeInteractor by inject()
     private val homeViewModel: HomeViewModel by viewModel()
     private val alarmManager: NotifiCoinAlarmManager by inject()

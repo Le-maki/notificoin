@@ -1,2 +1,5 @@
 include ':app'
 rootProject.name='NotifiCoin'
+include ':repository'
+include ':core'
+include ':logger'

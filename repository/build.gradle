@@ -1,0 +1,84 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion parent.ext.compileSdkVersion
+    defaultConfig {
+        minSdkVersion parent.ext.minSdkVersion
+        targetSdkVersion parent.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true"
+                ]
+            }
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation project(':logger')
+    implementation project(':core')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //Kotlin
+    implementation parent.ext.kotlinStdLib
+    implementation parent.ext.appCompat
+    implementation parent.ext.kotlinCore
+
+    // Jsoup
+    implementation parent.ext.jsoup
+
+    // Gson
+    implementation parent.ext.gson
+
+    // Tests
+    implementation parent.ext.junit
+    implementation  parent.ext.androidJunit
+    implementation  parent.ext.androidEspresso
+
+    // Room
+    implementation parent.ext.roomRuntime
+    kapt parent.ext.roomCompiler
+    annotationProcessor parent.ext.roomCompiler
+    kapt parent.ext.roomPersistenceCompiler
+    implementation parent.ext.roomKotlin
+    testImplementation parent.ext.roomTesting
+
+    // Koin
+    implementation parent.ext.koin
+    implementation parent.ext.koinViewmodel
+    implementation parent.ext.koinExt
+    implementation parent.ext.koinFragment
+
+    // Joda time
+    implementation parent.ext.jodaTime
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"

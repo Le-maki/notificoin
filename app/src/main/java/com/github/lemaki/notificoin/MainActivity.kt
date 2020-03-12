@@ -14,9 +14,9 @@ import com.facebook.flipper.plugins.inspector.InspectorFlipperPlugin
 import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.facebook.flipper.plugins.sharedpreferences.SharedPreferencesFlipperPlugin
 import com.facebook.soloader.SoLoader
-import com.github.lemaki.notificoin.data.sharedPreferences.SharedPreferencesRepository
+import com.github.lemaki.core.repository.SharedPreferencesRepository
+import com.github.lemaki.logger.NotifiCoinLogger
 import com.github.lemaki.notificoin.injection.*
-import com.github.lemaki.notificoin.logger.NotifiCoinLogger
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
