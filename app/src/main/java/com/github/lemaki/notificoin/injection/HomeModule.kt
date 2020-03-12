@@ -10,5 +10,12 @@ import org.koin.dsl.module
 val homeModule = module {
     single { HomeInteractor(get(), get(), get(), get()) }
     single<HomePresenter> { HomePresenterImpl(get(), get()) }
-    single { HomeViewModel(MutableLiveData(), MutableLiveData(), MutableLiveData()) }
+    single {
+        HomeViewModel(
+            MutableLiveData(),
+            MutableLiveData(),
+            MutableLiveData(),
+            MutableLiveData()
+        )
+    }
 }

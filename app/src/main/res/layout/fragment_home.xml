@@ -5,26 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/scrollViewHome"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scrollbars="none"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textHome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            tools:text="TEXT_HOME" />
-
-    </ScrollView>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:itemCount="5" />
 
     <ProgressBar
         android:id="@+id/progressBarHome"
@@ -35,5 +25,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="TEXT_HOME" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

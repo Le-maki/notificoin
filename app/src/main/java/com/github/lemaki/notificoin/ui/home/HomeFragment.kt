@@ -14,11 +14,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.github.lemaki.core.home.HomeErrorType.*
 import com.github.lemaki.core.home.HomeInteractor
 import com.github.lemaki.notificoin.R
 import com.github.lemaki.notificoin.ui.alarmManager.NotifiCoinAlarmManager
+import com.github.lemaki.notificoin.ui.home.searchesRecyclerView.SearchesAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,11 +36,20 @@ class HomeFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        bindViewModel()
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onStart() {
+        searchesRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    (layoutManager as LinearLayoutManager).orientation
+                )
+            )
+        }
+        bindViewModel()
         val context = requireContext()
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
         homeInteractor.onStart(
@@ -46,7 +58,7 @@ class HomeFragment: Fragment() {
             )
         )
         alarmManager.setAlarmManager()
-        super.onViewCreated(view, savedInstanceState)
+        super.onStart()
     }
 
     private fun bindViewModel() {
@@ -73,6 +85,12 @@ class HomeFragment: Fragment() {
                     homeViewModel.shouldShowBatteryWhiteListAlertDialog.value = false
                 }
             })
+        homeViewModel.searchList.observe(
+            this.viewLifecycleOwner,
+            Observer {
+                searchesRecyclerView.adapter = SearchesAdapter(it)
+            }
+        )
     }
 
     private fun hideProgressBar() {

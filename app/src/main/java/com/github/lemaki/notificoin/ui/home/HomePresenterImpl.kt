@@ -2,6 +2,7 @@ package com.github.lemaki.notificoin.ui.home
 
 import com.github.lemaki.core.ad.Ad
 import com.github.lemaki.core.home.HomeErrorType
+import com.github.lemaki.core.search.Search
 import com.github.lemaki.core.ui.home.HomePresenter
 import com.github.lemaki.notificoin.ui.ad.AdListToAdsListViewModelTransformer
 
@@ -31,5 +32,9 @@ class HomePresenterImpl(
 
     override fun presentBatteryWhitelistPermissionAlertDialog() {
         homeViewModel.shouldShowBatteryWhiteListAlertDialog.value = true
+    }
+
+    override fun presentSearches(searchList: List<Search>) {
+        homeViewModel.searchList.value = searchList
     }
 }
