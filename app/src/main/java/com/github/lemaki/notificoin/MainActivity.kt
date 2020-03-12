@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
+            stopKoin()
             startKoin {
                 androidLogger()
                 fragmentFactory()
@@ -83,10 +84,5 @@ class MainActivity : AppCompatActivity() {
             client.addPlugin(networkFlipperPlugin)
             client.start()
         }
-    }
-
-    override fun onStop() {
-        stopKoin()
-        super.onStop()
     }
 }
