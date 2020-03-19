@@ -24,11 +24,11 @@ import com.github.lemaki.notificoin.ui.alarmManager.NotifiCoinAlarmManager
 import com.github.lemaki.notificoin.ui.home.searchesRecyclerView.SearchesAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment: Fragment() {
     private val homeInteractor: HomeInteractor by inject()
-    private val homeViewModel: HomeViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by sharedViewModel()
     private val alarmManager: NotifiCoinAlarmManager by inject()
 
     override fun onCreateView(
@@ -53,9 +53,8 @@ class HomeFragment: Fragment() {
         val context = requireContext()
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
         homeInteractor.onStart(
-            powerManager != null && powerManager.isIgnoringBatteryOptimizations(
-                context.packageName
-            )
+            powerManager != null && powerManager.isIgnoringBatteryOptimizations(context.packageName),
+            homeViewModel.shouldShowBatteryWhiteListAlertDialog.value == false
         )
         alarmManager.setAlarmManager()
         super.onStart()
@@ -135,5 +134,4 @@ class HomeFragment: Fragment() {
         intent.action = Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
         startActivity(intent)
     }
-
 }

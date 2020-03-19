@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.github.lemaki.notificoin.R
 import kotlinx.android.synthetic.main.fragment_notifications.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class NotificationsFragment: Fragment() {
-    private val notificationsViewModel: NotificationsViewModel by viewModels()
+    private val notificationsViewModel: NotificationsViewModel by sharedViewModel()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

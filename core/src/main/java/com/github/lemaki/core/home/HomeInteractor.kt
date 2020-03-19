@@ -24,13 +24,14 @@ class HomeInteractor(
         "https://www.leboncoin.fr/recherche/?text=jeu%20switch&locations=Nantes__47.23898554566441_-1.5262136157260586_10000" to "Jeu Switch"
     )
 ) {
-    private var batteryPermissionWasAskedOnce = false
 
-    fun onStart(isBatteryWhiteListAlreadyGranted: Boolean) {
-        if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && !isBatteryWhiteListAlreadyGranted && !batteryPermissionWasAskedOnce
+    fun onStart(
+        isBatteryWhiteListAlreadyGranted: Boolean,
+        wasBatteryWhiteListDialogAlreadyShown: Boolean
+    ) {
+        if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && !isBatteryWhiteListAlreadyGranted && !wasBatteryWhiteListDialogAlreadyShown
         ) {
             homePresenter.presentBatteryWhitelistPermissionAlertDialog()
-            batteryPermissionWasAskedOnce = true
         }
         CoroutineScope(Dispatchers.IO).launch {
             try {
