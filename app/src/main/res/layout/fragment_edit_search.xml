@@ -6,12 +6,12 @@
     android:layout_margin="8dp">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView2"
+        android:id="@+id/editSearchTitleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/editSearchTitle"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/editText2"
+        app:layout_constraintBottom_toTopOf="@+id/editSearchTitleEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,42 +19,42 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/editSearchTitleEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/EditSearchTitleHint"
         android:importantForAutofill="no"
         android:inputType="textWebEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/materialTextView"
+        app:layout_constraintBottom_toTopOf="@+id/editSearchUrlTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView2" />
+        app:layout_constraintTop_toBottomOf="@+id/editSearchTitleTextView" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView"
+        android:id="@+id/editSearchUrlTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:text="@string/editSearchUrl"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintBottom_toTopOf="@+id/editSearchUrlEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/editSearchTitleEditText" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editSearchUrlEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/editSearchUrlHint"
         android:importantForAutofill="no"
-        android:inputType="textWebEmailAddress"
+        android:inputType="textUri"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/editSearchUrlTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

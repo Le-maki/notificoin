@@ -48,7 +48,8 @@ class MainActivity : AppCompatActivity() {
                         searchWithAdsModule,
                         detectNewAdsModule,
                         sharedPreferencesModule,
-                        adListModule
+                        adListModule,
+                        editSearchModule
                     )
                 )
             }

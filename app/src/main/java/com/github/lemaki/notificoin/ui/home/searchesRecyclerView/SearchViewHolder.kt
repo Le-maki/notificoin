@@ -8,6 +8,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.github.lemaki.core.search.Search
 import com.github.lemaki.notificoin.R
+import com.github.lemaki.notificoin.ui.home.HomeFragmentDirections
 
 class SearchViewHolder(inflater: LayoutInflater, parent: ViewGroup):
     RecyclerView.ViewHolder(
@@ -24,7 +25,13 @@ class SearchViewHolder(inflater: LayoutInflater, parent: ViewGroup):
         title.text = search.title
         button.setOnClickListener {
             Navigation.findNavController(itemView)
-                .navigate(R.id.action_navigation_home_to_navigation_edit_search)
+                .navigate(
+                    HomeFragmentDirections.editSearchAction(
+                        search.id,
+                        search.url,
+                        search.title
+                    )
+                )
         }
     }
 }

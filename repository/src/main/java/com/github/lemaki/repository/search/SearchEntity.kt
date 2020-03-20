@@ -10,7 +10,9 @@ import androidx.room.PrimaryKey
     indices = [Index(value = ["searchUrl"], unique = true)]
 )
 data class SearchEntity(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    val id: Int = 0,
     @ColumnInfo(name = "searchUrl")
     val searchUrl: String,
     @ColumnInfo(name = "searchTitle")

@@ -8,7 +8,7 @@ import com.github.lemaki.notificoin.ui.adList.AdListViewModel
 import org.koin.dsl.module
 
 val adListModule = module {
-    single { AdListInteractor(get(), get(), get()) }
+    single { AdListInteractor(get(), get()) }
     single<AdListPresenter> { AdListPresenterImpl(get(), get()) }
     single {
         AdListViewModel(

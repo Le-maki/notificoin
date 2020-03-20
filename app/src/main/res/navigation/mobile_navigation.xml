@@ -3,35 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home"
-    >
+    app:startDestination="@+id/navigation_home">
 
-    <fragment android:id="@+id/navigation_home"
+    <fragment
+        android:id="@+id/navigation_home"
         android:name="com.github.lemaki.notificoin.ui.home.HomeFragment"
         android:label="@string/titleHome"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_navigation_home_to_navigation_edit_search"
-            app:destination="@id/navigation_edit_search" />
+            android:id="@+id/editSearchAction"
+            app:destination="@id/editSearchFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_ad_list"
         android:name="com.github.lemaki.notificoin.ui.adList.AdListFragment"
         android:label="@string/titleAdList"
-        tools:layout="@layout/fragment_ad_list"
-        />
-
-    <fragment android:id="@+id/navigation_notifications"
-        android:name="com.github.lemaki.notificoin.ui.notifications.NotificationsFragment"
-        android:label="@string/titleNotifications"
-        tools:layout="@layout/fragment_notifications"
-        />
+        tools:layout="@layout/fragment_ad_list" />
 
     <fragment
-        android:id="@+id/navigation_edit_search"
+        android:id="@+id/navigation_notifications"
+        android:name="com.github.lemaki.notificoin.ui.notifications.NotificationsFragment"
+        android:label="@string/titleNotifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/editSearchFragment"
         android:name="com.github.lemaki.notificoin.ui.editSearch.EditSearchFragment"
         android:label="@string/titleEditSearch"
-        tools:layout="@layout/fragment_edit_search" />
+        tools:layout="@layout/fragment_edit_search">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+
+    </fragment>
 
 </navigation>

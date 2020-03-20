@@ -1,8 +1,6 @@
 package com.github.lemaki.core.adList
 
-import com.github.lemaki.core.repository.search.SearchRepository
 import com.github.lemaki.core.repository.searchWithAds.SearchWithAdsRepository
-import com.github.lemaki.core.search.Search
 import com.github.lemaki.core.ui.adList.AdListPresenter
 import com.github.lemaki.logger.NotifiCoinLogger
 import kotlinx.coroutines.CoroutineScope
@@ -15,20 +13,12 @@ import java.text.ParseException
 
 class AdListInteractor(
     private val adListPresenter: AdListPresenter,
-    private val searchRepository: SearchRepository,
-    private val searchWithAdsRepository: SearchWithAdsRepository,
-    private val searches: Map<String, String> = mapOf(
-        "https://www.leboncoin.fr/recherche/?category=2&locations=Nantes&regdate=2010-max" to "Voiture",
-        "https://www.leboncoin.fr/recherche/?text=jeu%20switch&locations=Nantes__47.23898554566441_-1.5262136157260586_10000" to "Jeu Switch"
-    )
+    private val searchWithAdsRepository: SearchWithAdsRepository
 ) {
 
     fun onStart() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                searches.forEach {
-                    searchRepository.addSearch(Search(it.key, it.value))
-                }
                 searchWithAdsRepository.updateAllSearchWithAds()
                 val searchWithAds = searchWithAdsRepository.getAllSortedSearchWithAds()
                 withContext(Dispatchers.Main) {

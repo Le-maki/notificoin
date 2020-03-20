@@ -30,13 +30,16 @@ class HomeInteractor(
             homePresenter.presentBatteryWhitelistPermissionAlertDialog()
         }
         CoroutineScope(Dispatchers.IO).launch {
+            var searchWithAds = searchWithAdsRepository.getAllSortedSearchWithAds()
+            if (searchWithAds.isEmpty()) {
                 searches.forEach {
-                    searchRepository.addSearch(Search(it.key, it.value))
+                    searchRepository.addSearch(Search(title = it.value, url = it.key))
                 }
-                val searchWithAds = searchWithAdsRepository.getAllSortedSearchWithAds()
-                withContext(Dispatchers.Main) {
-                    homePresenter.presentSearches(searchWithAds.map { it.search })
-                }
+                searchWithAds = searchWithAdsRepository.getAllSortedSearchWithAds()
+            }
+            withContext(Dispatchers.Main) {
+                homePresenter.presentSearches(searchWithAds.map { it.search })
+            }
         }
     }
 
