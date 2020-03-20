@@ -21,7 +21,7 @@ import com.github.lemaki.core.home.HomeErrorType.*
 import com.github.lemaki.core.home.HomeInteractor
 import com.github.lemaki.notificoin.R
 import com.github.lemaki.notificoin.ui.alarmManager.NotifiCoinAlarmManager
-import com.github.lemaki.notificoin.ui.home.searchesRecyclerView.SearchesAdapter
+import com.github.lemaki.notificoin.ui.home.searchesRecyclerView.SearchAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -87,7 +87,7 @@ class HomeFragment: Fragment() {
         homeViewModel.searchList.observe(
             this.viewLifecycleOwner,
             Observer {
-                searchesRecyclerView.adapter = SearchesAdapter(it)
+                searchesRecyclerView.adapter = SearchAdapter(it)
             }
         )
     }

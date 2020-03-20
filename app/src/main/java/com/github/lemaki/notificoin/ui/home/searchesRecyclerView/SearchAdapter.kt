@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.lemaki.core.search.Search
 
 
-class SearchesAdapter(private val searchList: List<Search>):
+class SearchAdapter(private val searchList: List<Search>):
     RecyclerView.Adapter<SearchViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         return SearchViewHolder(LayoutInflater.from(parent.context), parent)

@@ -17,14 +17,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="TITLE" />
 
-    <Button
+    <ImageButton
         android:id="@+id/searchItemButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:background="@color/primaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/searchItemTitle"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="EDIT" />
+        android:contentDescription="@string/editThisAd"
+        android:src="@drawable/ic_create_24px" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

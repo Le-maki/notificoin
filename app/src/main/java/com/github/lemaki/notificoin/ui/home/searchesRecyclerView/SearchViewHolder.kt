@@ -2,7 +2,7 @@ package com.github.lemaki.notificoin.ui.home.searchesRecyclerView
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -18,10 +18,7 @@ class SearchViewHolder(inflater: LayoutInflater, parent: ViewGroup):
         )
     ) {
     private var title: TextView = itemView.findViewById(R.id.searchItemTitle)
-    private var button: Button = itemView.findViewById(R.id.searchItemButton)
-
-    init {
-    }
+    private var button: ImageButton = itemView.findViewById(R.id.searchItemButton)
 
     fun bind(search: Search) {
         title.text = search.title

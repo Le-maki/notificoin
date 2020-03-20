@@ -13,4 +13,5 @@
     <string name="OK">OK</string>
     <string name="alertDialogStopAsking">Stop asking</string>
     <string name="alertDialogMaybeLater">Maybe later</string>
+    <string name="editThisAd">Edit this ad</string>
 </resources>
