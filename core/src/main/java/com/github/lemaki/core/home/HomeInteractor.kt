@@ -5,14 +5,10 @@ import com.github.lemaki.core.repository.search.SearchRepository
 import com.github.lemaki.core.repository.searchWithAds.SearchWithAdsRepository
 import com.github.lemaki.core.search.Search
 import com.github.lemaki.core.ui.home.HomePresenter
-import com.github.lemaki.logger.NotifiCoinLogger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
-import java.text.ParseException
 
 class HomeInteractor(
     private val homePresenter: HomePresenter,
@@ -34,38 +30,13 @@ class HomeInteractor(
             homePresenter.presentBatteryWhitelistPermissionAlertDialog()
         }
         CoroutineScope(Dispatchers.IO).launch {
-            try {
                 searches.forEach {
                     searchRepository.addSearch(Search(it.key, it.value))
                 }
-                searchWithAdsRepository.updateAllSearchWithAds()
                 val searchWithAds = searchWithAdsRepository.getAllSortedSearchWithAds()
                 withContext(Dispatchers.Main) {
-                    homePresenter.presentAdList(searchWithAds.map { it.ads }.flatten())
                     homePresenter.presentSearches(searchWithAds.map { it.search })
                 }
-            } catch (error: Exception) {
-                when (error) {
-                    is UnknownHostException, is SocketTimeoutException -> {
-                        NotifiCoinLogger.e("connection error getting ads:  $error ", error)
-                        withContext(Dispatchers.Main) {
-                            homePresenter.presentConnectionError()
-                        }
-                    }
-                    is ParseException, is IllegalStateException -> {
-                        NotifiCoinLogger.e("error parsing ads:  $error ", error)
-                        withContext(Dispatchers.Main) {
-                            homePresenter.presentParsingError()
-                        }
-                    }
-                    else -> {
-                        NotifiCoinLogger.e("unknown error:  $error ", error)
-                        withContext(Dispatchers.Main) {
-                            homePresenter.presentUnknownError()
-                        }
-                    }
-                }
-            }
         }
     }
 

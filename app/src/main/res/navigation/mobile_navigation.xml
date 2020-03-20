@@ -9,13 +9,17 @@
     <fragment android:id="@+id/navigation_home"
         android:name="com.github.lemaki.notificoin.ui.home.HomeFragment"
         android:label="@string/titleHome"
-        tools:layout="@layout/fragment_home"
-        />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_edit_search"
+            app:destination="@id/navigation_edit_search" />
+    </fragment>
 
-    <fragment android:id="@+id/navigation_dashboard"
-        android:name="com.github.lemaki.notificoin.ui.dashboard.DashboardFragment"
-        android:label="@string/titleDashboard"
-        tools:layout="@layout/fragment_dashboard"
+    <fragment
+        android:id="@+id/navigation_ad_list"
+        android:name="com.github.lemaki.notificoin.ui.adList.AdListFragment"
+        android:label="@string/titleAdList"
+        tools:layout="@layout/fragment_ad_list"
         />
 
     <fragment android:id="@+id/navigation_notifications"
@@ -23,4 +27,11 @@
         android:label="@string/titleNotifications"
         tools:layout="@layout/fragment_notifications"
         />
+
+    <fragment
+        android:id="@+id/navigation_edit_search"
+        android:name="com.github.lemaki.notificoin.ui.editSearch.EditSearchFragment"
+        android:label="@string/titleEditSearch"
+        tools:layout="@layout/fragment_edit_search" />
+
 </navigation>

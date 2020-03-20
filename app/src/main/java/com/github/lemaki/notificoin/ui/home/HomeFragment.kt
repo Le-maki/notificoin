@@ -11,13 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.github.lemaki.core.home.HomeErrorType.*
 import com.github.lemaki.core.home.HomeInteractor
 import com.github.lemaki.notificoin.R
 import com.github.lemaki.notificoin.ui.alarmManager.NotifiCoinAlarmManager
@@ -61,21 +59,6 @@ class HomeFragment: Fragment() {
     }
 
     private fun bindViewModel() {
-        homeViewModel.adListViewModel.observe(this.viewLifecycleOwner, Observer {
-            textHome?.text = it.text
-            hideProgressBar()
-        })
-        homeViewModel.errorType.observe(this.viewLifecycleOwner, Observer { homeErrorType ->
-            homeErrorType?.let {
-                val text = when (it) {
-                    CONNECTION -> getString(R.string.homeConnectionErrorMessage)
-                    PARSING -> getString(R.string.homeParsingErrorMessage)
-                    UNKNOWN -> getString(R.string.homeUnknownErrorMessage)
-                }
-                textHome?.text = text
-                hideProgressBar()
-            }
-        })
         homeViewModel.shouldShowBatteryWhiteListAlertDialog.observe(
             this.viewLifecycleOwner,
             Observer {
@@ -90,10 +73,6 @@ class HomeFragment: Fragment() {
                 searchesRecyclerView.adapter = SearchAdapter(it)
             }
         )
-    }
-
-    private fun hideProgressBar() {
-        progressBarHome?.isVisible = false
     }
 
     private fun presentBatteryWhitelistRequestAlertDialog() {

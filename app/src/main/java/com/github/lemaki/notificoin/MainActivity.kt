@@ -2,6 +2,7 @@ package com.github.lemaki.notificoin
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -46,7 +47,8 @@ class MainActivity : AppCompatActivity() {
                         alarmManagerModule,
                         searchWithAdsModule,
                         detectNewAdsModule,
-                        sharedPreferencesModule
+                        sharedPreferencesModule,
+                        adListModule
                     )
                 )
             }
@@ -58,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.navHostFragment)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_home, R.id.navigation_ad_list, R.id.navigation_notifications
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -84,5 +86,10 @@ class MainActivity : AppCompatActivity() {
             client.addPlugin(networkFlipperPlugin)
             client.start()
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return Navigation.findNavController(this, R.id.navHostFragment).navigateUp()
+                || super.onSupportNavigateUp()
     }
 }

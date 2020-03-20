@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.github.lemaki.core.search.Search
 import com.github.lemaki.notificoin.R
@@ -23,7 +23,8 @@ class SearchViewHolder(inflater: LayoutInflater, parent: ViewGroup):
     fun bind(search: Search) {
         title.text = search.title
         button.setOnClickListener {
-            Toast.makeText(itemView.context, "CLICKED", Toast.LENGTH_SHORT).show()
+            Navigation.findNavController(itemView)
+                .navigate(R.id.action_navigation_home_to_navigation_edit_search)
         }
     }
 }
