@@ -12,7 +12,8 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/editSearchAction"
-            app:destination="@id/editSearchFragment" />
+            app:destination="@id/editSearchFragment"
+            app:enterAnim="slide" />
     </fragment>
 
     <fragment

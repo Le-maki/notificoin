@@ -19,4 +19,5 @@
     <string name="editSearchTitle">Title</string>
     <string name="editSearchUrl">Url from Leboncoin</string>
     <string name="titleEditSearch">Edit your search</string>
+    <string name="editSearchSaveButton">save</string>
 </resources>

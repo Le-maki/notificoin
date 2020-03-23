@@ -2,15 +2,18 @@ package com.github.lemaki.notificoin.ui.editSearch
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.github.lemaki.core.EditSearchInteractor
 import com.github.lemaki.notificoin.R
+import com.github.lemaki.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,6 +38,20 @@ class EditSearchFragment: Fragment() {
                 }
             }
         findNavController().addOnDestinationChangedListener(onDestinationChangedListener)
+        editSearchUrlEditText.imeOptions = EditorInfo.IME_ACTION_DONE
+        editSearchUrlEditText.setRawInputType(InputType.TYPE_CLASS_TEXT)
+        editSearchUrlEditText.setOnEditorActionListener { _, editorAction, _ ->
+            when (editorAction) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    requireActivity().hideKeyboard()
+                    true
+                }
+                else -> false
+            }
+        }
+        editSearchSaveButton.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     override fun onCreateView(
@@ -58,6 +75,7 @@ class EditSearchFragment: Fragment() {
 
     private fun onNavigateUp() {
         CoroutineScope(Dispatchers.IO).launch {
+            requireActivity().hideKeyboard()
             editSearchInteractor.onNavigateUp(
                 editSearchFragmentArgs.id,
                 editSearchTitleEditText.text.toString(),
