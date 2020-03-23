@@ -9,8 +9,8 @@ class SearchDataSource(
         return searchDao.getAll().map { it.toSearch() }
     }
 
-    fun put(search: Search) {
-        searchDao.insertOrReplace(search.toEntity())
+    fun put(search: Search): Long {
+        return searchDao.insertOrReplace(search.toEntity())
     }
 
     fun deleteAll() {

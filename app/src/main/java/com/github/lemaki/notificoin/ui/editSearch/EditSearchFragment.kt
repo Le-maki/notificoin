@@ -18,13 +18,11 @@ import kotlinx.android.synthetic.main.fragment_edit_search.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
 
 
-class EditSearchFragment: Fragment() {
+class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor): Fragment() {
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
-    private val editSearchInteractor: EditSearchInteractor by inject()
-    lateinit var onDestinationChangedListener: OnDestinationChangedListener
+    private lateinit var onDestinationChangedListener: OnDestinationChangedListener
 
     override fun onStart() {
         super.onStart()
@@ -49,6 +47,8 @@ class EditSearchFragment: Fragment() {
                 else -> false
             }
         }
+        editSearchTitleEditText.text = Editable.Factory().newEditable(editSearchFragmentArgs.title)
+        editSearchUrlEditText.text = Editable.Factory().newEditable(editSearchFragmentArgs.url)
         editSearchSaveButton.setOnClickListener {
             requireActivity().onBackPressed()
         }
@@ -60,12 +60,6 @@ class EditSearchFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_edit_search, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        editSearchTitleEditText.text = Editable.Factory().newEditable(editSearchFragmentArgs.title)
-        editSearchUrlEditText.text = Editable.Factory().newEditable(editSearchFragmentArgs.url)
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onPause() {

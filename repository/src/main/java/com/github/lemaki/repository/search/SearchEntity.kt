@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "search",
-    indices = [Index(value = ["searchUrl"], unique = true)]
+    indices = [Index(value = ["id"], unique = true)]
 )
 data class SearchEntity(
     @PrimaryKey(autoGenerate = true)

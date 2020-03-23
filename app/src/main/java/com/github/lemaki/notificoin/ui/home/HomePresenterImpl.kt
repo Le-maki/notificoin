@@ -6,11 +6,17 @@ import com.github.lemaki.core.ui.home.HomePresenter
 class HomePresenterImpl(
     private val homeViewModel: HomeViewModel
 ): HomePresenter {
+    lateinit var homeDisplay: HomeDisplay
+
     override fun presentBatteryWhitelistPermissionAlertDialog() {
         homeViewModel.shouldShowBatteryWhiteListAlertDialog.value = true
     }
 
-    override fun presentSearches(searchList: List<Search>) {
+    override fun presentSearches(searchList: MutableList<Search>) {
         homeViewModel.searchList.value = searchList
+    }
+
+    override fun presentEditSearchScreen(id: Int, url: String, title: String) {
+        homeDisplay.displayEditAdScreen(id, url, title)
     }
 }

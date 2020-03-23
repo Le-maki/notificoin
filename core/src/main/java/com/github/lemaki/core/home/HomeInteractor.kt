@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class HomeInteractor(
-    private val homePresenter: HomePresenter,
+    val homePresenter: HomePresenter,
     private val searchRepository: SearchRepository,
     private val searchWithAdsRepository: SearchWithAdsRepository,
     private val sharedPreferencesRepository: SharedPreferencesRepository,
@@ -38,12 +38,23 @@ class HomeInteractor(
                 searchWithAds = searchWithAdsRepository.getAllSortedSearchWithAds()
             }
             withContext(Dispatchers.Main) {
-                homePresenter.presentSearches(searchWithAds.map { it.search })
+                homePresenter.presentSearches(searchWithAds.map { it.search }.toMutableList())
             }
         }
     }
 
     fun onBatteryWhiteListAlertDialogNeutralButtonPressed() {
         sharedPreferencesRepository.shouldShowBatteryWhiteListDialog = false
+    }
+
+    fun onCreateAdButtonPressed() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val url = ""
+            val title = ""
+            val id = searchRepository.addSearch(Search(url = url, title = title))
+            withContext(Dispatchers.Main) {
+                homePresenter.presentEditSearchScreen(id.toInt(), url, title)
+            }
+        }
     }
 }

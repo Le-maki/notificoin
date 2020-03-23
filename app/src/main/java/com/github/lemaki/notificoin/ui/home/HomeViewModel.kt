@@ -6,5 +6,5 @@ import com.github.lemaki.core.search.Search
 
 data class HomeViewModel(
     val shouldShowBatteryWhiteListAlertDialog: MutableLiveData<Boolean>,
-    val searchList: MutableLiveData<List<Search>>
+    val searchList: MutableLiveData<MutableList<Search>>
 ): ViewModel()

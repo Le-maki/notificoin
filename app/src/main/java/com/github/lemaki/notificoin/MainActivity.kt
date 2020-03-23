@@ -21,12 +21,13 @@ import com.github.lemaki.notificoin.injection.*
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.fragment.android.setupKoinFragmentFactory
 import org.koin.androidx.fragment.koin.fragmentFactory
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.error.KoinAppAlreadyStartedException
 
-class MainActivity : AppCompatActivity() {
+class MainActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                 androidContext(this@MainActivity)
                 modules(
                     listOf(
+                        fragmentModule,
                         homeModule,
                         databaseModule,
                         adModule,
@@ -49,13 +51,15 @@ class MainActivity : AppCompatActivity() {
                         detectNewAdsModule,
                         sharedPreferencesModule,
                         adListModule,
-                        editSearchModule
+                        editSearchModule,
+                        searchesRecyclerViewModule
                     )
                 )
             }
         } catch (exception: KoinAppAlreadyStartedException) {
             NotifiCoinLogger.i(this.applicationContext.resources.getString(R.string.koinAlreadyStarted))
         }
+        setupKoinFragmentFactory()
 
         setContentView(R.layout.activity_main)
         val navController = findNavController(R.id.navHostFragment)

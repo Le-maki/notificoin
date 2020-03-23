@@ -11,13 +11,11 @@ import com.github.lemaki.core.adList.AdListErrorType.*
 import com.github.lemaki.core.adList.AdListInteractor
 import com.github.lemaki.notificoin.R
 import kotlinx.android.synthetic.main.fragment_ad_list.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class AdListFragment: Fragment() {
+class AdListFragment(private val adListInteractor: AdListInteractor): Fragment() {
 
     private val adListViewModel: AdListViewModel by sharedViewModel()
-    private val adListInteractor: AdListInteractor by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
