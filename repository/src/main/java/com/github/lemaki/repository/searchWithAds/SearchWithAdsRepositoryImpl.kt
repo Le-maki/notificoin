@@ -4,6 +4,7 @@ import com.github.lemaki.core.SearchWithAds
 import com.github.lemaki.core.ad.Ad
 import com.github.lemaki.core.repository.search.SearchRepository
 import com.github.lemaki.core.repository.searchWithAds.SearchWithAdsRepository
+import com.github.lemaki.core.search.Search
 import com.github.lemaki.repository.ad.AdRepository
 
 class SearchWithAdsRepositoryImpl(
@@ -35,5 +36,10 @@ class SearchWithAdsRepositoryImpl(
             adRepository.putAll(it.ads, it.search.url)
         }
 
+    }
+
+    override fun delete(search: Search) {
+        searchRepository.delete(search)
+        adRepository.delete(adRepository.getAds(search.url))
     }
 }

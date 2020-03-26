@@ -21,6 +21,7 @@ import com.github.lemaki.core.search.Search
 import com.github.lemaki.notificoin.R
 import com.github.lemaki.notificoin.ui.alarmManager.NotifiCoinAlarmManager
 import com.github.lemaki.notificoin.ui.home.searchesRecyclerView.SearchAdapter
+import com.github.lemaki.notificoin.ui.home.searchesRecyclerView.SearchAdapterListener
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -79,6 +80,11 @@ class HomeFragment(
 
     private fun createRecyclerView(searchList: MutableList<Search>) {
         adapter.searchList = searchList
+        adapter.searchAdapterListener = object: SearchAdapterListener {
+            override fun onSearchDeleted(search: Search) {
+                homeInteractor.onSearchDeleted(search)
+            }
+        }
         homeFragmentSearchesRecyclerView.adapter = adapter
         adapter.touchHelper.attachToRecyclerView(homeFragmentSearchesRecyclerView)
     }

@@ -14,6 +14,7 @@ class SearchAdapter(
     RecyclerView.Adapter<SearchViewHolder>(), ActionCompletion {
     lateinit var searchList: MutableList<Search>
     val touchHelper: ItemTouchHelper = ItemTouchHelper(swipeAndDragHelper)
+    lateinit var searchAdapterListener: SearchAdapterListener
 
     init {
         swipeAndDragHelper.actionCompletion = this
@@ -45,8 +46,9 @@ class SearchAdapter(
     }
 
     override fun onViewSwiped(position: Int) {
-        searchList.removeAt(position)
+        val removedSearch = searchList.removeAt(position)
+        searchAdapterListener.onSearchDeleted(removedSearch)
         notifyItemRemoved(position)
-        notifyItemRangeChanged(position, itemCount)
+        notifyItemRangeChanged(position, itemCount - position)
     }
 }

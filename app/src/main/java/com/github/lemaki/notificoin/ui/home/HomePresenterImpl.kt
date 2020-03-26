@@ -13,7 +13,9 @@ class HomePresenterImpl(
     }
 
     override fun presentSearches(searchList: MutableList<Search>) {
-        homeViewModel.searchList.value = searchList
+        if (homeViewModel.searchList.value != searchList) {
+            homeViewModel.searchList.value = searchList
+        }
     }
 
     override fun presentEditSearchScreen(id: Int, url: String, title: String) {

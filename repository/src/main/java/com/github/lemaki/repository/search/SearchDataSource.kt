@@ -20,4 +20,8 @@ class SearchDataSource(
     fun update(id: Int, url: String, title: String) {
         searchDao.updateSearch(id, url, title)
     }
+
+    fun delete(id: Int) {
+        searchDao.removeSearch(id)
+    }
 }

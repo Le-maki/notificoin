@@ -49,12 +49,18 @@ class HomeInteractor(
 
     fun onCreateAdButtonPressed() {
         CoroutineScope(Dispatchers.IO).launch {
-            val url = ""
-            val title = ""
+            val url = searches.toList()[0].first
+            val title = searches.toList()[0].second
             val id = searchRepository.addSearch(Search(url = url, title = title))
             withContext(Dispatchers.Main) {
                 homePresenter.presentEditSearchScreen(id.toInt(), url, title)
             }
+        }
+    }
+
+    fun onSearchDeleted(deletedSearch: Search) {
+        CoroutineScope(Dispatchers.IO).launch {
+            searchWithAdsRepository.delete(deletedSearch)
         }
     }
 }

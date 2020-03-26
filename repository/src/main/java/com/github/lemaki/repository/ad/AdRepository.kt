@@ -46,4 +46,11 @@ class AdRepository(
     }
 
     fun deleteAll() = adDataSource.deleteAll()
+    fun delete(ads: List<Ad>) {
+        adDataSource.delete(ads)
+    }
+
+    fun getAds(url: String): List<Ad> {
+        return adDataSource.getAds(url)
+    }
 }

@@ -10,4 +10,7 @@ class SearchRepositoryImpl(private val searchDataSource: SearchDataSource):
     override fun updateSearch(id: Int, url: String, title: String) =
         searchDataSource.update(id, url, title)
     override fun deleteAll() = searchDataSource.deleteAll()
+    override fun delete(search: Search) {
+        searchDataSource.delete(search.id)
+    }
 }
