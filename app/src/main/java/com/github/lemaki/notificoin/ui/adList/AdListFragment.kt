@@ -22,10 +22,13 @@ class AdListFragment(private val adListInteractor: AdListInteractor): Fragment()
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_ad_list, container, false)
-        adListInteractor.onStart()
+        return inflater.inflate(R.layout.fragment_ad_list, container, false)
+    }
+
+    override fun onStart() {
         bindViewModel()
-        return root
+        adListInteractor.onStart()
+        super.onStart()
     }
 
     private fun bindViewModel() {

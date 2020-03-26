@@ -31,6 +31,7 @@ class HomeFragment(
     private val adapter: SearchAdapter
 ): Fragment(), HomeDisplay {
     private val homeViewModel: HomeViewModel by sharedViewModel()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,9 +51,9 @@ class HomeFragment(
         homeFragmentCreateAdButton.setOnClickListener {
             homeInteractor.onCreateAdButtonPressed()
         }
-        bindViewModel()
         val context = requireContext()
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
+        bindViewModel()
         homeInteractor.onStart(
             powerManager != null && powerManager.isIgnoringBatteryOptimizations(context.packageName),
             homeViewModel.shouldShowBatteryWhiteListAlertDialog.value == false
