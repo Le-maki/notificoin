@@ -26,7 +26,7 @@ class AdListPresenterImpl(
     }
 
     override fun presentAdList(adList: List<Ad>) {
-        adListViewModel.adListViewModel.value = adsListViewModelTransformer.transform(adList)
+        adListViewModel.adListTextViewModel.value = adsListViewModelTransformer.transform(adList)
     }
 
 }

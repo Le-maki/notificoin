@@ -6,17 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.github.lemaki.core.adList.AdListErrorType.*
 import com.github.lemaki.core.adList.AdListInteractor
 import com.github.lemaki.notificoin.R
+import com.github.lemaki.notificoin.ui.home.ResumedStateOnlyObserver
 import kotlinx.android.synthetic.main.fragment_ad_list.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdListFragment(private val adListInteractor: AdListInteractor): Fragment() {
 
-    private val adListViewModel: AdListViewModel by sharedViewModel()
-
+    private val adListViewModel: AdListViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,21 +31,25 @@ class AdListFragment(private val adListInteractor: AdListInteractor): Fragment()
     }
 
     private fun bindViewModel() {
-        adListViewModel.adListViewModel.observe(this.viewLifecycleOwner, Observer {
-            textAdsFragment?.text = it.text
-            hideProgressBar()
-        })
-        adListViewModel.errorType.observe(this.viewLifecycleOwner, Observer { adListErrorType ->
-            adListErrorType?.let {
-                val text = when (it) {
-                    CONNECTION -> getString(R.string.adListConnectionErrorMessage)
-                    PARSING -> getString(R.string.adListParsingErrorMessage)
-                    UNKNOWN -> getString(R.string.adListUnknownErrorMessage)
-                }
-                textAdsFragment?.text = text
+        adListViewModel.adListTextViewModel.observe(
+            this.viewLifecycleOwner,
+            ResumedStateOnlyObserver(this.viewLifecycleOwner) {
+                textAdsFragment?.text = it.text
                 hideProgressBar()
-            }
-        })
+            })
+        adListViewModel.errorType.observe(
+            this.viewLifecycleOwner,
+            ResumedStateOnlyObserver(this.viewLifecycleOwner) { adListErrorType ->
+                adListErrorType?.let {
+                    val text = when (it) {
+                        CONNECTION -> getString(R.string.adListConnectionErrorMessage)
+                        PARSING -> getString(R.string.adListParsingErrorMessage)
+                        UNKNOWN -> getString(R.string.adListUnknownErrorMessage)
+                    }
+                    textAdsFragment?.text = text
+                    hideProgressBar()
+                }
+            })
     }
 
     private fun hideProgressBar() {
