@@ -49,7 +49,8 @@ class MainActivity: AppCompatActivity() {
                         sharedPreferencesModule,
                         adListModule,
                         editSearchModule,
-                        searchesRecyclerViewModule
+                        searchesRecyclerViewModule,
+                        searchPositionModule
                     )
                 )
             }

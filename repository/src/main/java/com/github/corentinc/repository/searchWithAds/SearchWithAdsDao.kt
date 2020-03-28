@@ -10,6 +10,7 @@ abstract class SearchWithAdsDao {
     @Query("SELECT * FROM search")
     abstract fun getAllSearchWithAds(): List<SearchWithAdsEntity>
 
+    @Transaction
     @Query("SELECT * FROM search WHERE id = :id ")
     abstract fun getSearchWithAds(id: Int): SearchWithAdsEntity
 }

@@ -6,7 +6,6 @@ import com.github.corentinc.repository.dao.BaseDao
 
 @Dao
 abstract class SearchDao: BaseDao<SearchEntity>() {
-
     @Query("SELECT * FROM search WHERE id = :id")
     abstract fun getSearch(id: Int): SearchEntity
 

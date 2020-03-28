@@ -9,10 +9,12 @@ import com.github.corentinc.repository.ad.AdEntity
 import com.github.corentinc.repository.ad.AdTypeConverter
 import com.github.corentinc.repository.search.SearchDao
 import com.github.corentinc.repository.search.SearchEntity
+import com.github.corentinc.repository.searchPosition.SearchPositionDao
+import com.github.corentinc.repository.searchPosition.SearchPositionEntity
 import com.github.corentinc.repository.searchWithAds.SearchWithAdsDao
 
 @Database(
-    entities = [AdEntity::class, SearchEntity::class],
+    entities = [AdEntity::class, SearchEntity::class, SearchPositionEntity::class],
     version = 1,
     exportSchema = true
 )
@@ -28,4 +30,5 @@ abstract class NotifiCoinDataBase: RoomDatabase() {
     abstract fun adDao(): AdDao
     abstract fun searchDao(): SearchDao
     abstract fun searchWithAdsDao(): SearchWithAdsDao
+    abstract fun searchPositionDao(): SearchPositionDao
 }
