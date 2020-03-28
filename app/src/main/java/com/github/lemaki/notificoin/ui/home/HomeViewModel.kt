@@ -1,10 +1,10 @@
 package com.github.lemaki.notificoin.ui.home
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.lemaki.core.search.Search
+import com.github.lemaki.notificoin.ui.SingleLiveEvent
 
 data class HomeViewModel(
-    val shouldShowBatteryWhiteListAlertDialog: MutableLiveData<Boolean>,
-    val searchList: MutableLiveData<MutableList<Search>>
+    val shouldShowBatteryWhiteListAlertDialog: SingleLiveEvent<Boolean>,
+    val searchList: SingleLiveEvent<MutableList<Search>>
 ): ViewModel()

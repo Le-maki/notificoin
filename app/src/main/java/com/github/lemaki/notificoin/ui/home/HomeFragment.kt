@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -64,7 +65,7 @@ class HomeFragment(
     private fun bindViewModel() {
         homeViewModel.shouldShowBatteryWhiteListAlertDialog.observe(
             this.viewLifecycleOwner,
-            ResumedStateOnlyObserver(this.viewLifecycleOwner) {
+            Observer {
                 if (it) {
                     presentBatteryWhitelistRequestAlertDialog()
                     homeViewModel.shouldShowBatteryWhiteListAlertDialog.value = false
@@ -72,7 +73,7 @@ class HomeFragment(
             })
         homeViewModel.searchList.observe(
             this.viewLifecycleOwner,
-            ResumedStateOnlyObserver(this.viewLifecycleOwner) {
+            Observer {
                 createRecyclerView(it)
             }
         )

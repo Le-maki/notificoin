@@ -24,15 +24,12 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.android.setupKoinFragmentFactory
 import org.koin.androidx.fragment.koin.fragmentFactory
 import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.core.error.KoinAppAlreadyStartedException
 
 class MainActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
-            stopKoin()
             startKoin {
                 androidLogger()
                 fragmentFactory()
@@ -56,7 +53,7 @@ class MainActivity: AppCompatActivity() {
                     )
                 )
             }
-        } catch (exception: KoinAppAlreadyStartedException) {
+        } catch (exception: IllegalStateException) {
             NotifiCoinLogger.i(this.applicationContext.resources.getString(R.string.koinAlreadyStarted))
         }
         setupKoinFragmentFactory()

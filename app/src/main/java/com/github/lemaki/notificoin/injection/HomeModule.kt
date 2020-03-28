@@ -1,8 +1,8 @@
 package com.github.lemaki.notificoin.injection
 
-import androidx.lifecycle.MutableLiveData
 import com.github.lemaki.core.home.HomeInteractor
 import com.github.lemaki.core.ui.home.HomePresenter
+import com.github.lemaki.notificoin.ui.SingleLiveEvent
 import com.github.lemaki.notificoin.ui.home.HomePresenterImpl
 import com.github.lemaki.notificoin.ui.home.HomeViewModel
 import org.koin.dsl.module
@@ -12,8 +12,8 @@ val homeModule = module {
     single<HomePresenter> { HomePresenterImpl(get()) }
     single {
         HomeViewModel(
-            MutableLiveData(),
-            MutableLiveData()
+            SingleLiveEvent(),
+            SingleLiveEvent()
         )
     }
 }

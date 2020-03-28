@@ -14,8 +14,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.koin.fragmentFactory
 import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.core.error.KoinAppAlreadyStartedException
 import org.koin.core.parameter.parametersOf
 
 class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
@@ -24,7 +22,6 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
 
     override fun onHandleWork(intent: Intent) {
         try {
-            stopKoin()
             startKoin {
                 androidLogger()
                 fragmentFactory()
@@ -44,7 +41,7 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
                     )
                 )
             }
-        } catch (exception: KoinAppAlreadyStartedException) {
+        } catch (exception: IllegalStateException) {
             NotifiCoinLogger.i(getString(R.string.koinAlreadyStarted))
         }
         detectNewAdsInteractor.onServiceStarted()
