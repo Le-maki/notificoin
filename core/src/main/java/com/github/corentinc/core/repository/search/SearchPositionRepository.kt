@@ -10,4 +10,5 @@ interface SearchPositionRepository {
     fun updateSearchPosition(searchId: Int, position: Int)
     fun deleteAll()
     fun delete(searchId: Int)
+    fun swap(searchIdPair: Pair<Int, Int>)
 }

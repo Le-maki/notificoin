@@ -4,17 +4,17 @@ import com.github.corentinc.core.SearchAdsPosition
 import com.github.corentinc.core.ad.Ad
 import com.github.corentinc.core.repository.search.SearchPositionRepository
 import com.github.corentinc.core.repository.search.SearchRepository
-import com.github.corentinc.core.repository.searchWithAds.SearchAdsRepository
+import com.github.corentinc.core.repository.searchWithAds.SearchAdsPositionRepository
 import com.github.corentinc.core.search.Search
 import com.github.corentinc.repository.ad.AdRepository
 
-class SearchAdsPositionRepositoryImpl(
+class SearchAdsPositionPositionRepositoryImpl(
     private val searchAdsPositionDataSource: SearchAdsPositionDataSource,
     private val searchRepository: SearchRepository,
     private val adRepository: AdRepository,
     private val searchPositionRepository: SearchPositionRepository,
     private val adComparator: Comparator<Ad>
-): SearchAdsRepository {
+): SearchAdsPositionRepository {
     override fun getAllSortedSearchAdsPosition() =
         searchAdsPositionDataSource.getAllSearchAdsPosition().map {
         it.copy(ads = it.ads.sortedWith(adComparator))

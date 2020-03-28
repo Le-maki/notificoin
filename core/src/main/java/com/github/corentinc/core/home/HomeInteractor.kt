@@ -1,8 +1,10 @@
 package com.github.corentinc.core.home
 
+import com.github.corentinc.core.SearchAdsPosition
 import com.github.corentinc.core.repository.SharedPreferencesRepository
+import com.github.corentinc.core.repository.search.SearchPositionRepository
 import com.github.corentinc.core.repository.search.SearchRepository
-import com.github.corentinc.core.repository.searchWithAds.SearchAdsRepository
+import com.github.corentinc.core.repository.searchWithAds.SearchAdsPositionRepository
 import com.github.corentinc.core.search.Search
 import com.github.corentinc.core.ui.home.HomePresenter
 import kotlinx.coroutines.CoroutineScope
@@ -13,7 +15,8 @@ import kotlinx.coroutines.withContext
 class HomeInteractor(
     val homePresenter: HomePresenter,
     private val searchRepository: SearchRepository,
-    private val searchAdsRepository: SearchAdsRepository,
+    private val searchPositionRepository: SearchPositionRepository,
+    private val searchAdsPositionRepository: SearchAdsPositionRepository,
     private val sharedPreferencesRepository: SharedPreferencesRepository,
     private val searches: Map<String, String> = mapOf(
         "https://www.leboncoin.fr/recherche/?category=2&locations=Nantes&regdate=2010-max" to "Voiture",
@@ -30,15 +33,15 @@ class HomeInteractor(
             homePresenter.presentBatteryWhitelistPermissionAlertDialog()
         }
         CoroutineScope(Dispatchers.IO).launch {
-            var searchWithAds = searchAdsRepository.getAllSortedSearchAdsPosition()
+            var searchWithAds = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
             if (searchWithAds.isEmpty()) {
                 searches.forEach {
                     searchRepository.addSearch(Search(title = it.value, url = it.key))
                 }
-                searchWithAds = searchAdsRepository.getAllSortedSearchAdsPosition()
+                searchWithAds = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
             }
             withContext(Dispatchers.Main) {
-                homePresenter.presentSearches(searchWithAds.map { it.search }.toMutableList())
+                homePresenter.presentSearches(searchWithAds.toMutableList())
             }
         }
     }
@@ -58,9 +61,15 @@ class HomeInteractor(
         }
     }
 
-    fun onSearchDeleted(deletedSearch: Search) {
+    fun onSearchDeleted(searchAdsPosition: SearchAdsPosition) {
         CoroutineScope(Dispatchers.IO).launch {
-            searchAdsRepository.delete(deletedSearch)
+            searchAdsPositionRepository.delete(searchAdsPosition.search)
+        }
+    }
+
+    fun onSearchMoved(searchIdPair: Pair<Int, Int>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            searchPositionRepository.swap(searchIdPair)
         }
     }
 }

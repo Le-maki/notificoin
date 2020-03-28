@@ -5,14 +5,14 @@ import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.github.corentinc.core.search.Search
+import com.github.corentinc.core.SearchAdsPosition
 import kotlinx.android.synthetic.main.searches_recyclerview_item.view.*
 
 class SearchAdapter(
     swipeAndDragHelper: SwipeAndDragHelper
 ):
     RecyclerView.Adapter<SearchViewHolder>(), ActionCompletion {
-    lateinit var searchList: MutableList<Search>
+    lateinit var searchAdsPositionList: MutableList<SearchAdsPosition>
     val touchHelper: ItemTouchHelper = ItemTouchHelper(swipeAndDragHelper)
     lateinit var searchAdapterListener: SearchAdapterListener
 
@@ -25,7 +25,7 @@ class SearchAdapter(
     }
 
     override fun getItemCount(): Int {
-        return searchList.size
+        return searchAdsPositionList.size
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
@@ -35,18 +35,20 @@ class SearchAdapter(
             }
             false
         }
-        holder.bind(searchList[position])
+        holder.bind(searchAdsPositionList[position])
     }
 
     override fun onViewMoved(oldPosition: Int, newPosition: Int) {
-        val targetSearch: Search = searchList[oldPosition]
-        searchList.removeAt(oldPosition)
-        searchList.add(newPosition, targetSearch)
+        val movedSearch: SearchAdsPosition = searchAdsPositionList[oldPosition]
+        val replacedSearch = searchAdsPositionList[newPosition]
+        searchAdapterListener.onSearchMoved(Pair(movedSearch.search.id, replacedSearch.search.id))
+        searchAdsPositionList.removeAt(oldPosition)
+        searchAdsPositionList.add(newPosition, movedSearch)
         notifyItemMoved(oldPosition, newPosition)
     }
 
     override fun onViewSwiped(position: Int) {
-        val removedSearch = searchList.removeAt(position)
+        val removedSearch = searchAdsPositionList.removeAt(position)
         searchAdapterListener.onSearchDeleted(removedSearch)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, itemCount - position)

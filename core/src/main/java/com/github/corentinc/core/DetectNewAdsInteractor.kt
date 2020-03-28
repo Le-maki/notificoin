@@ -1,7 +1,7 @@
 package com.github.corentinc.core
 
 import com.github.corentinc.core.ad.Ad
-import com.github.corentinc.core.repository.searchWithAds.SearchAdsRepository
+import com.github.corentinc.core.repository.searchWithAds.SearchAdsPositionRepository
 import com.github.corentinc.core.ui.detectNewAds.DetectNewAdsPresenter
 import com.github.corentinc.logger.NotifiCoinLogger
 import kotlinx.coroutines.CoroutineScope
@@ -11,15 +11,17 @@ import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
 
 class DetectNewAdsInteractor(
-    private val searchAdsRepository: SearchAdsRepository,
+    private val searchAdsPositionRepository: SearchAdsPositionRepository,
     private val detectNewAdsPresenter: DetectNewAdsPresenter
 ) {
 
     fun onServiceStarted() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val remoteSearchWithAdsList = searchAdsRepository.getRemoteSortedSearchAdsPosition()
-                val localSearchWithAdsList = searchAdsRepository.getAllSortedSearchAdsPosition()
+                val remoteSearchWithAdsList =
+                    searchAdsPositionRepository.getRemoteSortedSearchAdsPosition()
+                val localSearchWithAdsList =
+                    searchAdsPositionRepository.getAllSortedSearchAdsPosition()
                 if (remoteSearchWithAdsList == localSearchWithAdsList) {
                     NotifiCoinLogger.i("AlarmManager didn't found new ads")
                 } else {
@@ -32,7 +34,7 @@ class DetectNewAdsInteractor(
                         }
                     }
                 }
-                searchAdsRepository.replaceAll(remoteSearchWithAdsList)
+                searchAdsPositionRepository.replaceAll(remoteSearchWithAdsList)
             } catch (exception: Exception) {
                 NotifiCoinLogger.e("Alarm Manager couldn't check new ads or send notifications $exception")
                 detectNewAdsPresenter.presentBigtextNotification(

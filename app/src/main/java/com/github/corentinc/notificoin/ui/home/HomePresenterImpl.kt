@@ -1,6 +1,6 @@
 package com.github.corentinc.notificoin.ui.home
 
-import com.github.corentinc.core.search.Search
+import com.github.corentinc.core.SearchAdsPosition
 import com.github.corentinc.core.ui.home.HomePresenter
 
 class HomePresenterImpl(
@@ -12,8 +12,8 @@ class HomePresenterImpl(
         homeViewModel.shouldShowBatteryWhiteListAlertDialog.value = true
     }
 
-    override fun presentSearches(searchList: MutableList<Search>) {
-        homeViewModel.searchList.value = searchList
+    override fun presentSearches(searchAdsPosition: MutableList<SearchAdsPosition>) {
+        homeViewModel.searchAdsPositionList.value = searchAdsPosition
     }
 
     override fun presentEditSearchScreen(id: Int, url: String, title: String) {

@@ -16,8 +16,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.github.corentinc.core.SearchAdsPosition
 import com.github.corentinc.core.home.HomeInteractor
-import com.github.corentinc.core.search.Search
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.alarmManager.NotifiCoinAlarmManager
 import com.github.corentinc.notificoin.ui.home.searchesRecyclerView.SearchAdapter
@@ -71,7 +71,7 @@ class HomeFragment(
                     homeViewModel.shouldShowBatteryWhiteListAlertDialog.value = false
                 }
             })
-        homeViewModel.searchList.observe(
+        homeViewModel.searchAdsPositionList.observe(
             this.viewLifecycleOwner,
             Observer {
                 createRecyclerView(it)
@@ -79,11 +79,15 @@ class HomeFragment(
         )
     }
 
-    private fun createRecyclerView(searchList: MutableList<Search>) {
-        adapter.searchList = searchList
+    private fun createRecyclerView(searchList: MutableList<SearchAdsPosition>) {
+        adapter.searchAdsPositionList = searchList
         adapter.searchAdapterListener = object: SearchAdapterListener {
-            override fun onSearchDeleted(search: Search) {
-                homeInteractor.onSearchDeleted(search)
+            override fun onSearchDeleted(searchAdsPosition: SearchAdsPosition) {
+                homeInteractor.onSearchDeleted(searchAdsPosition)
+            }
+
+            override fun onSearchMoved(searchIdPair: Pair<Int, Int>) {
+                homeInteractor.onSearchMoved(searchIdPair)
             }
         }
         homeFragmentSearchesRecyclerView.adapter = adapter

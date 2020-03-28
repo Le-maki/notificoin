@@ -1,7 +1,8 @@
 package com.github.corentinc.notificoin.ui.home.searchesRecyclerView
 
-import com.github.corentinc.core.search.Search
+import com.github.corentinc.core.SearchAdsPosition
 
 interface SearchAdapterListener {
-    fun onSearchDeleted(search: Search)
+    fun onSearchDeleted(searchAdsPosition: SearchAdsPosition)
+    fun onSearchMoved(searchIdPair: Pair<Int, Int>)
 }
