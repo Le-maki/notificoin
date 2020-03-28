@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.github.lemaki.notificoin.ui.home.HomeFragment"
+        android:name="com.github.corentinc.notificoin.ui.home.HomeFragment"
         android:label="@string/titleHome"
         tools:layout="@layout/fragment_home">
         <action
@@ -17,19 +17,19 @@
 
     <fragment
         android:id="@+id/navigation_ad_list"
-        android:name="com.github.lemaki.notificoin.ui.adList.AdListFragment"
+        android:name="com.github.corentinc.notificoin.ui.adList.AdListFragment"
         android:label="@string/titleAdList"
         tools:layout="@layout/fragment_ad_list" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.github.lemaki.notificoin.ui.notifications.NotificationsFragment"
+        android:name="com.github.corentinc.notificoin.ui.notifications.NotificationsFragment"
         android:label="@string/titleNotifications"
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/editSearchFragment"
-        android:name="com.github.lemaki.notificoin.ui.editSearch.EditSearchFragment"
+        android:name="com.github.corentinc.notificoin.ui.editSearch.EditSearchFragment"
         android:label="@string/titleEditSearch"
         tools:layout="@layout/fragment_edit_search">
         <argument

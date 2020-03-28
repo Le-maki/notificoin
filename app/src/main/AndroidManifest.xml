@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.github.corentinc.notificoin.MainActivity"
             android:label="@string/appName">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,11 +29,11 @@
         </activity>
 
         <receiver
-            android:name="com.github.lemaki.notificoin.ui.alarmManager.AlarmBroadcastReceiver"
+            android:name="com.github.corentinc.notificoin.ui.alarmManager.AlarmBroadcastReceiver"
             android:process=":remote" />
 
         <service
-            android:name="com.github.lemaki.notificoin.ui.detectNewAds.DetectNewAdsService"
+            android:name="com.github.corentinc.notificoin.ui.detectNewAds.DetectNewAdsService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity
