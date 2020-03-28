@@ -13,6 +13,7 @@ android {
     buildToolsVersion "29.0.3"
     compileSdkVersion parent.ext.compileSdkVersion
     defaultConfig {
+        applicationId = "com.github.corentinc.notificoin"
         minSdkVersion parent.ext.minSdkVersion
         targetSdkVersion parent.ext.targetSdkVersion
         versionName "1.0"
