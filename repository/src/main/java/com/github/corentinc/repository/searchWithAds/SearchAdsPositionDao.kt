@@ -5,12 +5,12 @@ import androidx.room.Query
 import androidx.room.Transaction
 
 @Dao
-abstract class SearchWithAdsDao {
+abstract class SearchAdsPositionDao {
     @Transaction
     @Query("SELECT * FROM search")
-    abstract fun getAllSearchWithAds(): List<SearchWithAdsEntity>
+    abstract fun getAllSearchAdsPosition(): List<SearchAdsPositionEntity>
 
     @Transaction
     @Query("SELECT * FROM search WHERE id = :id ")
-    abstract fun getSearchWithAds(id: Int): SearchWithAdsEntity
+    abstract fun getSearchAdsPosition(id: Int): SearchAdsPositionEntity
 }

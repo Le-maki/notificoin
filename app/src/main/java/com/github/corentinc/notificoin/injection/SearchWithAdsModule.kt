@@ -1,13 +1,21 @@
 package com.github.corentinc.notificoin.injection
 
-import com.github.corentinc.core.repository.searchWithAds.SearchWithAdsRepository
+import com.github.corentinc.core.repository.searchWithAds.SearchAdsRepository
 import com.github.corentinc.repository.NotifiCoinDataBase
-import com.github.corentinc.repository.searchWithAds.SearchWithAdsDataSource
-import com.github.corentinc.repository.searchWithAds.SearchWithAdsRepositoryImpl
+import com.github.corentinc.repository.searchWithAds.SearchAdsPositionDataSource
+import com.github.corentinc.repository.searchWithAds.SearchAdsPositionRepositoryImpl
 import org.koin.dsl.module
 
 val searchWithAdsModule = module {
-    single<SearchWithAdsRepository> { SearchWithAdsRepositoryImpl(get(), get(), get(), get()) }
-    single { SearchWithAdsDataSource(get()) }
+    single<SearchAdsRepository> {
+        SearchAdsPositionRepositoryImpl(
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
+    single { SearchAdsPositionDataSource(get()) }
     single { get<NotifiCoinDataBase>().searchWithAdsDao() }
 }

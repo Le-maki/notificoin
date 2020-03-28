@@ -1,7 +1,7 @@
 package com.github.corentinc.core
 
 import com.github.corentinc.core.ad.Ad
-import com.github.corentinc.core.repository.searchWithAds.SearchWithAdsRepository
+import com.github.corentinc.core.repository.searchWithAds.SearchAdsRepository
 import com.github.corentinc.core.ui.detectNewAds.DetectNewAdsPresenter
 import com.github.corentinc.logger.NotifiCoinLogger
 import kotlinx.coroutines.CoroutineScope
@@ -11,15 +11,15 @@ import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
 
 class DetectNewAdsInteractor(
-    private val searchWithAdsRepository: SearchWithAdsRepository,
+    private val searchAdsRepository: SearchAdsRepository,
     private val detectNewAdsPresenter: DetectNewAdsPresenter
 ) {
 
     fun onServiceStarted() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val remoteSearchWithAdsList = searchWithAdsRepository.getRemoteSortedSearchWithAds()
-                val localSearchWithAdsList = searchWithAdsRepository.getAllSortedSearchWithAds()
+                val remoteSearchWithAdsList = searchAdsRepository.getRemoteSortedSearchAdsPosition()
+                val localSearchWithAdsList = searchAdsRepository.getAllSortedSearchAdsPosition()
                 if (remoteSearchWithAdsList == localSearchWithAdsList) {
                     NotifiCoinLogger.i("AlarmManager didn't found new ads")
                 } else {
@@ -32,7 +32,7 @@ class DetectNewAdsInteractor(
                         }
                     }
                 }
-                searchWithAdsRepository.replaceAll(remoteSearchWithAdsList)
+                searchAdsRepository.replaceAll(remoteSearchWithAdsList)
             } catch (exception: Exception) {
                 NotifiCoinLogger.e("Alarm Manager couldn't check new ads or send notifications $exception")
                 detectNewAdsPresenter.presentBigtextNotification(
@@ -46,17 +46,17 @@ class DetectNewAdsInteractor(
     }
 
     private fun getNewAds(
-        remoteSearchWithAds: SearchWithAds,
-        localSearchWithAdsList: List<SearchWithAds>
+        remoteSearchAdsPosition: SearchAdsPosition,
+        localSearchAdsPositionList: List<SearchAdsPosition>
     ): List<Ad> {
-        return remoteSearchWithAds.ads.minus(
-            localSearchWithAdsList.find { localSearchWithAds ->
-                remoteSearchWithAds.search.url == localSearchWithAds.search.url
+        return remoteSearchAdsPosition.ads.minus(
+            localSearchAdsPositionList.find { localSearchWithAds ->
+                remoteSearchAdsPosition.search.url == localSearchWithAds.search.url
             }?.ads ?: emptyList()
         )
     }
 
-    private suspend fun sendNotifications(searchWithAds: SearchWithAds, newAds: List<Ad>) {
+    private suspend fun sendNotifications(searchAdsPosition: SearchAdsPosition, newAds: List<Ad>) {
         if (newAds.size == 1) {
             val titlesString: String = newAds[0].title.take(15)
             NotifiCoinLogger.i(
@@ -68,7 +68,7 @@ class DetectNewAdsInteractor(
                 detectNewAdsPresenter.presentNewAdNotifications(
                     newAds.size,
                     titlesString,
-                    searchWithAds.search.title,
+                    searchAdsPosition.search.title,
                     newAds[0].url
                 )
             }
@@ -80,8 +80,8 @@ class DetectNewAdsInteractor(
                 detectNewAdsPresenter.presentNewAdNotifications(
                     size,
                     titlesString,
-                    searchWithAds.search.title,
-                    searchWithAds.search.url
+                    searchAdsPosition.search.title,
+                    searchAdsPosition.search.url
                 )
             }
         }

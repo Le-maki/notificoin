@@ -1,6 +1,6 @@
 package com.github.corentinc.core.adList
 
-import com.github.corentinc.core.repository.searchWithAds.SearchWithAdsRepository
+import com.github.corentinc.core.repository.searchWithAds.SearchAdsRepository
 import com.github.corentinc.core.ui.adList.AdListPresenter
 import com.github.corentinc.logger.NotifiCoinLogger
 import kotlinx.coroutines.CoroutineScope
@@ -13,14 +13,14 @@ import java.text.ParseException
 
 class AdListInteractor(
     private val adListPresenter: AdListPresenter,
-    private val searchWithAdsRepository: SearchWithAdsRepository
+    private val searchAdsRepository: SearchAdsRepository
 ) {
 
     fun onStart() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                searchWithAdsRepository.updateAllSearchWithAds()
-                val searchWithAds = searchWithAdsRepository.getAllSortedSearchWithAds()
+                searchAdsRepository.updateAllSearchAdsPositionFromWebPage()
+                val searchWithAds = searchAdsRepository.getAllSortedSearchAdsPosition()
                 withContext(Dispatchers.Main) {
                     adListPresenter.presentAdList(searchWithAds.map { it.ads }.flatten())
                 }
