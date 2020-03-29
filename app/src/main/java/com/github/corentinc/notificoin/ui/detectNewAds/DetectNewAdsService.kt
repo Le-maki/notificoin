@@ -37,7 +37,8 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
                         notificationModule,
                         alarmManagerModule,
                         detectNewAdsModule,
-                        sharedPreferencesModule
+                        sharedPreferencesModule,
+                        searchPositionModule
                     )
                 )
             }
