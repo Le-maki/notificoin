@@ -1,6 +1,7 @@
 package com.github.corentinc.core.home
 
 import com.github.corentinc.core.SearchAdsPosition
+import com.github.corentinc.core.SearchAdsPostionDefaultSorter
 import com.github.corentinc.core.repository.SharedPreferencesRepository
 import com.github.corentinc.core.repository.search.SearchPositionRepository
 import com.github.corentinc.core.repository.search.SearchRepository
@@ -18,6 +19,7 @@ class HomeInteractor(
     private val searchPositionRepository: SearchPositionRepository,
     private val searchAdsPositionRepository: SearchAdsPositionRepository,
     private val sharedPreferencesRepository: SharedPreferencesRepository,
+    private val searchAdsPostionDefaultSorter: SearchAdsPostionDefaultSorter,
     private val searches: Map<String, String> = mapOf(
         "https://www.leboncoin.fr/recherche/?category=2&locations=Nantes&regdate=2010-max" to "Voiture",
         "https://www.leboncoin.fr/recherche/?text=jeu%20switch&locations=Nantes__47.23898554566441_-1.5262136157260586_10000" to "Jeu Switch"
@@ -41,6 +43,7 @@ class HomeInteractor(
                 searchWithAds = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
             }
             withContext(Dispatchers.Main) {
+                searchWithAds = searchWithAds.sortedWith(searchAdsPostionDefaultSorter)
                 homePresenter.presentSearches(searchWithAds.toMutableList())
             }
         }
@@ -67,9 +70,11 @@ class HomeInteractor(
         }
     }
 
-    fun onSearchMoved(searchIdPair: Pair<Int, Int>) {
+    fun onStop(searchAdsPositionList: MutableList<SearchAdsPosition>) {
         CoroutineScope(Dispatchers.IO).launch {
-            searchPositionRepository.swap(searchIdPair)
+            searchAdsPositionList.forEachIndexed { index, searchAdsPosition ->
+                //searchPositionRepository.updateSearchPosition(searchAdsPosition.search.id, index)
+            }
         }
     }
 }

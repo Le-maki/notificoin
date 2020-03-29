@@ -4,5 +4,4 @@ import com.github.corentinc.core.SearchAdsPosition
 
 interface SearchAdapterListener {
     fun onSearchDeleted(searchAdsPosition: SearchAdsPosition)
-    fun onSearchMoved(searchIdPair: Pair<Int, Int>)
 }

@@ -6,7 +6,6 @@ import com.github.corentinc.repository.dao.BaseDao
 
 @Dao
 abstract class SearchPositionDao: BaseDao<SearchPositionEntity>() {
-
     @Query("SELECT * FROM searchPosition WHERE searchId = :id")
     abstract fun getSearchPosition(id: Int): SearchPositionEntity
 
@@ -21,4 +20,7 @@ abstract class SearchPositionDao: BaseDao<SearchPositionEntity>() {
 
     @Query("UPDATE searchPosition SET searchId = :id WHERE position = :position")
     abstract fun updateSearchPosition(id: Int, position: Int)
+
+    @Query("SELECT MAX(position) FROM searchPosition")
+    abstract fun getMaxPosition(): Int
 }

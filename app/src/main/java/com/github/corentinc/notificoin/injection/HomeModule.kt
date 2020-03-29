@@ -8,7 +8,7 @@ import com.github.corentinc.notificoin.ui.home.HomeViewModel
 import org.koin.dsl.module
 
 val homeModule = module {
-    single { HomeInteractor(get(), get(), get(), get(), get()) }
+    single { HomeInteractor(get(), get(), get(), get(), get(), get()) }
     single<HomePresenter> { HomePresenterImpl(get()) }
     single {
         HomeViewModel(

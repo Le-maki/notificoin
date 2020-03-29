@@ -1,16 +1,25 @@
 package com.github.corentinc.repository.searchPosition
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import androidx.room.*
+import com.github.corentinc.repository.search.SearchEntity
 
 @Entity(
-    tableName = "searchPosition"
+    tableName = "searchPosition",
+    indices = [Index(value = ["position"], unique = true)],
+    foreignKeys = [
+        ForeignKey(
+            entity = SearchEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["searchId"],
+            onUpdate = ForeignKey.CASCADE,
+            onDelete = ForeignKey.CASCADE
+        )
+    ]
 )
 data class SearchPositionEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "position")
-    val position: Int = 0,
+    val position: Int,
     @ColumnInfo(name = "searchId")
     val searchId: Int
 )

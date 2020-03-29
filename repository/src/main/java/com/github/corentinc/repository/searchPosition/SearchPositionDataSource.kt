@@ -32,4 +32,8 @@ class SearchPositionDataSource(
     fun putAll(searchPositionList: List<SearchPosition>) {
         searchPositionDao.insertAllOrReplace(searchPositionList.map { it.toEntity() })
     }
+
+    fun getMaxPosition(): Int {
+        return searchPositionDao.getMaxPosition()
+    }
 }

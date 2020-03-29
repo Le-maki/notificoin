@@ -9,8 +9,8 @@ import com.github.corentinc.repository.searchPosition.SearchPositionEntity
 data class SearchAdsPositionEntity(
     @Embedded val search: SearchEntity,
     @Relation(
-        parentColumn = "searchUrl",
-        entityColumn = "adSearchUrl"
+        parentColumn = "id",
+        entityColumn = "searchId"
     )
     val ads: List<AdEntity>,
     @Relation(

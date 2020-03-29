@@ -13,14 +13,20 @@ class SearchRepositoryImpl(
     override fun getAllSearches() = searchDataSource.getAll()
     override fun addSearch(search: Search): Long {
         val id = searchDataSource.put(search)
-        searchPositionRepository.addSearchPosition(SearchPosition(searchId = id.toInt()))
+        searchPositionRepository.addSearchPosition(
+            SearchPosition(
+                searchPositionRepository.getMaxPosition() + 1,
+                searchId = id.toInt()
+            )
+        )
         return id
     }
+
     override fun updateSearch(id: Int, url: String, title: String) =
         searchDataSource.update(id, url, title)
+
     override fun deleteAll() = searchDataSource.deleteAll()
     override fun delete(search: Search) {
-        searchPositionRepository.delete(search.id)
         searchDataSource.delete(search.id)
     }
 }

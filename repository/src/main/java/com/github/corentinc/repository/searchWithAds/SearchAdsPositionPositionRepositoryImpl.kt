@@ -25,30 +25,27 @@ class SearchAdsPositionPositionRepositoryImpl(
             SearchAdsPosition(
                 search,
                 adRepository.getSortedRemoteAds(search.url),
-                searchPositionRepository.getPosition(search.id)
+                searchPositionRepository.getSearchPosition(search.id)
             )
     }
 
     override fun updateAllSearchAdsPositionFromWebPage() {
         adRepository.deleteAll()
         searchRepository.getAllSearches().forEach {
-            adRepository.updateAdsFromWebPage(it.url)
+            adRepository.updateAdsFromWebPage(it)
         }
     }
 
     override fun replaceAll(searchAdsPositionList: List<SearchAdsPosition>) {
-        adRepository.deleteAll()
         searchRepository.deleteAll()
-        searchPositionRepository.deleteAll()
         searchAdsPositionList.forEach {
             searchRepository.addSearch(it.search)
-            adRepository.putAll(it.ads, it.search.url)
+            adRepository.putAll(it.ads, it.search.id)
         }
 
     }
 
     override fun delete(search: Search) {
         searchRepository.delete(search)
-        adRepository.delete(adRepository.getAds(search.url))
     }
 }

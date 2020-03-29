@@ -44,7 +44,7 @@ class MainActivity: AppCompatActivity() {
                         webPageModule,
                         notificationModule,
                         alarmManagerModule,
-                        searchWithAdsModule,
+                        searchAdsPositionModule,
                         detectNewAdsModule,
                         sharedPreferencesModule,
                         adListModule,

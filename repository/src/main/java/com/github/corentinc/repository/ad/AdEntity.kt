@@ -1,14 +1,22 @@
 package com.github.corentinc.repository.ad
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.Index
-import androidx.room.PrimaryKey
+import androidx.room.*
+import androidx.room.ForeignKey.CASCADE
+import com.github.corentinc.repository.search.SearchEntity
 import org.joda.time.DateTime
 
 @Entity(
     tableName = "ads",
-    indices = [Index(value = ["adId"], unique = true)]
+    indices = [Index(value = ["adId"], unique = true)],
+    foreignKeys = [
+        ForeignKey(
+            entity = SearchEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["searchId"],
+            onUpdate = CASCADE,
+            onDelete = CASCADE
+        )
+    ]
 )
 data class AdEntity(
     @PrimaryKey(autoGenerate = true)
@@ -18,8 +26,8 @@ data class AdEntity(
     val adTitle: String,
     @ColumnInfo(name = "adPublicationDate")
     val publicationDate: DateTime,
-    @ColumnInfo(name = "adSearchUrl")
-    val searchUrl: String,
-    @ColumnInfo(name = "url")
-    val url: String
+    @ColumnInfo(name = "adUrl")
+    val url: String,
+    @ColumnInfo(name = "searchId")
+    val searchId: Int
 )

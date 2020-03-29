@@ -10,12 +10,12 @@ class AdDataSource(
         return adDao.getAd(id).toAd()
     }
 
-    fun putAd(ad: Ad, searchUrl: String) {
-        adDao.insertOrReplace(ad.toEntity(searchUrl))
+    fun putAd(ad: Ad, searchId: Int) {
+        adDao.insertOrReplace(ad.toEntity(searchId))
     }
 
-    fun putAll(adList: List<Ad>, searchUrl: String) {
-        adDao.insertAllOrReplace(adList.map { it.toEntity(searchUrl) })
+    fun putAll(adList: List<Ad>, searchId: Int) {
+        adDao.insertAllOrReplace(adList.map { it.toEntity(searchId) })
     }
 
     fun getAll() = adDao.getAll().map { it.toAd() }

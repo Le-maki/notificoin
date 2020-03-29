@@ -33,7 +33,7 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
                         adModule,
                         searchModule,
                         webPageModule,
-                        searchWithAdsModule,
+                        searchAdsPositionModule,
                         notificationModule,
                         alarmManagerModule,
                         detectNewAdsModule,

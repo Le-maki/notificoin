@@ -5,9 +5,13 @@ import com.github.corentinc.core.search.SearchPosition
 
 class SearchPositionRepositoryImpl(private val searchPositionDataSource: SearchPositionDataSource):
     SearchPositionRepository {
+    override fun getMaxPosition(): Int {
+        return searchPositionDataSource.getMaxPosition()
+    }
+
     override fun getAllSearchPositions(): List<SearchPosition> = searchPositionDataSource.getAll()
 
-    override fun getPosition(searchId: Int) = searchPositionDataSource.get(searchId)
+    override fun getSearchPosition(searchId: Int) = searchPositionDataSource.get(searchId)
 
     override fun addSearchPosition(searchPosition: SearchPosition): Long =
         searchPositionDataSource.put(searchPosition)
@@ -22,11 +26,4 @@ class SearchPositionRepositoryImpl(private val searchPositionDataSource: SearchP
 
     override fun delete(searchId: Int) =
         searchPositionDataSource.delete(searchId)
-
-    override fun swap(searchIdPair: Pair<Int, Int>) {
-        val firstPosition = searchPositionDataSource.get(searchIdPair.first).position
-        val secondPosition = searchPositionDataSource.get(searchIdPair.second).position
-        searchPositionDataSource.update(firstPosition, searchIdPair.second)
-        searchPositionDataSource.update(secondPosition, searchIdPair.first)
-    }
 }

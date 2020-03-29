@@ -1,6 +1,7 @@
 package com.github.corentinc.repository.ad
 
 import com.github.corentinc.core.ad.Ad
+import com.github.corentinc.core.search.Search
 import com.github.corentinc.repository.webpage.DocumentToAdJsonArrayTransformer
 import com.github.corentinc.repository.webpage.WebPageRepository
 import org.joda.time.format.DateTimeFormat
@@ -19,14 +20,14 @@ class AdRepository(
         private const val URL = "url"
     }
 
-    fun updateAdsFromWebPage(url: String): List<Ad> {
-        val adList = getSortedRemoteAds(url)
-        adDataSource.putAll(adList, url)
+    fun updateAdsFromWebPage(search: Search): List<Ad> {
+        val adList = getSortedRemoteAds(search.url)
+        adDataSource.putAll(adList, search.id)
         return adList
     }
 
-    fun putAll(adList: List<Ad>, url: String) {
-        adDataSource.putAll(adList, url)
+    fun putAll(adList: List<Ad>, searchId: Int) {
+        adDataSource.putAll(adList, searchId)
     }
 
     fun getAds() = adDataSource.getAll()

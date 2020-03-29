@@ -4,10 +4,10 @@ import com.github.corentinc.core.ad.Ad
 
 fun AdEntity.toAd() = Ad(id = adId, title = adTitle, publicationDate = publicationDate, url = url)
 
-fun Ad.toEntity(searchUrl: String) = AdEntity(
+fun Ad.toEntity(searchId: Int) = AdEntity(
     adId = id,
     adTitle = title,
-    searchUrl = searchUrl,
+    searchId = searchId,
     publicationDate = publicationDate,
     url = url
 )

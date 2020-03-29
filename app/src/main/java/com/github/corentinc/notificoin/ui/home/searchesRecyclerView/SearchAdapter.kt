@@ -39,11 +39,9 @@ class SearchAdapter(
     }
 
     override fun onViewMoved(oldPosition: Int, newPosition: Int) {
-        val movedSearch: SearchAdsPosition = searchAdsPositionList[oldPosition]
-        val replacedSearch = searchAdsPositionList[newPosition]
-        searchAdapterListener.onSearchMoved(Pair(movedSearch.search.id, replacedSearch.search.id))
+        val targetSearch = searchAdsPositionList[oldPosition]
         searchAdsPositionList.removeAt(oldPosition)
-        searchAdsPositionList.add(newPosition, movedSearch)
+        searchAdsPositionList.add(newPosition, targetSearch)
         notifyItemMoved(oldPosition, newPosition)
     }
 

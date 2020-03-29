@@ -62,6 +62,22 @@ class HomeFragment(
         super.onStart()
     }
 
+    override fun onStop() {
+        homeInteractor.onStop(adapter.searchAdsPositionList)
+        super.onStop()
+    }
+
+    override fun displayEditAdScreen(id: Int, url: String, title: String) {
+        Navigation.findNavController(requireView())
+            .navigate(
+                HomeFragmentDirections.editSearchAction(
+                    id,
+                    url,
+                    title
+                )
+            )
+    }
+
     private fun bindViewModel() {
         homeViewModel.shouldShowBatteryWhiteListAlertDialog.observe(
             this.viewLifecycleOwner,
@@ -84,10 +100,6 @@ class HomeFragment(
         adapter.searchAdapterListener = object: SearchAdapterListener {
             override fun onSearchDeleted(searchAdsPosition: SearchAdsPosition) {
                 homeInteractor.onSearchDeleted(searchAdsPosition)
-            }
-
-            override fun onSearchMoved(searchIdPair: Pair<Int, Int>) {
-                homeInteractor.onSearchMoved(searchIdPair)
             }
         }
         homeFragmentSearchesRecyclerView.adapter = adapter
@@ -131,16 +143,5 @@ class HomeFragment(
         val intent = Intent()
         intent.action = Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
         startActivity(intent)
-    }
-
-    override fun displayEditAdScreen(id: Int, url: String, title: String) {
-        Navigation.findNavController(requireView())
-            .navigate(
-                HomeFragmentDirections.editSearchAction(
-                    id,
-                    url,
-                    title
-                )
-            )
     }
 }
