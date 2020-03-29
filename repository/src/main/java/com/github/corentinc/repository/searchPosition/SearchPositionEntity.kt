@@ -1,11 +1,13 @@
 package com.github.corentinc.repository.searchPosition
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import com.github.corentinc.repository.search.SearchEntity
 
 @Entity(
     tableName = "searchPosition",
-    indices = [Index(value = ["position"], unique = true)],
     foreignKeys = [
         ForeignKey(
             entity = SearchEntity::class,
@@ -17,9 +19,9 @@ import com.github.corentinc.repository.search.SearchEntity
     ]
 )
 data class SearchPositionEntity(
-    @PrimaryKey
     @ColumnInfo(name = "position")
     val position: Int,
+    @PrimaryKey
     @ColumnInfo(name = "searchId")
     val searchId: Int
 )

@@ -18,7 +18,7 @@ abstract class SearchPositionDao: BaseDao<SearchPositionEntity>() {
     @Query("SELECT * FROM searchPosition")
     abstract fun getAll(): List<SearchPositionEntity>
 
-    @Query("UPDATE searchPosition SET searchId = :id WHERE position = :position")
+    @Query("UPDATE searchPosition SET position = :position WHERE searchId = :id")
     abstract fun updateSearchPosition(id: Int, position: Int)
 
     @Query("SELECT MAX(position) FROM searchPosition")

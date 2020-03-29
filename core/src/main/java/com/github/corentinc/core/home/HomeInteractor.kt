@@ -73,7 +73,7 @@ class HomeInteractor(
     fun onStop(searchAdsPositionList: MutableList<SearchAdsPosition>) {
         CoroutineScope(Dispatchers.IO).launch {
             searchAdsPositionList.forEachIndexed { index, searchAdsPosition ->
-                //searchPositionRepository.updateSearchPosition(searchAdsPosition.search.id, index)
+                searchPositionRepository.updateSearchPosition(searchAdsPosition.search.id, index)
             }
         }
     }
