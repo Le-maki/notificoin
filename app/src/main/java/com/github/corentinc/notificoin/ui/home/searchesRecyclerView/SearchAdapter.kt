@@ -5,14 +5,14 @@ import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.github.corentinc.core.SearchAdsPosition
+import com.github.corentinc.core.search.Search
 import kotlinx.android.synthetic.main.searches_recyclerview_item.view.*
 
 class SearchAdapter(
     swipeAndDragHelper: SwipeAndDragHelper
 ):
     RecyclerView.Adapter<SearchViewHolder>(), ActionCompletion {
-    lateinit var searchAdsPositionList: MutableList<SearchAdsPosition>
+    lateinit var searchAdsPositionList: MutableList<Search>
     val touchHelper: ItemTouchHelper = ItemTouchHelper(swipeAndDragHelper)
     lateinit var searchAdapterListener: SearchAdapterListener
 

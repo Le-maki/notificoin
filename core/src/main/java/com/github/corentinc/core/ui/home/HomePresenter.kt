@@ -1,9 +1,9 @@
 package com.github.corentinc.core.ui.home
 
-import com.github.corentinc.core.SearchAdsPosition
+import com.github.corentinc.core.search.Search
 
 interface HomePresenter {
     fun presentBatteryWhitelistPermissionAlertDialog()
-    fun presentSearches(searchAdsPosition: MutableList<SearchAdsPosition>)
+    fun presentSearches(search: MutableList<Search>)
     fun presentEditSearchScreen(id: Int, url: String, title: String)
 }

@@ -1,6 +1,5 @@
 package com.github.corentinc.core.home
 
-import com.github.corentinc.core.SearchAdsPosition
 import com.github.corentinc.core.SearchAdsPostionDefaultSorter
 import com.github.corentinc.core.repository.SharedPreferencesRepository
 import com.github.corentinc.core.repository.search.SearchPositionRepository
@@ -35,16 +34,16 @@ class HomeInteractor(
             homePresenter.presentBatteryWhitelistPermissionAlertDialog()
         }
         CoroutineScope(Dispatchers.IO).launch {
-            var searchWithAds = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
-            if (searchWithAds.isEmpty()) {
+            var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
+            if (searchAdsPosition.isEmpty()) {
                 searches.forEach {
                     searchRepository.addSearch(Search(title = it.value, url = it.key))
                 }
-                searchWithAds = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
+                searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
             }
             withContext(Dispatchers.Main) {
-                searchWithAds = searchWithAds.sortedWith(searchAdsPostionDefaultSorter)
-                homePresenter.presentSearches(searchWithAds.toMutableList())
+                searchAdsPosition = searchAdsPosition.sortedWith(searchAdsPostionDefaultSorter)
+                homePresenter.presentSearches(searchAdsPosition.map { it.search }.toMutableList())
             }
         }
     }
@@ -64,16 +63,16 @@ class HomeInteractor(
         }
     }
 
-    fun onSearchDeleted(searchAdsPosition: SearchAdsPosition) {
+    fun onSearchDeleted(search: Search) {
         CoroutineScope(Dispatchers.IO).launch {
-            searchAdsPositionRepository.delete(searchAdsPosition.search)
+            searchAdsPositionRepository.delete(search)
         }
     }
 
-    fun onStop(searchAdsPositionList: MutableList<SearchAdsPosition>) {
+    fun onStop(searchList: MutableList<Search>) {
         CoroutineScope(Dispatchers.IO).launch {
-            searchAdsPositionList.forEachIndexed { index, searchAdsPosition ->
-                searchPositionRepository.updateSearchPosition(searchAdsPosition.search.id, index)
+            searchList.forEachIndexed { index, search ->
+                searchPositionRepository.updateSearchPosition(search.id, index)
             }
         }
     }
