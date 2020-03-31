@@ -51,4 +51,6 @@ class SearchAdapter(
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, itemCount - position)
     }
+
+    fun isSearchAdsPositionListInitialized() = this::searchAdsPositionList.isInitialized
 }

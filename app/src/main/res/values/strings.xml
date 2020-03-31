@@ -22,4 +22,5 @@
     <string name="editSearchSaveButton">save</string>
     <string name="dragYourAd">drag your ad</string>
     <string name="createAnAd">Create an ad</string>
+    <string name="homeFragmentRecyclerViewTitleText">Your searches :</string>
 </resources>

@@ -63,7 +63,9 @@ class HomeFragment(
     }
 
     override fun onStop() {
-        homeInteractor.onStop(adapter.searchAdsPositionList)
+        if (adapter.isSearchAdsPositionListInitialized()) {
+            homeInteractor.onStop(adapter.searchAdsPositionList)
+        }
         super.onStop()
     }
 

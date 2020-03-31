@@ -28,16 +28,20 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
                 androidContext(this@DetectNewAdsService)
                 modules(
                     listOf(
+                        fragmentModule,
                         homeModule,
                         databaseModule,
                         adModule,
                         searchModule,
                         webPageModule,
-                        searchAdsPositionModule,
                         notificationModule,
                         alarmManagerModule,
+                        searchAdsPositionModule,
                         detectNewAdsModule,
                         sharedPreferencesModule,
+                        adListModule,
+                        editSearchModule,
+                        searchesRecyclerViewModule,
                         searchPositionModule
                     )
                 )
