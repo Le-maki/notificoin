@@ -20,6 +20,7 @@
     <string name="editSearchUrl">Url from Leboncoin</string>
     <string name="titleEditSearch">Edit your search</string>
     <string name="editSearchSaveButton">save</string>
+    <string name="editSearchDeleteButton">delete</string>
     <string name="dragYourAd">drag your ad</string>
     <string name="createAnAd">Create an ad</string>
     <string name="homeFragmentRecyclerViewTitleText">Your searches :</string>
