@@ -65,7 +65,7 @@ class HomeInteractor(
 
     fun onSearchDeleted(search: Search) {
         CoroutineScope(Dispatchers.IO).launch {
-            searchAdsPositionRepository.delete(search)
+            searchAdsPositionRepository.delete(search.id)
         }
     }
 

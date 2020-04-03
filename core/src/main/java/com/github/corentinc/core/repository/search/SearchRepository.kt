@@ -7,5 +7,5 @@ interface SearchRepository {
     fun addSearch(search: Search): Long
     fun updateSearch(id: Int, url: String, title: String)
     fun deleteAll()
-    fun delete(search: Search)
+    fun delete(searchId: Int)
 }

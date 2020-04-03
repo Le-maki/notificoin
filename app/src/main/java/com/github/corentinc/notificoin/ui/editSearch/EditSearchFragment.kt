@@ -15,9 +15,6 @@ import com.github.corentinc.core.EditSearchInteractor
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor): Fragment() {
@@ -52,6 +49,10 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         editSearchSaveButton.setOnClickListener {
             requireActivity().onBackPressed()
         }
+        editSearchDeleteButton.setOnClickListener {
+            editSearchInteractor.deleteSearch(editSearchFragmentArgs.id)
+            requireActivity().onBackPressed()
+        }
     }
 
     override fun onCreateView(
@@ -68,13 +69,11 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     }
 
     private fun onNavigateUp() {
-        CoroutineScope(Dispatchers.IO).launch {
-            requireActivity().hideKeyboard()
-            editSearchInteractor.onNavigateUp(
-                editSearchFragmentArgs.id,
-                editSearchTitleEditText.text.toString(),
-                editSearchUrlEditText.text.toString()
-            )
-        }
+        requireActivity().hideKeyboard()
+        editSearchInteractor.onNavigateUp(
+            editSearchFragmentArgs.id,
+            editSearchTitleEditText.text.toString(),
+            editSearchUrlEditText.text.toString()
+        )
     }
 }

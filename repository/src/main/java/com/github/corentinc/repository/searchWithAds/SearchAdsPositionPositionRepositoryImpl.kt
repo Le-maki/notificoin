@@ -5,7 +5,6 @@ import com.github.corentinc.core.ad.Ad
 import com.github.corentinc.core.repository.search.SearchPositionRepository
 import com.github.corentinc.core.repository.search.SearchRepository
 import com.github.corentinc.core.repository.searchWithAds.SearchAdsPositionRepository
-import com.github.corentinc.core.search.Search
 import com.github.corentinc.repository.ad.AdRepository
 
 class SearchAdsPositionPositionRepositoryImpl(
@@ -45,7 +44,7 @@ class SearchAdsPositionPositionRepositoryImpl(
 
     }
 
-    override fun delete(search: Search) {
-        searchRepository.delete(search)
+    override fun delete(searchId: Int) {
+        searchRepository.delete(searchId)
     }
 }

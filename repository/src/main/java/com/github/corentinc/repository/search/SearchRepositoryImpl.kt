@@ -26,7 +26,7 @@ class SearchRepositoryImpl(
         searchDataSource.update(id, url, title)
 
     override fun deleteAll() = searchDataSource.deleteAll()
-    override fun delete(search: Search) {
-        searchDataSource.delete(search.id)
+    override fun delete(searchId: Int) {
+        searchDataSource.delete(searchId)
     }
 }
