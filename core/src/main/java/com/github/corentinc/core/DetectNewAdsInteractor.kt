@@ -18,15 +18,15 @@ class DetectNewAdsInteractor(
     fun onServiceStarted() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val remoteSearchWithAdsList =
+                val remoteSearchAdsPositionList =
                     searchAdsPositionRepository.getRemoteSortedSearchAdsPosition()
-                val localSearchWithAdsList =
+                val localSearchAdsPositionList =
                     searchAdsPositionRepository.getAllSortedSearchAdsPosition()
-                if (remoteSearchWithAdsList == localSearchWithAdsList) {
+                if (remoteSearchAdsPositionList == localSearchAdsPositionList) {
                     NotifiCoinLogger.i("AlarmManager didn't found new ads")
                 } else {
-                    remoteSearchWithAdsList.forEach { remoteSearchWithAds ->
-                        val newAds = getNewAds(remoteSearchWithAds, localSearchWithAdsList)
+                    remoteSearchAdsPositionList.forEach { remoteSearchWithAds ->
+                        val newAds = getNewAds(remoteSearchWithAds, localSearchAdsPositionList)
                         if (newAds.isNotEmpty()) {
                             sendNotifications(remoteSearchWithAds, newAds)
                         } else {
@@ -34,7 +34,7 @@ class DetectNewAdsInteractor(
                         }
                     }
                 }
-                searchAdsPositionRepository.replaceAll(remoteSearchWithAdsList)
+                searchAdsPositionRepository.replaceAll(remoteSearchAdsPositionList)
             } catch (exception: Exception) {
                 NotifiCoinLogger.e("Alarm Manager couldn't check new ads or send notifications $exception")
                 detectNewAdsPresenter.presentBigtextNotification(
@@ -53,7 +53,7 @@ class DetectNewAdsInteractor(
     ): List<Ad> {
         return remoteSearchAdsPosition.ads.minus(
             localSearchAdsPositionList.find { localSearchWithAds ->
-                remoteSearchAdsPosition.search.url == localSearchWithAds.search.url
+                remoteSearchAdsPosition.search.id == localSearchWithAds.search.id
             }?.ads ?: emptyList()
         )
     }

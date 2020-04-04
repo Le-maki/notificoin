@@ -36,7 +36,6 @@ class AdRepository(
         val document = webPageRepository.getWebPage(url)
         return documentToAdJsonArrayTransformer.transform(document)?.map { jsonElement ->
             Ad(
-                jsonElement.asJsonObject[ID_ATTRIBUTE].asInt,
                 jsonElement.asJsonObject[SUBJECT_ATTRIBUTE].asString,
                 DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").parseDateTime(
                     jsonElement.asJsonObject[PUBLICATION_ATTRIBUTE].asString
@@ -47,9 +46,6 @@ class AdRepository(
     }
 
     fun deleteAll() = adDataSource.deleteAll()
-    fun delete(ads: List<Ad>) {
-        adDataSource.delete(ads)
-    }
 
     fun getAds(url: String): List<Ad> {
         return adDataSource.getAds(url)
