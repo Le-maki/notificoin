@@ -1,10 +1,10 @@
 package com.github.corentinc.core.ui.adList
 
-import com.github.corentinc.core.ad.Ad
+import com.github.corentinc.core.SearchAdsPosition
 
 interface AdListPresenter {
     fun presentConnectionError()
     fun presentParsingError()
     fun presentUnknownError()
-    fun presentAdList(adList: List<Ad>)
+    fun presentAdList(searchAdsPositionList: List<SearchAdsPosition>)
 }

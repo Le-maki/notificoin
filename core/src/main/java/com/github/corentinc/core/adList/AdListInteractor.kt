@@ -20,9 +20,9 @@ class AdListInteractor(
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 searchAdsPositionRepository.updateAllSearchAdsPositionFromWebPage()
-                val searchWithAds = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
+                val searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
                 withContext(Dispatchers.Main) {
-                    adListPresenter.presentAdList(searchWithAds.map { it.ads }.flatten())
+                    adListPresenter.presentAdList(searchAdsPosition)
                 }
             } catch (error: Exception) {
                 when (error) {

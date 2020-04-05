@@ -69,6 +69,11 @@ class HomeFragment(
         super.onStop()
     }
 
+    override fun onDestroyView() {
+        adapter.searchAdsPositionList = mutableListOf()
+        super.onDestroyView()
+    }
+
     override fun displayEditAdScreen(id: Int, url: String, title: String) {
         Navigation.findNavController(requireView())
             .navigate(
@@ -92,7 +97,9 @@ class HomeFragment(
         homeViewModel.searchAdsPositionList.observe(
             this.viewLifecycleOwner,
             Observer {
-                createRecyclerView(it)
+                if (!adapter.isSearchAdsPositionListInitialized() || (adapter.isSearchAdsPositionListInitialized() && adapter.searchAdsPositionList != it)) {
+                    createRecyclerView(it)
+                }
             }
         )
     }

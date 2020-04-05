@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.github.corentinc.core.search.Search
-import kotlinx.android.synthetic.main.searches_recyclerview_item.view.*
+import kotlinx.android.synthetic.main.item_search_recyclerview.view.*
 
 class SearchAdapter(
     swipeAndDragHelper: SwipeAndDragHelper

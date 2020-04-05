@@ -36,7 +36,7 @@
         android:layout_width="46dp"
         android:layout_height="46dp"
         android:layout_marginEnd="2dp"
-        android:background="@drawable/yellow_circle"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/editThisAd"
         android:src="@drawable/ic_create_24px"
         app:layout_constraintBottom_toBottomOf="parent"

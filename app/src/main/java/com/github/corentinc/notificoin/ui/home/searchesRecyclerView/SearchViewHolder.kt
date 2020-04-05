@@ -13,7 +13,7 @@ import com.github.corentinc.notificoin.ui.home.HomeFragmentDirections
 class SearchViewHolder(inflater: LayoutInflater, parent: ViewGroup):
     RecyclerView.ViewHolder(
         inflater.inflate(
-            R.layout.searches_recyclerview_item,
+            R.layout.item_search_recyclerview,
             parent,
             false
         )

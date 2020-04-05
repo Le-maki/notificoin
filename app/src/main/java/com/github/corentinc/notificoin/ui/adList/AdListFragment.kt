@@ -7,15 +7,18 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.adList.AdListErrorType.*
 import com.github.corentinc.core.adList.AdListInteractor
 import com.github.corentinc.notificoin.R
+import com.github.corentinc.notificoin.ui.adList.adListRecyclerView.AdListAdapter
 import kotlinx.android.synthetic.main.fragment_ad_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdListFragment(private val adListInteractor: AdListInteractor): Fragment() {
 
     private val adListViewModel: AdListViewModel by viewModel()
+    private val adapter = AdListAdapter()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,12 +33,23 @@ class AdListFragment(private val adListInteractor: AdListInteractor): Fragment()
         super.onStart()
     }
 
+    override fun onDestroyView() {
+        adapter.adViewModelList = mutableListOf()
+        super.onDestroyView()
+    }
+
     private fun bindViewModel() {
-        adListViewModel.adListTextViewModel.observe(
+        adListViewModel.adViewModelList.observe(
             this.viewLifecycleOwner,
             Observer {
-                textAdsFragment?.text = it.text
                 hideProgressBar()
+                if (!adapter.isListInitialised() || (adapter.isListInitialised() && adapter.adViewModelList != it)) {
+                    adapter.adViewModelList = it
+                    adListFragmentRecyclerView.apply {
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = this@AdListFragment.adapter
+                    }
+                }
             })
         adListViewModel.errorType.observe(
             this.viewLifecycleOwner,
@@ -53,6 +67,6 @@ class AdListFragment(private val adListInteractor: AdListInteractor): Fragment()
     }
 
     private fun hideProgressBar() {
-        progressBarAdsFragment?.isVisible = false
+        adListFragmentProgressBar?.isVisible = false
     }
 }
