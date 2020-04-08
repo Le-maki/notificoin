@@ -20,7 +20,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdListFragment(private val adListInteractor: AdListInteractor): Fragment() {
     companion object {
-        private const val LEBONCOIN_URL = "http://www.leboncoin.fr"
+        const val LEBONCOIN_URL = "http://www.leboncoin.fr"
     }
 
     private val adListViewModel: AdListViewModel by viewModel()

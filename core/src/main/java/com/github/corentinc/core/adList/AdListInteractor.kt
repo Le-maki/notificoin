@@ -43,9 +43,11 @@ class AdListInteractor(
                         }
                     }
                     is HttpStatusException -> {
-                        NotifiCoinLogger.e("error getting ads:  $error ", error)
-                        withContext(Dispatchers.Main) {
-                            adListPresenter.presentForbiddenError()
+                        if (error.statusCode == 403) {
+                            NotifiCoinLogger.e("error getting ads:  $error ", error)
+                            withContext(Dispatchers.Main) {
+                                adListPresenter.presentForbiddenError()
+                            }
                         }
                     }
                     else -> {

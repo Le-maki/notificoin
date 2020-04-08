@@ -88,21 +88,26 @@ class NotificationManager(private val context: Context) {
         title: String,
         text: String,
         bigText: String,
-        searchUrl: String? = null
+        url: String? = null,
+        intent: Intent? = null
     ) {
-        var intent = Intent()
-        searchUrl?.let {
-            intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(searchUrl)
-            intent.apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
+        var intentToSend = Intent()
+        intent?.let {
+            intentToSend = intent
         } ?: run {
-            intent = Intent(context, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            url?.let {
+                intentToSend = Intent(Intent.ACTION_VIEW)
+                intentToSend.data = Uri.parse(url)
+                intentToSend.apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+            } ?: run {
+                intentToSend = Intent(context, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
             }
         }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intentToSend, 0)
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_duck)
             .setColor(Color.YELLOW)

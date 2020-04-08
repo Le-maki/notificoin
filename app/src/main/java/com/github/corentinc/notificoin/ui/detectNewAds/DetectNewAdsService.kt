@@ -4,11 +4,16 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.JobIntentService
 import com.github.corentinc.core.DetectNewAdsInteractor
+import com.github.corentinc.core.adList.AdListErrorType
+import com.github.corentinc.core.adList.AdListErrorType.FORBIDDEN
 import com.github.corentinc.core.ui.detectNewAds.DetectNewAdsPresenter
 import com.github.corentinc.logger.NotifiCoinLogger
 import com.github.corentinc.notificoin.R
+import com.github.corentinc.notificoin.createChromeIntentFromUrl
 import com.github.corentinc.notificoin.injection.*
+import com.github.corentinc.notificoin.ui.adList.AdListFragment
 import com.github.corentinc.notificoin.ui.notificationPush.NotificationManager
+import org.joda.time.DateTime
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -79,5 +84,23 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
         url: String
     ) {
         notificationManager.sendNewAdNotifications(size, titlesString, title, url)
+    }
+
+    override fun presentErrorNotification(errorType: AdListErrorType, exception: Exception) {
+        when (errorType) {
+            FORBIDDEN -> notificationManager.sendBigtextNotification(
+                title = "Oops, there was an Error",
+                text = "Too many requests",
+                bigText = getString(R.string.adListForbiddenErrorMessage),
+                intent = AdListFragment.LEBONCOIN_URL.createChromeIntentFromUrl(application.packageManager)
+            )
+            else -> {
+                notificationManager.sendBigtextNotification(
+                    title = "Oops, there was an Error",
+                    text = "Error at ${DateTime.now().toString("HH:mm")}, you were offline maybe ?",
+                    bigText = exception.toString()
+                )
+            }
+        }
     }
 }

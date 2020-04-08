@@ -1,6 +1,7 @@
 package com.github.corentinc.core
 
 import com.github.corentinc.core.ad.Ad
+import com.github.corentinc.core.adList.AdListErrorType
 import com.github.corentinc.core.repository.searchWithAds.SearchAdsPositionRepository
 import com.github.corentinc.core.ui.detectNewAds.DetectNewAdsPresenter
 import com.github.corentinc.logger.NotifiCoinLogger
@@ -8,7 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.joda.time.DateTime
+import org.jsoup.HttpStatusException
 
 class DetectNewAdsInteractor(
     private val searchAdsPositionRepository: SearchAdsPositionRepository,
@@ -35,13 +36,18 @@ class DetectNewAdsInteractor(
                     }
                 }
                 searchAdsPositionRepository.replaceAll(remoteSearchAdsPositionList)
+            } catch (httpStatusException: HttpStatusException) {
+                if (httpStatusException.statusCode == 403) {
+                    NotifiCoinLogger.i("AlarmManager coundn't get new adds, forbidden 403")
+                    detectNewAdsPresenter.presentErrorNotification(
+                        AdListErrorType.FORBIDDEN,
+                        httpStatusException
+                    )
+                } else {
+                    sendUnknowErrorNotification(httpStatusException)
+                }
             } catch (exception: Exception) {
-                NotifiCoinLogger.e("Alarm Manager couldn't check new ads or send notifications $exception")
-                detectNewAdsPresenter.presentBigtextNotification(
-                    "Oops",
-                    "Error at ${DateTime.now().toString("HH:mm")}, you were offline maybe ?",
-                    exception.toString()
-                )
+                sendUnknowErrorNotification(exception)
             }
             detectNewAdsPresenter.stopSelf()
         }
@@ -87,5 +93,13 @@ class DetectNewAdsInteractor(
                 )
             }
         }
+    }
+
+    private fun sendUnknowErrorNotification(exception: Exception) {
+        NotifiCoinLogger.e("Alarm Manager couldn't check new ads or send notifications $exception")
+        detectNewAdsPresenter.presentErrorNotification(
+            AdListErrorType.UNKNOWN,
+            exception
+        )
     }
 }
