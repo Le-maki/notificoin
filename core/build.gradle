@@ -12,6 +12,9 @@ dependencies {
     implementation parent.ext.kotlinCore
     implementation parent.ext.kotlinCoroutines
 
+    // jsoup
+    implementation parent.ext.jsoup
+
     // Tests
     implementation parent.ext.junit
     implementation  parent.ext.androidJunit

@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jsoup.HttpStatusException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import java.text.ParseException
@@ -16,11 +17,14 @@ class AdListInteractor(
     private val searchAdsPositionRepository: SearchAdsPositionRepository
 ) {
 
-    fun onStart() {
+    fun onStart(searchId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 searchAdsPositionRepository.updateAllSearchAdsPositionFromWebPage()
-                val searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
+                var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
+                if (searchId != -1) {
+                    searchAdsPosition = searchAdsPosition.filter { it.search.id == searchId }
+                }
                 withContext(Dispatchers.Main) {
                     adListPresenter.presentAdList(searchAdsPosition)
                 }
@@ -36,6 +40,12 @@ class AdListInteractor(
                         NotifiCoinLogger.e("error parsing ads:  $error ", error)
                         withContext(Dispatchers.Main) {
                             adListPresenter.presentParsingError()
+                        }
+                    }
+                    is HttpStatusException -> {
+                        NotifiCoinLogger.e("error getting ads:  $error ", error)
+                        withContext(Dispatchers.Main) {
+                            adListPresenter.presentForbiddenError()
                         }
                     }
                     else -> {

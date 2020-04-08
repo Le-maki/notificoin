@@ -1,13 +1,12 @@
 package com.github.corentinc.notificoin.ui.adList.adListRecyclerView
 
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.github.corentinc.notificoin.R
+import com.github.corentinc.notificoin.createIntentFromUrl
 import com.github.corentinc.notificoin.ui.adList.AdViewModel
 
 class AdViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder(
@@ -30,18 +29,8 @@ class AdViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.Vi
             adItemSearchTitle.text = this.searchTitle
         }
         itemView.findViewById<ConstraintLayout>(R.id.adItem).setOnClickListener {
-            itemView.context.startActivity(createOpenAdIntent(adViewModel.url))
+            itemView.context.startActivity(adViewModel.url.createIntentFromUrl())
         }
 
     }
-
-    private fun createOpenAdIntent(url: String): Intent {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(url)
-        intent.apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        return intent
-    }
-
 }

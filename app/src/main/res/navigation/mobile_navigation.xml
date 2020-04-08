@@ -13,13 +13,21 @@
         <action
             android:id="@+id/editSearchAction"
             app:destination="@id/editSearchFragment" />
+        <action
+            android:id="@+id/goToAdListAction"
+            app:destination="@id/navigation_ad_list" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_ad_list"
         android:name="com.github.corentinc.notificoin.ui.adList.AdListFragment"
         android:label="@string/titleAdList"
-        tools:layout="@layout/fragment_ad_list" />
+        tools:layout="@layout/fragment_ad_list">
+        <argument
+            android:name="searchId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"

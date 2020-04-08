@@ -4,18 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.adList.AdListErrorType.*
 import com.github.corentinc.core.adList.AdListInteractor
 import com.github.corentinc.notificoin.R
+import com.github.corentinc.notificoin.createChromeIntentFromUrl
 import com.github.corentinc.notificoin.ui.adList.adListRecyclerView.AdListAdapter
 import kotlinx.android.synthetic.main.fragment_ad_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AdListFragment(private val adListInteractor: AdListInteractor): Fragment() {
+    companion object {
+        private const val LEBONCOIN_URL = "http://www.leboncoin.fr"
+    }
 
     private val adListViewModel: AdListViewModel by viewModel()
     private val adapter = AdListAdapter()
@@ -29,7 +35,8 @@ class AdListFragment(private val adListInteractor: AdListInteractor): Fragment()
 
     override fun onStart() {
         bindViewModel()
-        adListInteractor.onStart()
+        val adListFragmentArgs: AdListFragmentArgs by navArgs()
+        adListInteractor.onStart(adListFragmentArgs.searchId)
         super.onStart()
     }
 
@@ -54,11 +61,25 @@ class AdListFragment(private val adListInteractor: AdListInteractor): Fragment()
         adListViewModel.errorType.observe(
             this.viewLifecycleOwner,
             Observer { adListErrorType ->
+                textAdsFragment.setOnClickListener {}
                 adListErrorType?.let {
                     val text = when (it) {
                         CONNECTION -> getString(R.string.adListConnectionErrorMessage)
                         PARSING -> getString(R.string.adListParsingErrorMessage)
                         UNKNOWN -> getString(R.string.adListUnknownErrorMessage)
+                        FORBIDDEN -> {
+                            textAdsFragment.setOnClickListener {
+                                LEBONCOIN_URL.createChromeIntentFromUrl(requireActivity().packageManager)
+                                    ?.let { intent ->
+                                        startActivity(intent)
+                                    } ?: Toast.makeText(
+                                    requireContext(),
+                                    getString(R.string.adListForbiddenFixMessage),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                            getString(R.string.adListForbiddenErrorMessage)
+                        }
                     }
                     textAdsFragment?.text = text
                     hideProgressBar()

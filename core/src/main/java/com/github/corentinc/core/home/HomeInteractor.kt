@@ -76,4 +76,8 @@ class HomeInteractor(
             }
         }
     }
+
+    fun onSearchClicked(search: Search) {
+        homePresenter.presentAdListFragment(search)
+    }
 }

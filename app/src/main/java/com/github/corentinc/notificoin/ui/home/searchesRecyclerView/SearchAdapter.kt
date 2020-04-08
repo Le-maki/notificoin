@@ -21,7 +21,7 @@ class SearchAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
-        return SearchViewHolder(LayoutInflater.from(parent.context), parent)
+        return SearchViewHolder(LayoutInflater.from(parent.context), parent, searchAdapterListener)
     }
 
     override fun getItemCount(): Int {

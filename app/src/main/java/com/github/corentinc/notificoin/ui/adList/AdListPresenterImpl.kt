@@ -2,6 +2,7 @@ package com.github.corentinc.notificoin.ui.adList
 
 import com.github.corentinc.core.SearchAdsPosition
 import com.github.corentinc.core.adList.AdListErrorType
+import com.github.corentinc.core.adList.AdListErrorType.*
 import com.github.corentinc.core.ui.adList.AdListPresenter
 import com.github.corentinc.notificoin.ui.ad.AdListToAdViewModelListTransformer
 
@@ -14,20 +15,24 @@ class AdListPresenterImpl(
     }
 
     override fun presentConnectionError() {
-        presentError(AdListErrorType.CONNECTION)
+        presentError(CONNECTION)
     }
 
     override fun presentParsingError() {
-        presentError(AdListErrorType.PARSING)
+        presentError(PARSING)
     }
 
     override fun presentUnknownError() {
-        presentError(AdListErrorType.UNKNOWN)
+        presentError(UNKNOWN)
     }
 
     override fun presentAdList(searchAdsPositionList: List<SearchAdsPosition>) {
         adListViewModel.adViewModelList.value =
             adsListToAdViewModelListTransformer.transform(searchAdsPositionList)
+    }
+
+    override fun presentForbiddenError() {
+        presentError(FORBIDDEN)
     }
 
 }

@@ -19,4 +19,8 @@ class HomePresenterImpl(
     override fun presentEditSearchScreen(id: Int, url: String, title: String) {
         homeDisplay.displayEditAdScreen(id, url, title)
     }
+
+    override fun presentAdListFragment(search: Search) {
+        homeDisplay.displayAdListScreen(search.id)
+    }
 }

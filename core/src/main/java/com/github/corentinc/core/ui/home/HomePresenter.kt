@@ -6,4 +6,5 @@ interface HomePresenter {
     fun presentBatteryWhitelistPermissionAlertDialog()
     fun presentSearches(search: MutableList<Search>)
     fun presentEditSearchScreen(id: Int, url: String, title: String)
+    fun presentAdListFragment(search: Search)
 }

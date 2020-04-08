@@ -85,6 +85,15 @@ class HomeFragment(
             )
     }
 
+    override fun displayAdListScreen(searchId: Int) {
+        Navigation.findNavController(requireView())
+            .navigate(
+                HomeFragmentDirections.goToAdListAction(
+                    searchId
+                )
+            )
+    }
+
     private fun bindViewModel() {
         homeViewModel.shouldShowBatteryWhiteListAlertDialog.observe(
             this.viewLifecycleOwner,
@@ -109,6 +118,10 @@ class HomeFragment(
         adapter.searchAdapterListener = object: SearchAdapterListener {
             override fun onSearchDeleted(search: Search) {
                 homeInteractor.onSearchDeleted(search)
+            }
+
+            override fun onSearchClicked(search: Search) {
+                homeInteractor.onSearchClicked(search)
             }
         }
         homeFragmentSearchesRecyclerView.adapter = adapter

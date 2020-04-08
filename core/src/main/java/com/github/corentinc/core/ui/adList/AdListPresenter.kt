@@ -7,4 +7,5 @@ interface AdListPresenter {
     fun presentParsingError()
     fun presentUnknownError()
     fun presentAdList(searchAdsPositionList: List<SearchAdsPosition>)
+    fun presentForbiddenError()
 }

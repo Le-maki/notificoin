@@ -10,7 +10,11 @@ import com.github.corentinc.core.search.Search
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.home.HomeFragmentDirections
 
-class SearchViewHolder(inflater: LayoutInflater, parent: ViewGroup):
+class SearchViewHolder(
+    inflater: LayoutInflater,
+    parent: ViewGroup,
+    private val searchAdapterListener: SearchAdapterListener
+):
     RecyclerView.ViewHolder(
         inflater.inflate(
             R.layout.item_search_recyclerview,
@@ -23,6 +27,9 @@ class SearchViewHolder(inflater: LayoutInflater, parent: ViewGroup):
 
     fun bind(search: Search) {
         title.text = search.title
+        title.setOnClickListener {
+            searchAdapterListener.onSearchClicked(search)
+        }
         button.setOnClickListener {
             Navigation.findNavController(itemView)
                 .navigate(
