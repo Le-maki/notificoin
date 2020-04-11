@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +35,7 @@ class HomeFragment(
     private val adapter: SearchAdapter
 ): Fragment(), HomeDisplay {
     private val homeViewModel: HomeViewModel by viewModel()
+    private lateinit var onDestinationChangedListener: NavController.OnDestinationChangedListener
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,15 +64,31 @@ class HomeFragment(
             homeViewModel.shouldShowBatteryWhiteListAlertDialog.value == false
         )
         alarmManager.setAlarmManager()
-        findNavController().addOnDestinationChangedListener { _, _, _ ->
-            onFragmentChange()
+        onDestinationChangedListener = object: NavController.OnDestinationChangedListener {
+            override fun onDestinationChanged(
+                controller: NavController,
+                destination: NavDestination,
+                arguments: Bundle?
+            ) {
+                if (destination.label != resources.getString(R.string.titleHome)) {
+                    endFragment()
+                    findNavController().removeOnDestinationChangedListener(this)
+                }
+            }
+
         }
+        findNavController().addOnDestinationChangedListener(onDestinationChangedListener)
         super.onStart()
     }
 
-    private fun onFragmentChange() {
+    override fun onPause() {
+        endFragment()
+        super.onPause()
+    }
+
+    private fun endFragment() {
         if (adapter.isSearchAdsPositionListInitialized()) {
-            homeInteractor.onFragmentChange(adapter.searchAdsPositionList)
+            homeInteractor.endFragment(adapter.searchAdsPositionList)
         }
     }
 
