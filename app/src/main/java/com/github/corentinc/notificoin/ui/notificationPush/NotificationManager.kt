@@ -29,29 +29,6 @@ class NotificationManager(private val context: Context) {
         createNotificationChannel()
     }
 
-    private fun sendNotification(title: String, text: String, url: String) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(url)
-        intent.apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        }
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(context, 0, intent, 0)
-        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_duck)
-            .setColor(Color.YELLOW)
-            .setDefaults(NotificationCompat.DEFAULT_ALL)
-            .setContentTitle(title)
-            .setContentText(text)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-        with(NotificationManagerCompat.from(context)) {
-            notify(Random.nextInt(0, 10000000), builder.build())
-        }
-
-    }
-
     fun sendNewAdNotifications(
         adsNumber: Int,
         titleString: String,
@@ -59,14 +36,16 @@ class NotificationManager(private val context: Context) {
         url: String
     ) {
         if (adsNumber == 1) {
-            sendNotification(
+            val text = context.resources.getQuantityString(
+                R.plurals.newAdNotificationText,
+                adsNumber,
+                searchTitleString,
+                titleString
+            )
+            sendBigtextNotification(
                 context.getString(R.string.newAdNotificationTitle),
-                context.resources.getQuantityString(
-                    R.plurals.newAdNotificationText,
-                    adsNumber,
-                    searchTitleString,
-                    titleString
-                ),
+                text,
+                text,
                 url
             )
         } else {
