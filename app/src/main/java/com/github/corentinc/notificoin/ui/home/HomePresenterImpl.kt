@@ -23,4 +23,8 @@ class HomePresenterImpl(
     override fun presentAdListFragment(search: Search) {
         homeDisplay.displayAdListScreen(search.id)
     }
+
+    override fun presentUndoDeleteSearch(search: Search) {
+        homeDisplay.displayUndoDeleteSearch(search)
+    }
 }

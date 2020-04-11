@@ -7,10 +7,7 @@ import com.github.corentinc.core.repository.search.SearchRepository
 import com.github.corentinc.core.repository.searchWithAds.SearchAdsPositionRepository
 import com.github.corentinc.core.search.Search
 import com.github.corentinc.core.ui.home.HomePresenter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class HomeInteractor(
     val homePresenter: HomePresenter,
@@ -24,11 +21,13 @@ class HomeInteractor(
         "https://www.leboncoin.fr/recherche/?text=jeu%20switch&locations=Nantes__47.23898554566441_-1.5262136157260586_10000" to "Jeu Switch"
     )
 ) {
+    private var deletedSearchList: MutableList<Search> = mutableListOf()
 
     fun onStart(
         isBatteryWhiteListAlreadyGranted: Boolean,
         wasBatteryWhiteListDialogAlreadyShown: Boolean
     ) {
+        deletedSearchList = mutableListOf()
         if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && !isBatteryWhiteListAlreadyGranted && !wasBatteryWhiteListDialogAlreadyShown
         ) {
             homePresenter.presentBatteryWhitelistPermissionAlertDialog()
@@ -64,12 +63,18 @@ class HomeInteractor(
     }
 
     fun onSearchDeleted(search: Search) {
-        CoroutineScope(Dispatchers.IO).launch {
-            searchAdsPositionRepository.delete(search.id)
-        }
+        deletedSearchList.add(search)
+        homePresenter.presentUndoDeleteSearch(search)
     }
 
-    fun onStop(searchList: MutableList<Search>) {
+    fun onFragmentChange(searchList: MutableList<Search>) {
+        runBlocking {
+            CoroutineScope(Dispatchers.IO).launch {
+                deletedSearchList.forEach { search ->
+                    searchAdsPositionRepository.delete(search.id)
+                }
+            }
+        }
         CoroutineScope(Dispatchers.IO).launch {
             searchList.forEachIndexed { index, search ->
                 searchPositionRepository.updateSearchPosition(search.id, index)
@@ -79,5 +84,9 @@ class HomeInteractor(
 
     fun onSearchClicked(search: Search) {
         homePresenter.presentAdListFragment(search)
+    }
+
+    fun onRestoreSearch(search: Search) {
+        deletedSearchList.remove(search)
     }
 }

@@ -26,4 +26,6 @@
     <string name="dragYourAd">drag your ad</string>
     <string name="createAnAd">Create an ad</string>
     <string name="homeFragmentRecyclerViewTitleText">Your searches :</string>
+    <string name="homeFragmentSearchDeleted">Search deleted</string>
+    <string name="undo">Undo</string>
 </resources>

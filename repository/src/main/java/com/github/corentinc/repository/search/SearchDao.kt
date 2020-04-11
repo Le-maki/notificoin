@@ -10,7 +10,7 @@ abstract class SearchDao: BaseDao<SearchEntity>() {
     abstract fun getSearch(id: Int): SearchEntity
 
     @Query("DELETE FROM search WHERE id = :id")
-    abstract fun removeSearch(id: Int)
+    abstract fun removeSearch(id: Int): Int
 
     @Query("DELETE FROM search")
     abstract fun deleteAll()

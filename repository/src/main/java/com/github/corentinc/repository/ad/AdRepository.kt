@@ -15,7 +15,6 @@ class AdRepository(
 ) {
     companion object {
         private const val SUBJECT_ATTRIBUTE = "subject"
-        private const val ID_ATTRIBUTE = "list_id"
         private const val PUBLICATION_ATTRIBUTE = "index_date"
         private const val URL = "url"
     }

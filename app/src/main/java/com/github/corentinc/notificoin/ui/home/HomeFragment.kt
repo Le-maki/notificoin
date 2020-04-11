@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.github.corentinc.core.home.HomeInteractor
@@ -22,6 +23,7 @@ import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.alarmManager.NotifiCoinAlarmManager
 import com.github.corentinc.notificoin.ui.home.searchesRecyclerView.SearchAdapter
 import com.github.corentinc.notificoin.ui.home.searchesRecyclerView.SearchAdapterListener
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -59,14 +61,16 @@ class HomeFragment(
             homeViewModel.shouldShowBatteryWhiteListAlertDialog.value == false
         )
         alarmManager.setAlarmManager()
+        findNavController().addOnDestinationChangedListener { _, _, _ ->
+            onFragmentChange()
+        }
         super.onStart()
     }
 
-    override fun onStop() {
+    private fun onFragmentChange() {
         if (adapter.isSearchAdsPositionListInitialized()) {
-            homeInteractor.onStop(adapter.searchAdsPositionList)
+            homeInteractor.onFragmentChange(adapter.searchAdsPositionList)
         }
-        super.onStop()
     }
 
     override fun onDestroyView() {
@@ -92,6 +96,20 @@ class HomeFragment(
                     searchId
                 )
             )
+    }
+
+    override fun displayUndoDeleteSearch(search: Search) {
+        Snackbar.make(
+            homeFragmentSnackBar,
+            getString(R.string.homeFragmentSearchDeleted),
+            Snackbar.LENGTH_LONG
+        )
+            .setAction(getString(R.string.undo)) {
+                adapter.searchAdsPositionList.add(search)
+                adapter.notifyItemInserted(adapter.searchAdsPositionList.size)
+                homeInteractor.onRestoreSearch(search)
+            }.setActionTextColor(resources.getColor(R.color.primaryColor, requireContext().theme))
+            .show()
     }
 
     private fun bindViewModel() {
