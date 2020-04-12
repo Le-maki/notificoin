@@ -67,7 +67,7 @@ class HomeInteractor(
         homePresenter.presentUndoDeleteSearch(search)
     }
 
-    fun endFragment(searchList: MutableList<Search>) {
+    fun beforeFragmentPause(searchList: MutableList<Search>) {
         runBlocking {
             CoroutineScope(Dispatchers.IO).launch {
                 deletedSearchList.forEach { search ->

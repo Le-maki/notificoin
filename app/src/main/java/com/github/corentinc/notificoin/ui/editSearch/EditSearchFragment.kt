@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.fragment.findNavController
@@ -20,19 +21,12 @@ import kotlinx.android.synthetic.main.fragment_edit_search.*
 class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor): Fragment() {
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     override fun onStart() {
         super.onStart()
-        onDestinationChangedListener =
-            OnDestinationChangedListener { _, destination, _ ->
-                if (destination.label == getString(R.string.titleHome)) {
-                    onNavigateUp()
-                    findNavController().removeOnDestinationChangedListener(
-                        onDestinationChangedListener
-                    )
-                }
-            }
-        findNavController().addOnDestinationChangedListener(onDestinationChangedListener)
+        addOnDestinationChangedListener()
+        addOnBackPressedCallBack()
         editSearchUrlEditText.imeOptions = EditorInfo.IME_ACTION_DONE
         editSearchUrlEditText.setRawInputType(InputType.TYPE_CLASS_TEXT)
         editSearchUrlEditText.setOnEditorActionListener { _, editorAction, _ ->
@@ -47,12 +41,32 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         editSearchTitleEditText.text = Editable.Factory().newEditable(editSearchFragmentArgs.title)
         editSearchUrlEditText.text = Editable.Factory().newEditable(editSearchFragmentArgs.url)
         editSearchSaveButton.setOnClickListener {
-            requireActivity().onBackPressed()
+            findNavController().navigateUp()
         }
         editSearchDeleteButton.setOnClickListener {
             editSearchInteractor.deleteSearch(editSearchFragmentArgs.id)
-            requireActivity().onBackPressed()
+            findNavController().navigateUp()
         }
+    }
+
+    private fun addOnBackPressedCallBack() {
+        onBackPressedCallback =
+            object: OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigateUp()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    private fun addOnDestinationChangedListener() {
+        onDestinationChangedListener =
+            OnDestinationChangedListener { _, destination, _ ->
+                if (destination.label == getString(R.string.titleHome)) {
+                    onNavigateUp()
+                }
+            }
+        findNavController().addOnDestinationChangedListener(onDestinationChangedListener)
     }
 
     override fun onCreateView(
@@ -64,6 +78,7 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     }
 
     override fun onPause() {
+        onBackPressedCallback.remove()
         findNavController().removeOnDestinationChangedListener(onDestinationChangedListener)
         super.onPause()
     }

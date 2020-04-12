@@ -14,8 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -64,31 +62,29 @@ class HomeFragment(
             homeViewModel.shouldShowBatteryWhiteListAlertDialog.value == false
         )
         alarmManager.setAlarmManager()
-        onDestinationChangedListener = object: NavController.OnDestinationChangedListener {
-            override fun onDestinationChanged(
-                controller: NavController,
-                destination: NavDestination,
-                arguments: Bundle?
-            ) {
-                if (destination.label != resources.getString(R.string.titleHome)) {
-                    endFragment()
-                    findNavController().removeOnDestinationChangedListener(this)
-                }
-            }
-
-        }
-        findNavController().addOnDestinationChangedListener(onDestinationChangedListener)
+        addOnDestinationChangedListener()
         super.onStart()
     }
 
+    private fun addOnDestinationChangedListener() {
+        onDestinationChangedListener =
+            NavController.OnDestinationChangedListener { _, destination, _ ->
+                if (destination.label != resources.getString(R.string.titleHome)) {
+                    beforeFragmentPause()
+                }
+            }
+        findNavController().addOnDestinationChangedListener(onDestinationChangedListener)
+    }
+
     override fun onPause() {
-        endFragment()
+        beforeFragmentPause()
+        findNavController().removeOnDestinationChangedListener(onDestinationChangedListener)
         super.onPause()
     }
 
-    private fun endFragment() {
+    private fun beforeFragmentPause() {
         if (adapter.isSearchAdsPositionListInitialized()) {
-            homeInteractor.endFragment(adapter.searchAdsPositionList)
+            homeInteractor.beforeFragmentPause(adapter.searchAdsPositionList)
         }
     }
 
@@ -98,7 +94,7 @@ class HomeFragment(
     }
 
     override fun displayEditAdScreen(id: Int, url: String, title: String) {
-        Navigation.findNavController(requireView())
+        findNavController()
             .navigate(
                 HomeFragmentDirections.editSearchAction(
                     id,
@@ -109,7 +105,7 @@ class HomeFragment(
     }
 
     override fun displayAdListScreen(searchId: Int) {
-        Navigation.findNavController(requireView())
+        findNavController()
             .navigate(
                 HomeFragmentDirections.goToAdListAction(
                     searchId
