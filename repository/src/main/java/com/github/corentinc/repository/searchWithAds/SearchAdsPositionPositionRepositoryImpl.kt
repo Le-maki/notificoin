@@ -30,6 +30,8 @@ class SearchAdsPositionPositionRepositoryImpl(
 
     override fun updateAllSearchAdsPositionFromWebPage() {
         adRepository.deleteAll()
+
+        println("search updateAllSearchAdsPositionFromWebPage")
         searchRepository.getAllSearches().forEach {
             adRepository.updateAdsFromWebPage(it)
         }

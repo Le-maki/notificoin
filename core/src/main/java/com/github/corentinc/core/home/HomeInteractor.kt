@@ -68,12 +68,14 @@ class HomeInteractor(
     }
 
     fun beforeFragmentPause(searchList: MutableList<Search>) {
-        runBlocking {
-            CoroutineScope(Dispatchers.IO).launch {
-                deletedSearchList.forEach { search ->
-                    searchAdsPositionRepository.delete(search.id)
+        if (deletedSearchList.isNotEmpty()) {
+            runBlocking {
+                withContext(Dispatchers.Default) {
+                    deletedSearchList.forEach { search ->
+                        searchAdsPositionRepository.delete(search.id)
+                    }
+                    deletedSearchList = mutableListOf()
                 }
-                deletedSearchList = mutableListOf()
             }
         }
         CoroutineScope(Dispatchers.IO).launch {
