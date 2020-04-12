@@ -7,26 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.github.corentinc.core.EditSearchInteractor
 import com.github.corentinc.notificoin.R
+import com.github.corentinc.notificoin.ui.ChildFragment
 import com.github.corentinc.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
 
 
-class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor): Fragment() {
+class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor): ChildFragment() {
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
-    private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     override fun onStart() {
         super.onStart()
         addOnDestinationChangedListener()
-        addOnBackPressedCallBack()
         editSearchUrlEditText.imeOptions = EditorInfo.IME_ACTION_DONE
         editSearchUrlEditText.setRawInputType(InputType.TYPE_CLASS_TEXT)
         editSearchUrlEditText.setOnEditorActionListener { _, editorAction, _ ->
@@ -49,16 +46,6 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         }
     }
 
-    private fun addOnBackPressedCallBack() {
-        onBackPressedCallback =
-            object: OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    findNavController().navigateUp()
-                }
-            }
-        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
-    }
-
     private fun addOnDestinationChangedListener() {
         onDestinationChangedListener =
             OnDestinationChangedListener { _, destination, _ ->
@@ -78,7 +65,6 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     }
 
     override fun onPause() {
-        onBackPressedCallback.remove()
         findNavController().removeOnDestinationChangedListener(onDestinationChangedListener)
         super.onPause()
     }
