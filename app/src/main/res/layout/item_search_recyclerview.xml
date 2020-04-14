@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:contentDescription="@string/dragYourAd"
         android:padding="8dp"
-        android:src="@drawable/ic_drag_handle_24px"
+        android:src="@drawable/ic_drag_indicator_24px"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
