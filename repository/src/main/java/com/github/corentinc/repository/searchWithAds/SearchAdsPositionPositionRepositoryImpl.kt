@@ -4,7 +4,7 @@ import com.github.corentinc.core.SearchAdsPosition
 import com.github.corentinc.core.ad.Ad
 import com.github.corentinc.core.repository.search.SearchPositionRepository
 import com.github.corentinc.core.repository.search.SearchRepository
-import com.github.corentinc.core.repository.searchWithAds.SearchAdsPositionRepository
+import com.github.corentinc.core.repository.searchAdsPosition.SearchAdsPositionRepository
 import com.github.corentinc.repository.ad.AdRepository
 
 class SearchAdsPositionPositionRepositoryImpl(

@@ -20,13 +20,17 @@ class AdViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.Vi
     private var adItemHour: TextView = itemView.findViewById(R.id.adItemHour)
     private var adItemDate: TextView = itemView.findViewById(R.id.adItemDate)
     private var adItemSearchTitle: TextView = itemView.findViewById(R.id.adItemSearchTitle)
+    private var adItemPrice: TextView = itemView.findViewById(R.id.adItemPrice)
 
     fun bind(adViewModel: AdViewModel) {
         with(adViewModel) {
-            adItemAdTitle.text = this.adTitle
-            adItemHour.text = this.hour
-            adItemDate.text = this.date
-            adItemSearchTitle.text = this.searchTitle
+            adItemAdTitle.text = adTitle
+            adItemHour.text = hour
+            adItemDate.text = date
+            adItemSearchTitle.text = searchTitle
+            adItemPrice.text = price?.let {
+                itemView.resources.getString(R.string.adViewHolderprice, price)
+            }
         }
         itemView.findViewById<ConstraintLayout>(R.id.adItem).setOnClickListener {
             itemView.context.startActivity(adViewModel.url.createIntentFromUrl())

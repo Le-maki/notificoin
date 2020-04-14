@@ -4,7 +4,7 @@ import com.github.corentinc.core.SearchAdsPostionDefaultSorter
 import com.github.corentinc.core.repository.SharedPreferencesRepository
 import com.github.corentinc.core.repository.search.SearchPositionRepository
 import com.github.corentinc.core.repository.search.SearchRepository
-import com.github.corentinc.core.repository.searchWithAds.SearchAdsPositionRepository
+import com.github.corentinc.core.repository.searchAdsPosition.SearchAdsPositionRepository
 import com.github.corentinc.core.search.Search
 import com.github.corentinc.core.ui.home.HomePresenter
 import kotlinx.coroutines.*

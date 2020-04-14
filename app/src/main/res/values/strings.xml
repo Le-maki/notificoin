@@ -28,4 +28,5 @@
     <string name="homeFragmentRecyclerViewTitleText">Your searches :</string>
     <string name="homeFragmentSearchDeleted">Search deleted</string>
     <string name="undo">Undo</string>
+    <string name="adViewHolderprice">%s €</string>
 </resources>

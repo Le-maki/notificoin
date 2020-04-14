@@ -5,5 +5,6 @@ data class AdViewModel(
     val searchTitle: String,
     val hour: String,
     val date: String,
+    val price: String?,
     val url: String
 )

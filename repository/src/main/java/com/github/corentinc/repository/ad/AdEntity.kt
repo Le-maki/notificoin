@@ -25,9 +25,11 @@ data class AdEntity(
     @ColumnInfo(name = "adTitle")
     val adTitle: String,
     @ColumnInfo(name = "adPublicationDate")
-    val publicationDate: DateTime,
+    val adPublicationDate: DateTime,
+    @ColumnInfo(name = "adPrice")
+    val adPrice: Int?,
     @ColumnInfo(name = "adUrl")
-    val url: String,
+    val adUrl: String,
     @ColumnInfo(name = "searchId")
     val searchId: Int
 )

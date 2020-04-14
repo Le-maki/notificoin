@@ -1,4 +1,4 @@
-package com.github.corentinc.core.repository.searchWithAds
+package com.github.corentinc.core.repository.searchAdsPosition
 
 import com.github.corentinc.core.SearchAdsPosition
 

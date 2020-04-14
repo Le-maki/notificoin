@@ -1,6 +1,6 @@
 package com.github.corentinc.core.adList
 
-import com.github.corentinc.core.repository.searchWithAds.SearchAdsPositionRepository
+import com.github.corentinc.core.repository.searchAdsPosition.SearchAdsPositionRepository
 import com.github.corentinc.core.ui.adList.AdListPresenter
 import com.github.corentinc.logger.NotifiCoinLogger
 import kotlinx.coroutines.CoroutineScope

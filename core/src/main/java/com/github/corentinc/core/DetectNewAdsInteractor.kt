@@ -2,7 +2,7 @@ package com.github.corentinc.core
 
 import com.github.corentinc.core.ad.Ad
 import com.github.corentinc.core.adList.AdListErrorType
-import com.github.corentinc.core.repository.searchWithAds.SearchAdsPositionRepository
+import com.github.corentinc.core.repository.searchAdsPosition.SearchAdsPositionRepository
 import com.github.corentinc.core.ui.detectNewAds.DetectNewAdsPresenter
 import com.github.corentinc.logger.NotifiCoinLogger
 import kotlinx.coroutines.CoroutineScope

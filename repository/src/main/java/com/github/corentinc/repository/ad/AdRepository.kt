@@ -15,8 +15,9 @@ class AdRepository(
 ) {
     companion object {
         private const val SUBJECT_ATTRIBUTE = "subject"
-        private const val PUBLICATION_ATTRIBUTE = "index_date"
-        private const val URL = "url"
+        private const val PUBLICATION_DATE_ATTRIBUTE = "index_date"
+        private const val PRICE_ATTRIBUTE = "price"
+        private const val URL_ATTRIBUTE = "url"
     }
 
     fun updateAdsFromWebPage(search: Search): List<Ad> {
@@ -37,9 +38,10 @@ class AdRepository(
             Ad(
                 jsonElement.asJsonObject[SUBJECT_ATTRIBUTE].asString,
                 DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").parseDateTime(
-                    jsonElement.asJsonObject[PUBLICATION_ATTRIBUTE].asString
+                    jsonElement.asJsonObject[PUBLICATION_DATE_ATTRIBUTE].asString
                 ),
-                jsonElement.asJsonObject[URL].asString
+                jsonElement.asJsonObject.get(PRICE_ATTRIBUTE)?.asInt,
+                jsonElement.asJsonObject[URL_ATTRIBUTE].asString
             )
         }?.sortedWith(adComparator) ?: throw ParseException("Unable to parse $url", 0)
     }

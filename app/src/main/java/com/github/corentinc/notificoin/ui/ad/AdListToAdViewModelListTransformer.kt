@@ -30,6 +30,7 @@ class AdListToAdViewModelListTransformer(
                 it.second,
                 it.first.publicationDate.toString("HH:mm"),
                 it.first.publicationDate.toString("dd/MM"),
+                it.first.price?.toString(),
                 it.first.url
             )
         }.toMutableList()
