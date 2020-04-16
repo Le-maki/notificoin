@@ -11,7 +11,7 @@
     <string name="channelName">notificoin</string>
     <string name="channelDescription">channel for the app NotifiCoin</string>
     <string name="koinAlreadyStarted">Koin already started, skipping startKoin</string>
-    <string name="batteryWhiteListExplanation">Please allow NotifiCoin to always run in the background, else you will not be able to receive new ads notifications on time.</string>
+    <string name="batteryWhiteListExplanation">Please allow NotifiCoin to always run in the background to receive new ads notifications on time.</string>
     <string name="OK">OK</string>
     <string name="alertDialogStopAsking">Stop asking</string>
     <string name="alertDialogMaybeLater">Maybe later</string>
