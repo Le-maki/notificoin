@@ -2,7 +2,7 @@
     <string name="appName">NotifiCoin</string>
     <string name="titleHome">Home</string>
     <string name="titleAdList">Ad List</string>
-    <string name="titleNotifications">Notifications</string>
+    <string name="titleSettings">Settings</string>
     <string name="adListConnectionErrorMessage">There was an error while trying to get adds from the website, check your connection</string>
     <string name="adListParsingErrorMessage">Unable to parse the webpage, check your url</string>
     <string name="adListForbiddenErrorMessage">You have made too many requests and Leboncoin detected that you were a robot, click here to fix this problem</string>

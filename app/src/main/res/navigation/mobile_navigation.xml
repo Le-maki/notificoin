@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/editSearchAction"
-            app:destination="@id/editSearchFragment" />
+            app:destination="@id/navigation_editSearchFragment" />
         <action
             android:id="@+id/goToAdListAction"
             app:destination="@id/navigation_ad_list" />
@@ -30,13 +30,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.github.corentinc.notificoin.ui.notifications.NotificationsFragment"
-        android:label="@string/titleNotifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_settings"
+        android:name="com.github.corentinc.notificoin.ui.notifications.SettingsFragment"
+        android:label="@string/titleSettings"
+        tools:layout="@layout/fragment_settings" />
 
     <fragment
-        android:id="@+id/editSearchFragment"
+        android:id="@+id/navigation_editSearchFragment"
         android:name="com.github.corentinc.notificoin.ui.editSearch.EditSearchFragment"
         android:label="@string/titleEditSearch"
         tools:layout="@layout/fragment_edit_search">

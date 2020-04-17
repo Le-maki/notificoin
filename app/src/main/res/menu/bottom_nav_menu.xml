@@ -12,9 +12,10 @@
         android:title="@string/titleAdList"
         />
 
-    <item android:id="@+id/navigation_notifications"
+    <item
+        android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings_24px"
-        android:title="@string/titleNotifications"
+        android:title="@string/titleSettings"
         />
 
 </menu>
