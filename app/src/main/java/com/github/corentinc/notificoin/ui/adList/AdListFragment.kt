@@ -18,7 +18,9 @@ import com.github.corentinc.notificoin.ui.adList.adListRecyclerView.AdListAdapte
 import kotlinx.android.synthetic.main.fragment_ad_list.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AdListFragment(private val adListInteractor: AdListInteractor): ChildFragment() {
+class AdListFragment(
+    private val adListInteractor: AdListInteractor
+): ChildFragment() {
     companion object {
         const val LEBONCOIN_URL = "http://www.leboncoin.fr"
     }

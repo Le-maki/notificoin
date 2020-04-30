@@ -4,7 +4,6 @@ import com.github.corentinc.core.SearchAdsPosition
 import com.github.corentinc.core.adList.AdListErrorType
 import com.github.corentinc.core.adList.AdListErrorType.*
 import com.github.corentinc.core.ui.adList.AdListPresenter
-import com.github.corentinc.notificoin.ui.ad.AdListToAdViewModelListTransformer
 
 class AdListPresenterImpl(
     private val adsListToAdViewModelListTransformer: AdListToAdViewModelListTransformer,

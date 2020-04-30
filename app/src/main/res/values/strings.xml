@@ -3,6 +3,8 @@
     <string name="titleHome">Home</string>
     <string name="titleAdList">Ad List</string>
     <string name="titleSettings">Settings</string>
+    <string name="titleAbout">About</string>
+    <string name="settingsBatteryWarningTitle">Accurate notifications</string>
     <string name="adListConnectionErrorMessage">There was an error while trying to get adds from the website, check your connection</string>
     <string name="adListParsingErrorMessage">Unable to parse the webpage, check your url</string>
     <string name="adListForbiddenErrorMessage">You have made too many requests and Leboncoin detected that you were a robot, click here to fix this problem</string>
@@ -11,7 +13,7 @@
     <string name="channelName">notificoin</string>
     <string name="channelDescription">channel for the app NotifiCoin</string>
     <string name="koinAlreadyStarted">Koin already started, skipping startKoin</string>
-    <string name="batteryWhiteListExplanation">Please allow NotifiCoin to always run in the background to receive new ads notifications on time.</string>
+    <string name="batteryWhiteListExplanation">Please allow NotifiCoin to always run in the background to receive ads notifications on time.</string>
     <string name="OK">OK</string>
     <string name="alertDialogStopAsking">Stop asking</string>
     <string name="alertDialogMaybeLater">Maybe later</string>

@@ -10,14 +10,14 @@ import org.koin.dsl.module
 val searchAdsPositionModule = module {
     single<SearchAdsPositionRepository> {
         SearchAdsPositionPositionRepositoryImpl(
-            get(),
-            get(),
-            get(),
-            get(),
-            get()
+            searchAdsPositionDataSource = get(),
+            searchRepository = get(),
+            adRepository = get(),
+            searchPositionRepository = get(),
+            adComparator = get()
         )
     }
-    single { SearchAdsPositionDataSource(get()) }
+    single { SearchAdsPositionDataSource(searchAdsPositionDao = get()) }
     single { get<NotifiCoinDataBase>().searchWithAdsDao() }
-    single { SearchAdsPostionDefaultSorter(get()) }
+    single { SearchAdsPostionDefaultSorter(searchPositionDefaultSorter = get()) }
 }

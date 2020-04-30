@@ -7,13 +7,18 @@ import com.github.corentinc.repository.sharedPreferences.SharedPreferencesReposi
 import org.koin.dsl.module
 
 val sharedPreferencesModule = module {
-    single<SharedPreferencesRepository> { SharedPreferencesRepositoryImpl(get(), get()) }
+    single<SharedPreferencesRepository> {
+        SharedPreferencesRepositoryImpl(
+            sharedPreferencesEditor = get(),
+            sharedPreferences = get()
+        )
+    }
     single {
-        getSharedPrefs(get())
+        getSharedPrefs(context = get())
     }
 
     single<SharedPreferences.Editor> {
-        getSharedPrefs(get()).edit()
+        getSharedPrefs(context = get()).edit()
     }
 }
 

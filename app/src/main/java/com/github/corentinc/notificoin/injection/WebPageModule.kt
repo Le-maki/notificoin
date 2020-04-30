@@ -7,6 +7,6 @@ import org.koin.dsl.module
 
 val webPageModule = module {
 	single { WebPageDataSource() }
-	single { WebPageRepository(get()) }
+    single { WebPageRepository(webPageDataSource = get()) }
 	single { DocumentToAdJsonArrayTransformer() }
 }

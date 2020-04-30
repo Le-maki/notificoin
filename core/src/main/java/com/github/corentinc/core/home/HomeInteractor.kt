@@ -27,11 +27,11 @@ class HomeInteractor(
         isBatteryWhiteListAlreadyGranted: Boolean,
         wasBatteryWhiteListDialogAlreadyShown: Boolean
     ) {
-        deletedSearchList = mutableListOf()
         if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && !isBatteryWhiteListAlreadyGranted && !wasBatteryWhiteListDialogAlreadyShown
         ) {
-            homePresenter.presentBatteryWhitelistPermissionAlertDialog()
+            homePresenter.presentBatteryWarningFragment()
         }
+        deletedSearchList = mutableListOf()
         CoroutineScope(Dispatchers.IO).launch {
             var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
             if (searchAdsPosition.isEmpty()) {
@@ -45,10 +45,6 @@ class HomeInteractor(
                 homePresenter.presentSearches(searchAdsPosition.map { it.search }.toMutableList())
             }
         }
-    }
-
-    fun onBatteryWhiteListAlertDialogNeutralButtonPressed() {
-        sharedPreferencesRepository.shouldShowBatteryWhiteListDialog = false
     }
 
     fun onCreateAdButtonPressed() {

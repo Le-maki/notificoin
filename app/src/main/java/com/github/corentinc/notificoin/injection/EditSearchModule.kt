@@ -4,5 +4,5 @@ import com.github.corentinc.core.EditSearchInteractor
 import org.koin.dsl.module
 
 val editSearchModule = module {
-    single { EditSearchInteractor(get()) }
+    single { EditSearchInteractor(searchRepository = get()) }
 }

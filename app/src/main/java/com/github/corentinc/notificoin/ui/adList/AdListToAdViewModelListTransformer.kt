@@ -1,8 +1,7 @@
-package  com.github.corentinc.notificoin.ui.ad
+package  com.github.corentinc.notificoin.ui.adList
 
 import com.github.corentinc.core.SearchAdsPosition
 import com.github.corentinc.core.ad.Ad
-import com.github.corentinc.notificoin.ui.adList.AdViewModel
 
 class AdListToAdViewModelListTransformer(
     private val adComparator: Comparator<Ad>

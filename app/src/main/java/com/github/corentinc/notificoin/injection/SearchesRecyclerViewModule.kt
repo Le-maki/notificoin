@@ -5,6 +5,6 @@ import com.github.corentinc.notificoin.ui.home.searchesRecyclerView.SwipeAndDrag
 import org.koin.dsl.module
 
 val searchesRecyclerViewModule = module {
-    single { SearchAdapter(get()) }
+    single { SearchAdapter(swipeAndDragHelper = get()) }
     single { SwipeAndDragHelper() }
 }

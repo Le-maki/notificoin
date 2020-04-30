@@ -8,10 +8,6 @@ class HomePresenterImpl(
 ): HomePresenter {
     lateinit var homeDisplay: HomeDisplay
 
-    override fun presentBatteryWhitelistPermissionAlertDialog() {
-        homeViewModel.shouldShowBatteryWhiteListAlertDialog.value = true
-    }
-
     override fun presentSearches(search: MutableList<Search>) {
         homeViewModel.searchAdsPositionList.value = search
     }
@@ -26,5 +22,9 @@ class HomePresenterImpl(
 
     override fun presentUndoDeleteSearch(search: Search) {
         homeDisplay.displayUndoDeleteSearch(search)
+    }
+
+    override fun presentBatteryWarningFragment() {
+        homeDisplay.displayBatteryWarningFragment()
     }
 }

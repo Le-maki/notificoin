@@ -98,5 +98,6 @@ dependencies {
     kapt parent.ext.glideCompiler
     annotationProcessor parent.ext.glideCompiler
 
-
+    // About page
+    implementation parent.ext.aboutPage
 }

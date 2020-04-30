@@ -51,7 +51,8 @@ class MainActivity: AppCompatActivity() {
                         editSearchModule,
                         searchesRecyclerViewModule,
                         searchPositionModule,
-                        settingsModule
+                        settingsModule,
+                        batteryWarningModule
                     )
                 )
             }

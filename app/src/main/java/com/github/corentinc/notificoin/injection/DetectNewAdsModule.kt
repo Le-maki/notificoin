@@ -7,8 +7,8 @@ import org.koin.dsl.module
 val detectNewAdsModule = module {
     single { (detectNewAdsPresenter: DetectNewAdsPresenter) ->
         DetectNewAdsInteractor(
-            get(),
-            detectNewAdsPresenter
+            searchAdsPositionRepository = get(),
+            detectNewAdsPresenter = detectNewAdsPresenter
         )
     }
 }

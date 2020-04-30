@@ -8,12 +8,17 @@ import com.github.corentinc.notificoin.ui.adList.AdListViewModel
 import org.koin.dsl.module
 
 val adListModule = module {
-    single { AdListInteractor(get(), get()) }
-    single<AdListPresenter> { AdListPresenterImpl(get(), get()) }
+    single { AdListInteractor(adListPresenter = get(), searchAdsPositionRepository = get()) }
+    single<AdListPresenter> {
+        AdListPresenterImpl(
+            adsListToAdViewModelListTransformer = get(),
+            adListViewModel = get()
+        )
+    }
     single {
         AdListViewModel(
-            SingleLiveEvent(),
-            SingleLiveEvent()
+            adViewModelList = SingleLiveEvent(),
+            errorType = SingleLiveEvent()
         )
     }
 }

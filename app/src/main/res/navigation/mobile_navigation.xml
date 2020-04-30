@@ -16,8 +16,15 @@
         <action
             android:id="@+id/goToAdListAction"
             app:destination="@id/navigation_ad_list" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_battery_warning"
+            app:destination="@id/navigation_battery_warning" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_battery_warning"
+        android:name="com.github.corentinc.notificoin.ui.batteryWarning.BatteryWarningFragment"
+        tools:layout="@layout/battery_whitelist_alertdialog" />
     <fragment
         android:id="@+id/navigation_ad_list"
         android:name="com.github.corentinc.notificoin.ui.adList.AdListFragment"
@@ -31,9 +38,21 @@
 
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.github.corentinc.notificoin.ui.notifications.SettingsFragment"
+        android:name="com.github.corentinc.notificoin.ui.settings.SettingsFragment"
         android:label="@string/titleSettings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_navigation_settings_to_navigation_about"
+            app:destination="@id/navigation_about" />
+        <action
+            android:id="@+id/action_navigation_settings_to_navigation_battery_warning"
+            app:destination="@id/navigation_battery_warning" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_about"
+        android:name="com.github.corentinc.notificoin.ui.settings.AboutFragment"
+        android:label="@string/titleAbout" />
 
     <fragment
         android:id="@+id/navigation_editSearchFragment"

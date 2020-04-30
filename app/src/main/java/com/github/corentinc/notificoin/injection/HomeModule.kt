@@ -8,12 +8,21 @@ import com.github.corentinc.notificoin.ui.home.HomeViewModel
 import org.koin.dsl.module
 
 val homeModule = module {
-    single { HomeInteractor(get(), get(), get(), get(), get(), get()) }
-    single<HomePresenter> { HomePresenterImpl(get()) }
+    single {
+        HomeInteractor(
+            homePresenter = get(),
+            searchRepository = get(),
+            searchPositionRepository = get(),
+            searchAdsPositionRepository = get(),
+            sharedPreferencesRepository = get(),
+            searchAdsPostionDefaultSorter = get()
+        )
+    }
+    single<HomePresenter> { HomePresenterImpl(homeViewModel = get()) }
     single {
         HomeViewModel(
-            SingleLiveEvent(),
-            SingleLiveEvent()
+            shouldShowBatteryWhiteListAlertDialog = SingleLiveEvent(),
+            searchAdsPositionList = SingleLiveEvent()
         )
     }
 }

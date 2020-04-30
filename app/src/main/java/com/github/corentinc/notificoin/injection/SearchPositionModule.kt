@@ -9,7 +9,7 @@ import org.koin.dsl.module
 
 val searchPositionModule = module {
     single { get<NotifiCoinDataBase>().searchPositionDao() }
-    single { SearchPositionDataSource(get()) }
-    single<SearchPositionRepository> { SearchPositionRepositoryImpl(get()) }
+    single { SearchPositionDataSource(searchPositionDao = get()) }
+    single<SearchPositionRepository> { SearchPositionRepositoryImpl(searchPositionDataSource = get()) }
     single { SearchPositionDefaultSorter() }
 }
