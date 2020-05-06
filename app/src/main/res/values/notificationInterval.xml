@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="notificationIntervalEntries">
+        <item>"every minute"</item>
+        <item>"every 5 minutes"</item>
+        <item>"every 15 minutes"</item>
+        <item>"every 30 minutes"</item>
+        <item>"every hour"</item>
+        <item>"every day"</item>
+    </array>
+    <array name="notificationIntervalValues">
+        <item>"1"</item>
+        <item>"5"</item>
+        <item>"15"</item>
+        <item>"30"</item>
+        <item>"60"</item>
+        <item>"1440"</item>
+    </array>
+</resources>

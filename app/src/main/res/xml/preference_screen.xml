@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <DropDownPreference
+        android:entryValues="@array/notificationIntervalValues"
+        android:summary="@string/settingsNotificationIntervalSummary"
+        android:title="@string/settingsNotificationIntervalTitle"
+        app:entries="@array/notificationIntervalEntries"
+        app:icon="@drawable/ic_timer_24px"
+        app:key="notificationInterval" />
+
+    <SwitchPreferenceCompat
+        app:icon="@drawable/ic_access_alarm_24px"
+        app:key="accurateNotifications"
+        app:summary="@string/settingsBatteryWarningSummary"
+        app:title="@string/settingsBatteryWarningTitle" />
+
+    <Preference
+        app:icon="@drawable/ic_info_24px"
+        app:key="about"
+        app:title="@string/titleAbout" />
+</PreferenceScreen>

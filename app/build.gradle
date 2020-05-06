@@ -98,6 +98,9 @@ dependencies {
     kapt parent.ext.glideCompiler
     annotationProcessor parent.ext.glideCompiler
 
+    // Settings
+    implementation parent.ext.androidPreferences
+
     // About page
     implementation parent.ext.aboutPage
 }

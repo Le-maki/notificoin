@@ -5,6 +5,7 @@
     <string name="titleSettings">Settings</string>
     <string name="titleAbout">About</string>
     <string name="settingsBatteryWarningTitle">Accurate notifications</string>
+    <string name="settingsBatteryWarningSummary">Allow Notificoin to run in the background to get notifications on time</string>
     <string name="adListConnectionErrorMessage">There was an error while trying to get adds from the website, check your connection</string>
     <string name="adListParsingErrorMessage">Unable to parse the webpage, check your url</string>
     <string name="adListForbiddenErrorMessage">You have made too many requests and Leboncoin detected that you were a robot, click here to fix this problem</string>
@@ -31,4 +32,6 @@
     <string name="homeFragmentSearchDeleted">Search deleted</string>
     <string name="undo">Undo</string>
     <string name="adViewHolderprice">%s €</string>
+    <string name="settingsNotificationIntervalSummary">Choose how often you want to check for new ads</string>
+    <string name="settingsNotificationIntervalTitle">Ad check interval</string>
 </resources>
