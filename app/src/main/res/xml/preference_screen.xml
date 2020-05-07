@@ -8,16 +8,16 @@
         android:title="@string/settingsNotificationIntervalTitle"
         app:entries="@array/notificationIntervalEntries"
         app:icon="@drawable/ic_timer_24px"
-        app:key="notificationInterval" />
+        app:key="@string/notificationIntervalKey" />
 
     <SwitchPreferenceCompat
         app:icon="@drawable/ic_access_alarm_24px"
-        app:key="accurateNotifications"
+        app:key="@string/accurateNotificationsKey"
         app:summary="@string/settingsBatteryWarningSummary"
         app:title="@string/settingsBatteryWarningTitle" />
 
     <Preference
         app:icon="@drawable/ic_info_24px"
-        app:key="about"
+        app:key="@string/aboutKey"
         app:title="@string/titleAbout" />
 </PreferenceScreen>

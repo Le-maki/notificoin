@@ -39,8 +39,7 @@
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.github.corentinc.notificoin.ui.settings.SettingsFragment"
-        android:label="@string/titleSettings"
-        tools:layout="@layout/fragment_settings">
+        android:label="@string/titleSettings">
         <action
             android:id="@+id/action_navigation_settings_to_navigation_about"
             app:destination="@id/navigation_about" />

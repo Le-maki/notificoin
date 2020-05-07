@@ -9,5 +9,5 @@ import org.koin.dsl.module
 val settingsModule = module {
     single { SettingsViewModel() }
     single { SettingsInteractor(settingsPresenter = get()) }
-    single<SettingsPresenter> { SettingsPresenterImpl() }
+    single<SettingsPresenter> { SettingsPresenterImpl(settingsViewModel = get()) }
 }
