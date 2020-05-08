@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="notificationIntervalEntries">
+        <item>"never"</item>
         <item>"every minute"</item>
         <item>"every 5 minutes"</item>
         <item>"every 15 minutes"</item>
@@ -9,6 +10,7 @@
         <item>"every day"</item>
     </array>
     <array name="notificationIntervalValues">
+        <item>"0"</item>
         <item>"1"</item>
         <item>"5"</item>
         <item>"15"</item>

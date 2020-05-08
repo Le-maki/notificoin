@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.home.HomeInteractor
 import com.github.corentinc.core.search.Search
 import com.github.corentinc.notificoin.R
-import com.github.corentinc.notificoin.ui.alarmManager.NotifiCoinAlarmManager
 import com.github.corentinc.notificoin.ui.home.searchesRecyclerView.SearchAdapter
 import com.github.corentinc.notificoin.ui.home.searchesRecyclerView.SearchAdapterListener
 import com.google.android.material.snackbar.Snackbar
@@ -23,7 +22,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment(
     val homeInteractor: HomeInteractor,
-    private val alarmManager: NotifiCoinAlarmManager,
     private val adapter: SearchAdapter
 ): Fragment(), HomeDisplay {
     private val homeViewModel: HomeViewModel by viewModel()
@@ -55,7 +53,6 @@ class HomeFragment(
             powerManager != null && powerManager.isIgnoringBatteryOptimizations(context.packageName),
             homeViewModel.shouldShowBatteryWhiteListAlertDialog.value == false
         )
-        alarmManager.setAlarmManager()
         addOnDestinationChangedListener()
         super.onStart()
     }

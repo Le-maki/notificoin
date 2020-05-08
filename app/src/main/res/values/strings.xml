@@ -33,5 +33,5 @@
     <string name="undo">Undo</string>
     <string name="adViewHolderprice">%s €</string>
     <string name="settingsNotificationIntervalSummary">Choose how often you want to check for new ads</string>
-    <string name="settingsNotificationIntervalTitle">Ad check interval :&#160;</string>
+    <string name="settingsNotificationIntervalTitle">Check for new ads :&#160;</string>
 </resources>

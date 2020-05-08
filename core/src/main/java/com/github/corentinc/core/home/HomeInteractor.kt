@@ -1,6 +1,7 @@
 package com.github.corentinc.core.home
 
 import com.github.corentinc.core.SearchAdsPostionDefaultSorter
+import com.github.corentinc.core.alarmManager.AlarmManagerInteractor
 import com.github.corentinc.core.repository.SharedPreferencesRepository
 import com.github.corentinc.core.repository.search.SearchPositionRepository
 import com.github.corentinc.core.repository.search.SearchRepository
@@ -11,6 +12,7 @@ import kotlinx.coroutines.*
 
 class HomeInteractor(
     val homePresenter: HomePresenter,
+    private val alarmManagerInteractor: AlarmManagerInteractor,
     private val searchRepository: SearchRepository,
     private val searchPositionRepository: SearchPositionRepository,
     private val searchAdsPositionRepository: SearchAdsPositionRepository,
@@ -45,6 +47,7 @@ class HomeInteractor(
                 homePresenter.presentSearches(searchAdsPosition.map { it.search }.toMutableList())
             }
         }
+        alarmManagerInteractor.updateAlarm(sharedPreferencesRepository.alarmIntervalPreference)
     }
 
     fun onCreateAdButtonPressed() {

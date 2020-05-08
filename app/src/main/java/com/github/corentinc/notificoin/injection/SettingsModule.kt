@@ -8,6 +8,6 @@ import org.koin.dsl.module
 
 val settingsModule = module {
     single { SettingsViewModel() }
-    single { SettingsInteractor(settingsPresenter = get()) }
+    single { SettingsInteractor(settingsPresenter = get(), alarmManagerInteractor = get()) }
     single<SettingsPresenter> { SettingsPresenterImpl(settingsViewModel = get()) }
 }

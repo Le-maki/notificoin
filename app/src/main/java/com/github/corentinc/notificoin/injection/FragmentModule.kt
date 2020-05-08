@@ -10,7 +10,7 @@ import com.github.corentinc.notificoin.ui.settings.SettingsFragment
 import org.koin.dsl.module
 
 val fragmentModule = module {
-    single { HomeFragment(homeInteractor = get(), alarmManager = get(), adapter = get()) }
+    single { HomeFragment(homeInteractor = get(), adapter = get()) }
     single { NavHostFragment() }
     factory { EditSearchFragment(editSearchInteractor = get()) }
     single { AdListFragment(adListInteractor = get()) }

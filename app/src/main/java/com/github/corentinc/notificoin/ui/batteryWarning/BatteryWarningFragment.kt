@@ -26,22 +26,26 @@ class BatteryWarningFragment(
             .into(view.findViewById(R.id.batteryWhiteListGif))
         builder.setView(view)
             .setMessage(alertMessage)
-            .setPositiveButton(getString(R.string.OK)) { _, _ ->
+            .setPositiveButton(getString(R.string.OK)) { dialog, _ ->
                 try {
                     goToBatteryWhiteListOfTheApp(context)
                 } catch (exception: ActivityNotFoundException) {
                     goToBatteryWhiteList()
                 }
+                dialog.dismiss()
                 requireActivity().onBackPressed()
             }
-            .setNeutralButton(getString(R.string.alertDialogStopAsking)) { _, _ ->
+            .setNeutralButton(getString(R.string.alertDialogStopAsking)) { dialog, _ ->
                 batteryWarningInteractor.onBatteryWhiteListAlertDialogNeutralButtonPressed()
+                dialog.dismiss()
                 requireActivity().onBackPressed()
             }
-            .setNegativeButton(getString(R.string.alertDialogMaybeLater)) { _, _ ->
+            .setNegativeButton(getString(R.string.alertDialogMaybeLater)) { dialog, _ ->
+                dialog.dismiss()
                 requireActivity().onBackPressed()
             }
             .setOnCancelListener {
+                it.dismiss()
                 requireActivity().onBackPressed()
             }.create().show()
     }

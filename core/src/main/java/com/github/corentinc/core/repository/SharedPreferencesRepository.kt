@@ -6,4 +6,5 @@ interface SharedPreferencesRepository {
     }
 
     var shouldShowBatteryWhiteListDialog: Boolean
+    val alarmIntervalPreference: Int
 }
