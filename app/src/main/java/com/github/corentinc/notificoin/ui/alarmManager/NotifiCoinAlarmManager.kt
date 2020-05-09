@@ -15,7 +15,7 @@ class NotifiCoinAlarmManager(private val context: Context): AlarmManagerDisplay 
             SystemClock.elapsedRealtime() + milliSeconds,
             milliSeconds.toLong(),
             Intent(context, AlarmBroadcastReceiver::class.java).let { intent ->
-                PendingIntent.getBroadcast(context, 0, intent, 0)
+                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             }
         )
     }
@@ -23,7 +23,7 @@ class NotifiCoinAlarmManager(private val context: Context): AlarmManagerDisplay 
     override fun cancelAlarm() {
         (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager).cancel(
             Intent(context, AlarmBroadcastReceiver::class.java).let { intent ->
-                PendingIntent.getBroadcast(context, 0, intent, 0)
+                PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
             })
     }
 }

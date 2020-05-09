@@ -16,7 +16,8 @@ val homeModule = module {
             searchAdsPositionRepository = get(),
             sharedPreferencesRepository = get(),
             searchAdsPostionDefaultSorter = get(),
-            alarmManagerInteractor = get()
+            alarmManagerInteractor = get(),
+            globalSharedPreferencesRepository = get()
         )
     }
     single<HomePresenter> { HomePresenterImpl(homeViewModel = get()) }

@@ -47,7 +47,9 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
                         adListModule,
                         editSearchModule,
                         searchesRecyclerViewModule,
-                        searchPositionModule
+                        searchPositionModule,
+                        settingsModule,
+                        batteryWarningModule
                     )
                 )
             }

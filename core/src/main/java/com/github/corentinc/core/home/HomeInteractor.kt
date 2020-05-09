@@ -2,6 +2,7 @@ package com.github.corentinc.core.home
 
 import com.github.corentinc.core.SearchAdsPostionDefaultSorter
 import com.github.corentinc.core.alarmManager.AlarmManagerInteractor
+import com.github.corentinc.core.repository.GlobalSharedPreferencesRepository
 import com.github.corentinc.core.repository.SharedPreferencesRepository
 import com.github.corentinc.core.repository.search.SearchPositionRepository
 import com.github.corentinc.core.repository.search.SearchRepository
@@ -17,6 +18,7 @@ class HomeInteractor(
     private val searchPositionRepository: SearchPositionRepository,
     private val searchAdsPositionRepository: SearchAdsPositionRepository,
     private val sharedPreferencesRepository: SharedPreferencesRepository,
+    private val globalSharedPreferencesRepository: GlobalSharedPreferencesRepository,
     private val searchAdsPostionDefaultSorter: SearchAdsPostionDefaultSorter,
     private val searches: Map<String, String> = mapOf(
         "https://www.leboncoin.fr/recherche/?category=2&locations=Nantes&regdate=2010-max" to "Voiture",
@@ -47,7 +49,7 @@ class HomeInteractor(
                 homePresenter.presentSearches(searchAdsPosition.map { it.search }.toMutableList())
             }
         }
-        alarmManagerInteractor.updateAlarm(sharedPreferencesRepository.alarmIntervalPreference)
+        alarmManagerInteractor.updateAlarm(globalSharedPreferencesRepository.alarmIntervalPreference)
     }
 
     fun onCreateAdButtonPressed() {

@@ -10,8 +10,6 @@ class SharedPreferencesRepositoryImpl(
     companion object {
         private const val SHOULD_SHOW_BATTERY_WHITE_LIST_DIALOG =
             "SHOULD_SHOW_BATTERY_WHITE_LIST_DIALOG"
-        private const val ALARM_INTERVAL_PREFERENCE_KEY =
-            "notificationInterval"
     }
 
     override var shouldShowBatteryWhiteListDialog: Boolean
@@ -20,13 +18,5 @@ class SharedPreferencesRepositoryImpl(
         }
         set(value) {
             sharedPreferencesEditor.putBoolean(SHOULD_SHOW_BATTERY_WHITE_LIST_DIALOG, value).apply()
-        }
-
-    override var alarmIntervalPreference: Int
-        get() {
-            return sharedPreferences.getInt(ALARM_INTERVAL_PREFERENCE_KEY, 5)
-        }
-        set(value) {
-            sharedPreferencesEditor.putInt(ALARM_INTERVAL_PREFERENCE_KEY, value).apply()
         }
 }
