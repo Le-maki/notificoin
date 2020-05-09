@@ -4,5 +4,6 @@ enum class AdListErrorType {
     CONNECTION,
     PARSING,
     UNKNOWN,
-    FORBIDDEN
+    FORBIDDEN,
+    EMPTY
 }

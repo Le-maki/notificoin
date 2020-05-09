@@ -37,6 +37,8 @@ class AdListFragment(
     }
 
     override fun onStart() {
+        textAdsFragment?.isVisible = false
+        adListImageView?.isVisible = false
         bindViewModel()
         val adListFragmentArgs: AdListFragmentArgs by navArgs()
         adListInteractor.onStart(adListFragmentArgs.searchId)
@@ -83,8 +85,11 @@ class AdListFragment(
                             }
                             getString(R.string.adListForbiddenErrorMessage)
                         }
+                        EMPTY -> getString(R.string.adListEmpty)
                     }
                     textAdsFragment?.text = text
+                    textAdsFragment?.isVisible = true
+                    adListImageView?.isVisible = true
                     hideProgressBar()
                 }
             })

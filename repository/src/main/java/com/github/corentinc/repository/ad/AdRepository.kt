@@ -2,6 +2,7 @@ package com.github.corentinc.repository.ad
 
 import com.github.corentinc.core.ad.Ad
 import com.github.corentinc.core.search.Search
+import com.github.corentinc.logger.NotifiCoinLogger
 import com.github.corentinc.repository.webpage.DocumentToAdJsonArrayTransformer
 import com.github.corentinc.repository.webpage.WebPageRepository
 import org.joda.time.format.DateTimeFormat
@@ -34,16 +35,21 @@ class AdRepository(
 
     fun getSortedRemoteAds(url: String): List<Ad> {
         val document = webPageRepository.getWebPage(url)
-        return documentToAdJsonArrayTransformer.transform(document)?.map { jsonElement ->
-            Ad(
-                jsonElement.asJsonObject[SUBJECT_ATTRIBUTE].asString,
-                DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").parseDateTime(
-                    jsonElement.asJsonObject[PUBLICATION_DATE_ATTRIBUTE].asString
-                ),
-                jsonElement.asJsonObject.get(PRICE_ATTRIBUTE)?.asInt,
-                jsonElement.asJsonObject[URL_ATTRIBUTE].asString
-            )
-        }?.sortedWith(adComparator) ?: throw ParseException("Unable to parse $url", 0)
+        return try {
+            documentToAdJsonArrayTransformer.transform(document)?.map { jsonElement ->
+                Ad(
+                    jsonElement.asJsonObject[SUBJECT_ATTRIBUTE].asString,
+                    DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").parseDateTime(
+                        jsonElement.asJsonObject[PUBLICATION_DATE_ATTRIBUTE].asString
+                    ),
+                    jsonElement.asJsonObject.get(PRICE_ATTRIBUTE)?.asInt,
+                    jsonElement.asJsonObject[URL_ATTRIBUTE].asString
+                )
+            }?.sortedWith(adComparator) ?: throw ParseException("Unable to parse $url", 0)
+        } catch (exception: IllegalStateException) {
+            NotifiCoinLogger.i("Empty search : $url")
+            emptyList()
+        }
     }
 
     fun deleteAll() = adDataSource.deleteAll()

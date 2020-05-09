@@ -25,8 +25,14 @@ class AdListInteractor(
                 if (searchId != -1) {
                     searchAdsPosition = searchAdsPosition.filter { it.search.id == searchId }
                 }
-                withContext(Dispatchers.Main) {
-                    adListPresenter.presentAdList(searchAdsPosition)
+                if (searchAdsPosition.all { it.ads.isEmpty() }) {
+                    withContext(Dispatchers.Main) {
+                        adListPresenter.presentEmptyList()
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        adListPresenter.presentAdList(searchAdsPosition)
+                    }
                 }
             } catch (error: Exception) {
                 when (error) {
@@ -36,7 +42,7 @@ class AdListInteractor(
                             adListPresenter.presentConnectionError()
                         }
                     }
-                    is ParseException, is IllegalStateException -> {
+                    is ParseException -> {
                         NotifiCoinLogger.e("error parsing ads:  $error ", error)
                         withContext(Dispatchers.Main) {
                             adListPresenter.presentParsingError()

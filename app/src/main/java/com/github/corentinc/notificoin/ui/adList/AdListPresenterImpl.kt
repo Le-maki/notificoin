@@ -34,4 +34,7 @@ class AdListPresenterImpl(
         presentError(FORBIDDEN)
     }
 
+    override fun presentEmptyList() {
+        presentError(EMPTY)
+    }
 }
