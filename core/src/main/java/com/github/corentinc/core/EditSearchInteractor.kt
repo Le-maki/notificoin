@@ -12,7 +12,7 @@ class EditSearchInteractor(
     private val editSearchPresenter: EditSearchPresenter
 ) {
     companion object {
-        private const val REGEX = "^(http://|https://)?www\\.leboncoin\\.fr/(recherche/)?.+"
+        private const val REGEX = "^(http://|https://)www\\.leboncoin\\.fr/(recherche/)?.+"
         private const val SEARCH_PATH = "recherche/"
     }
     fun onNavigateUp(id: Int, title: String, url: String) {
