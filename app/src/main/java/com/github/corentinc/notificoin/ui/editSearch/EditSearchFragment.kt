@@ -30,8 +30,6 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         super.onStart()
         bindViewModel()
         addOnDestinationChangedListener()
-        initializeUrlEditText()
-        initializeTitleEditText()
         editSearchSaveButton.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -41,6 +39,11 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initializeUrlEditText()
+        initializeTitleEditText()
+        super.onViewCreated(view, savedInstanceState)
+    }
     private fun initializeTitleEditText() {
         editSearchTitleEditText.text = Editable.Factory().newEditable(editSearchFragmentArgs.title)
         editSearchTitleEditText.doOnTextChanged { text, _, _, _ ->
@@ -102,9 +105,9 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
             this.viewLifecycleOwner,
             Observer {
                 when (it) {
-                    EMPTY -> showUrlError("EMPTY")
-                    INVALID_FORMAT -> showUrlError("INVALID")
-                    NOT_A_SEARCH -> showUrlError("NOT A SEARCH")
+                    EMPTY -> showUrlError(getString(R.string.editSearchEmptyUrlError))
+                    INVALID_FORMAT -> showUrlError(getString(R.string.edtiSearchInvalidUrlError))
+                    NOT_A_SEARCH -> showUrlError(getString(R.string.editSearchNotASearchUrlError))
                     null -> hideUrlError()
                 }
             }
@@ -118,7 +121,7 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     }
 
     private fun hideUrlError() {
-        if (editSearchViewModel.isTitleEmpty.value == false) {
+        if (editSearchViewModel.isTitleEmpty.value != true) {
             editSearchSaveButton.isEnabled = true
         }
         editSearchUrlErrorText.isVisible = false
