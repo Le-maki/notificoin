@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.github.corentinc.notificoin">
 
     <dist:module dist:instant="true" />
@@ -15,7 +16,8 @@
         android:label="@string/appName"
         android:roundIcon="@drawable/ic_duck"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
 
         <activity
             android:name="com.github.corentinc.notificoin.MainActivity"

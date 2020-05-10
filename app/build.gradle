@@ -42,6 +42,7 @@ android {
 
 repositories {
     jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -103,4 +104,7 @@ dependencies {
 
     // About page
     implementation parent.ext.aboutPage
+
+    // Bubble views
+    implementation parent.ext.bubbleView
 }

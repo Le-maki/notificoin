@@ -7,23 +7,48 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.github.corentinc.core.EditSearchInteractor
+import com.github.corentinc.core.editSearch.UrlError.*
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.ChildFragment
 import com.github.corentinc.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor): ChildFragment() {
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
-
+    private val editSearchViewModel: EditSearchViewModel by viewModel()
     override fun onStart() {
         super.onStart()
+        bindViewModel()
         addOnDestinationChangedListener()
+        initializeUrlEditText()
+        initializeTitleEditText()
+        editSearchSaveButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+        editSearchDeleteButton.setOnClickListener {
+            editSearchInteractor.deleteSearch(editSearchFragmentArgs.id)
+            findNavController().navigateUp()
+        }
+    }
+
+    private fun initializeTitleEditText() {
+        editSearchTitleEditText.text = Editable.Factory().newEditable(editSearchFragmentArgs.title)
+        editSearchTitleEditText.doOnTextChanged { text, _, _, _ ->
+            editSearchInteractor.onTitleTextChanged(text)
+        }
+    }
+
+    private fun initializeUrlEditText() {
         editSearchUrlEditText.imeOptions = EditorInfo.IME_ACTION_DONE
         editSearchUrlEditText.setRawInputType(InputType.TYPE_CLASS_TEXT)
         editSearchUrlEditText.setOnEditorActionListener { _, editorAction, _ ->
@@ -35,14 +60,9 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                 else -> false
             }
         }
-        editSearchTitleEditText.text = Editable.Factory().newEditable(editSearchFragmentArgs.title)
         editSearchUrlEditText.text = Editable.Factory().newEditable(editSearchFragmentArgs.url)
-        editSearchSaveButton.setOnClickListener {
-            findNavController().navigateUp()
-        }
-        editSearchDeleteButton.setOnClickListener {
-            editSearchInteractor.deleteSearch(editSearchFragmentArgs.id)
-            findNavController().navigateUp()
+        editSearchUrlEditText.doOnTextChanged { text, _, _, _ ->
+            editSearchInteractor.onUrlTextChanged(text)
         }
     }
 
@@ -67,6 +87,41 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     override fun onPause() {
         findNavController().removeOnDestinationChangedListener(onDestinationChangedListener)
         super.onPause()
+    }
+
+    private fun bindViewModel() {
+        editSearchViewModel.isTitleEmpty.observe(
+            this.viewLifecycleOwner,
+            Observer {
+                editSearchTitleErrorText.isVisible = it
+                editSearchSaveButton.isEnabled =
+                    editSearchViewModel.urlError.value == null && it == false
+            }
+        )
+        editSearchViewModel.urlError.observe(
+            this.viewLifecycleOwner,
+            Observer {
+                when (it) {
+                    EMPTY -> showUrlError("EMPTY")
+                    INVALID_FORMAT -> showUrlError("INVALID")
+                    NOT_A_SEARCH -> showUrlError("NOT A SEARCH")
+                    null -> hideUrlError()
+                }
+            }
+        )
+    }
+
+    private fun showUrlError(text: String) {
+        editSearchUrlErrorText.isVisible = true
+        editSearchUrlErrorText.text = text
+        editSearchSaveButton.isEnabled = false
+    }
+
+    private fun hideUrlError() {
+        if (editSearchViewModel.isTitleEmpty.value == false) {
+            editSearchSaveButton.isEnabled = true
+        }
+        editSearchUrlErrorText.isVisible = false
     }
 
     private fun onNavigateUp() {

@@ -5,7 +5,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.3'
@@ -55,7 +54,7 @@ allprojects {
         // Tests
         junit = 'junit:junit:4.12'
         androidJunit = 'androidx.test.ext:junit:1.1.1'
-        androidEspresso  ='androidx.test.espresso:espresso-core:3.2.0'
+        androidEspresso = 'androidx.test.espresso:espresso-core:3.2.0'
 
         // Room
         def room_version = "2.2.4"
@@ -90,6 +89,9 @@ allprojects {
 
         // About page
         aboutPage = 'com.github.medyo:android-about-page:1.2.5'
+
+        // Bubble views
+        bubbleView = 'com.github.lguipeng:BubbleView:1.0.1'
     }
 }
 
