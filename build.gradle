@@ -12,6 +12,9 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0-alpha06"
+        // Add the Crashlytics Gradle plugin.
+        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.1.0'
     }
 }
 
@@ -92,6 +95,10 @@ allprojects {
 
         // Bubble views
         bubbleView = 'com.github.lguipeng:BubbleView:1.0.1'
+
+        // Firebase
+        firebaseCrashlytics = 'com.google.firebase:firebase-crashlytics:17.0.0'
+        firebaseAnalytics = 'com.google.firebase:firebase-analytics-ktx:17.4.1'
     }
 }
 

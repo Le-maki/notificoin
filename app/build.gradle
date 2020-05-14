@@ -8,6 +8,9 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
+apply plugin: 'com.google.gms.google-services'
+
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     buildToolsVersion "29.0.3"
@@ -107,4 +110,8 @@ dependencies {
 
     // Bubble views
     implementation parent.ext.bubbleView
+
+    // Firebase
+    implementation parent.ext.firebaseCrashlytics
+    implementation parent.ext.firebaseAnalytics
 }

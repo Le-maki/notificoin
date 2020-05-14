@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "199113550734",
+    "firebase_url": "https://notificoin.firebaseio.com",
+    "project_id": "notificoin",
+    "storage_bucket": "notificoin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199113550734:android:ff17e730274db5f31412df",
+        "android_client_info": {
+          "package_name": "com.github.corentinc.notificoin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199113550734-g6jkq0ot095jmsesebna2r2m1gsg78k7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.corentinc.notificoin",
+            "certificate_hash": "274edc925bda0a3ded379da9082666d79801edd5"
+          }
+        },
+        {
+          "client_id": "199113550734-ddod4hg9in0r36qgs0oe5r78l84e19re.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBleLqWkmpHFi_eNTiDtmFmiK0xZdOvnWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199113550734-ddod4hg9in0r36qgs0oe5r78l84e19re.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
