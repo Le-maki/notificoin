@@ -18,7 +18,7 @@
     <string name="alertDialogStopAsking">Stop asking</string>
     <string name="alertDialogMaybeLater">Maybe later</string>
     <string name="editThisSearch">Edit this search</string>
-    <string name="editSearchUrlHint">https://www.leboncoin.fr/recherche/?category=2&amp;locations=Nantes</string>
+    <string name="editSearchUrlHint">https://www.leboncoin.fr/recherche/…</string>
     <string name="EditSearchTitleHint">Your title</string>
     <string name="editSearchTitle">Title</string>
     <string name="editSearchUrl">Url of the search from Leboncoin</string>
@@ -35,8 +35,6 @@
     <string name="settingsNotificationIntervalTitle">Check for new ads :&#160;</string>
     <string name="adListEmpty">No ads found, check the url of your searches or try to add new ones</string>
     <string name="adListImageViewContentDescription">sad duck</string>
-    <string name="editSearchTitleError">Title cannot be empty</string>
-    <string name="editSearchEmptyUrlError">Url cannot be empty</string>
     <string name="edtiSearchInvalidUrlError">Url is not valid, it should respect the pattern : https://www.leboncoin.fr/recherche/…</string>
     <string name="editSearchNotASearchUrlError">Url is from leboncoin but is not a search, it should respect the pattern : https://www.leboncoin.fr/recherche/…</string>
 </resources>

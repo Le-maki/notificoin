@@ -60,12 +60,15 @@
         tools:layout="@layout/fragment_edit_search">
         <argument
             android:name="id"
+            android:defaultValue="-1"
             app:argType="integer" />
         <argument
             android:name="url"
+            android:defaultValue=" "
             app:argType="string" />
         <argument
             android:name="title"
+            android:defaultValue=" "
             app:argType="string" />
 
     </fragment>

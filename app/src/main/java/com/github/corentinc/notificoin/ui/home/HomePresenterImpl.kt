@@ -12,8 +12,8 @@ class HomePresenterImpl(
         homeViewModel.searchAdsPositionList.value = search
     }
 
-    override fun presentEditSearchScreen(id: Int, url: String, title: String) {
-        homeDisplay.displayEditAdScreen(id, url, title)
+    override fun presentEditSearchScreen(id: Int?, url: String?, title: String?) {
+        homeDisplay.displayEditSearchScreen(id, url, title)
     }
 
     override fun presentAdListFragment(search: Search) {

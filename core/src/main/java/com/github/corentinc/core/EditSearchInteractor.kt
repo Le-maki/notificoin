@@ -1,7 +1,9 @@
 package com.github.corentinc.core
 
-import com.github.corentinc.core.editSearch.UrlError.*
+import com.github.corentinc.core.editSearch.UrlError.INVALID_FORMAT
+import com.github.corentinc.core.editSearch.UrlError.NOT_A_SEARCH
 import com.github.corentinc.core.repository.search.SearchRepository
+import com.github.corentinc.core.search.Search
 import com.github.corentinc.core.ui.editSearch.EditSearchPresenter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +16,7 @@ class EditSearchInteractor(
     companion object {
         private const val REGEX = "^(http://|https://)www\\.leboncoin\\.fr/(recherche/)?.+"
         private const val SEARCH_PATH = "recherche/"
+        const val DEFAULT_ID = -1
     }
 
     fun onNavigateUp(id: Int, title: String, url: String) {
@@ -28,24 +31,47 @@ class EditSearchInteractor(
         }
     }
 
-    fun onTitleTextChanged(text: CharSequence?) {
-        editSearchPresenter.presentTitleError(text?.isBlank() != false)
+    fun onTitleTextChanged(titleText: CharSequence?, urlText: String, isUrlValid: Boolean) {
+        editSearchPresenter.presentSaveButton(titleText?.isBlank() == false && !urlText.isBlank() && isUrlValid)
     }
 
-    fun onUrlTextChanged(text: CharSequence?) {
+    fun onUrlTextChanged(urlText: CharSequence?, titleText: String) {
         val regex = REGEX.toRegex()
-        if (text?.isBlank() == false) {
-            text.let { regex.find(it) }?.let { matchResult ->
-                if (matchResult.groupValues.getOrNull(2) == SEARCH_PATH) {
+        val isUrlNotEmpty = urlText?.isBlank() == false
+        var isUrlValid = false
+        if (isUrlNotEmpty) {
+            urlText.let { regex.find(it!!) }?.let { matchResult ->
+                isUrlValid = if (matchResult.groupValues.getOrNull(2) == SEARCH_PATH) {
                     editSearchPresenter.presentValidUrl()
+                    true
                 } else {
                     editSearchPresenter.presentUrlError(NOT_A_SEARCH)
+                    false
                 }
             } ?: run {
                 editSearchPresenter.presentUrlError(INVALID_FORMAT)
+                isUrlValid = false
             }
         } else {
-            editSearchPresenter.presentUrlError(EMPTY)
+            editSearchPresenter.presentValidUrl()
+            isUrlValid = true
+        }
+        editSearchPresenter.presentSaveButton(isUrlNotEmpty && !titleText.isBlank() && isUrlValid)
+    }
+
+    fun onStart(id: Int, title: String, url: String) {
+        if (id != DEFAULT_ID) {
+            editSearchPresenter.presentEditSearch(title, url)
+        }
+    }
+
+    fun onSave(id: Int, title: String, url: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            if (id == DEFAULT_ID) {
+                searchRepository.addSearch(Search(url = url, title = title))
+            } else {
+                searchRepository.updateSearch(id, title, url)
+            }
         }
     }
 }

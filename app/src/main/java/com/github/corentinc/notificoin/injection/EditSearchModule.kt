@@ -11,6 +11,11 @@ val editSearchModule = module {
     single { EditSearchInteractor(searchRepository = get(), editSearchPresenter = get()) }
     single<EditSearchPresenter> { EditSearchPresenterImpl(editSearchViewModel = get()) }
     single {
-        EditSearchViewModel(isTitleEmpty = SingleLiveEvent(), urlError = SingleLiveEvent())
+        EditSearchViewModel(
+            title = SingleLiveEvent(),
+            url = SingleLiveEvent(),
+            urlError = SingleLiveEvent(),
+            isSaveButtonEnabled = SingleLiveEvent()
+        )
     }
 }

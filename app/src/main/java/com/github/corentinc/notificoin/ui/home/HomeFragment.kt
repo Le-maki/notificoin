@@ -84,15 +84,20 @@ class HomeFragment(
         super.onDestroyView()
     }
 
-    override fun displayEditAdScreen(id: Int, url: String, title: String) {
-        findNavController()
-            .navigate(
-                HomeFragmentDirections.editSearchAction(
-                    id,
-                    url,
-                    title
+    override fun displayEditSearchScreen(id: Int?, url: String?, title: String?) {
+        if (id != null && url != null && title != null) {
+            findNavController()
+                .navigate(
+                    HomeFragmentDirections.editSearchAction(
+                        id,
+                        url,
+                        title
+                    )
                 )
-            )
+        } else {
+            findNavController()
+                .navigate(HomeFragmentDirections.editSearchAction())
+        }
     }
 
     override fun displayAdListScreen(searchId: Int) {
