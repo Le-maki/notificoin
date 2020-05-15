@@ -9,7 +9,8 @@
         app:entries="@array/notificationIntervalEntries"
         android:defaultValue="5"
         app:icon="@drawable/ic_timer_24px"
-        app:key="@string/notificationIntervalKey" />
+        app:key="@string/notificationIntervalKey"
+        app:singleLineTitle="false" />
 
     <SwitchPreferenceCompat
         app:icon="@drawable/ic_access_alarm_24px"

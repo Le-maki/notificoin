@@ -51,7 +51,7 @@
                 android:layout_height="46dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/yellow_circle"
-                android:contentDescription="@string/createAnAd"
+                android:contentDescription="@string/createNewSearch"
                 android:src="@drawable/ic_add_circle_outline_24px"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/homeFragmentSearchesRecyclerView" />

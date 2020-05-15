@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="newAdNotificationTitle">Nouvelle annonce !</string>
+    <plurals name="newAdNotificationText">
+        <item quantity="one">Nouvelle annonce pour votre recherche %s : %s</item>
+        <item quantity="other">%s nouvelles annonces pour votre recherche %s</item>
+    </plurals>
+    <string name="newAdNotificationBigText">Nouvelles annonces : %s</string>
+    <string name="enteringOnReceive">Entering OnReceive in AlarmManager</string>
+</resources>

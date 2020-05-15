@@ -15,6 +15,7 @@ class EditSearchInteractor(
         private const val REGEX = "^(http://|https://)www\\.leboncoin\\.fr/(recherche/)?.+"
         private const val SEARCH_PATH = "recherche/"
     }
+
     fun onNavigateUp(id: Int, title: String, url: String) {
         CoroutineScope(Dispatchers.IO).launch {
             searchRepository.updateSearch(id, url, title)

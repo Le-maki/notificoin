@@ -9,7 +9,7 @@
         android:layout_width="210dp"
         android:layout_height="210dp"
         android:layout_margin="10dp"
-        android:contentDescription="@string/batteryWhiteListExplanation"
+        android:contentDescription="@string/settingsBatteryWarningSummary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

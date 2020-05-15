@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appName">NotifiCoin</string>
+    <string name="titleHome">Notificoin</string>
+    <string name="titleAdList">Liste des annonces</string>
+    <string name="titleSettings">Paramètres</string>
+    <string name="titleAbout">À propos</string>
+    <string name="settingsBatteryWarningTitle">Notifications exactes</string>
+    <string name="settingsBatteryWarningSummary">Autoriser Notificoin à rester en arrière plan pour recevoir les notifications à l\'heure</string>
+    <string name="adListConnectionErrorMessage">Une erreur s\'est produite lors de la récupération des annonces sur le site, vérifiez votre connexion et l\'url de vos recherches</string>
+    <string name="adListParsingErrorMessage">Impossible d\'analyser la page web, vérifiez l\'url de vos recherches</string>
+    <string name="adListForbiddenErrorMessage">Vous avez recherché des nouvelles annonces trop souvent et Leboncoin a détecté que vous étiez un robot, cliquez ici pour corriger ce problème</string>
+    <string name="adListForbiddenFixMessage">"Navigateur Chrome non trouvé, allez sur \"www.leboncoin.fr\" depuis votre navigateur mobile pour corriger ce problème"</string>
+    <string name="adListUnknownErrorMessage">Une erreur inconnue s\'est produite lors de la récupération des annonces sur le site</string>
+    <string name="channelName">notificoin</string>
+    <string name="channelDescription">channel pour l\'application NotifiCoin</string>
+    <string name="koinAlreadyStarted">Koin already started, skipping startKoin</string>
+    <string name="OK">OK</string>
+    <string name="alertDialogStopAsking">Ne plus me demander</string>
+    <string name="alertDialogMaybeLater">Plus tard</string>
+    <string name="editThisSearch">Modifier cette recherche</string>
+    <string name="editSearchUrlHint">https://www.leboncoin.fr/recherche/?category=2&amp;locations=Nantes</string>
+    <string name="EditSearchTitleHint">Votre titre</string>
+    <string name="editSearchTitle">Titre</string>
+    <string name="editSearchUrl">Url de la recherche sur Leboncoin</string>
+    <string name="titleEditSearch">Modifier votre recherche</string>
+    <string name="editSearchSaveButton">Sauvegarder</string>
+    <string name="editSearchDeleteButton">Supprimer</string>
+    <string name="dragYourSearch">Faites glisser votre recherche</string>
+    <string name="createNewSearch">Ajouter une nouvelle recherche</string>
+    <string name="homeFragmentRecyclerViewTitleText">Vos recherches :</string>
+    <string name="homeFragmentSearchDeleted">Recherche supprimée</string>
+    <string name="undo">Annuler</string>
+    <string name="adViewHolderprice">%s €</string>
+    <string name="settingsNotificationIntervalSummary">Choisir la fréquence à laquelle vous voulez rechercher de nouvelles annonces</string>
+    <string name="settingsNotificationIntervalTitle">Rechercher de nouvelles annonces :&#160;</string>
+    <string name="adListEmpty">Pas de nouvelle annonce trouvée, vérifiez l\'url des vos recherches ou essayez d\'en ajouter d\'autres</string>
+    <string name="adListImageViewContentDescription">canard triste</string>
+    <string name="editSearchTitleError">Le titre ne peut pas être vide</string>
+    <string name="editSearchEmptyUrlError">L\'url ne peut pas être vide</string>
+    <string name="edtiSearchInvalidUrlError">L\'url n\'est pas valide, elle doit respecter le format : https://www.leboncoin.fr/recherche/…</string>
+    <string name="editSearchNotASearchUrlError">L\'url provient de Leboncoin mais n\'est pas une recherche, elle doit respecter le format : https://www.leboncoin.fr/recherche/…</string>
+</resources>

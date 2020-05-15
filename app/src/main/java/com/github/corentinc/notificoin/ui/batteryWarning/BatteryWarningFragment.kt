@@ -18,7 +18,7 @@ class BatteryWarningFragment(
 
     private fun presentBatteryWhitelistRequestAlertDialog() {
         val context = requireContext()
-        val alertMessage = getString(R.string.batteryWhiteListExplanation)
+        val alertMessage = getString(R.string.settingsBatteryWarningSummary)
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         val view: View = View.inflate(context, R.layout.battery_whitelist_alertdialog, null)
         Glide.with(context)
@@ -26,26 +26,22 @@ class BatteryWarningFragment(
             .into(view.findViewById(R.id.batteryWhiteListGif))
         builder.setView(view)
             .setMessage(alertMessage)
-            .setPositiveButton(getString(R.string.OK)) { dialog, _ ->
+            .setPositiveButton(getString(R.string.OK)) { _, _ ->
                 try {
                     goToBatteryWhiteListOfTheApp(context)
                 } catch (exception: ActivityNotFoundException) {
                     goToBatteryWhiteList()
                 }
-                dialog.dismiss()
                 requireActivity().onBackPressed()
             }
-            .setNeutralButton(getString(R.string.alertDialogStopAsking)) { dialog, _ ->
+            .setNeutralButton(getString(R.string.alertDialogStopAsking)) { _, _ ->
                 batteryWarningInteractor.onBatteryWhiteListAlertDialogNeutralButtonPressed()
-                dialog.dismiss()
                 requireActivity().onBackPressed()
             }
-            .setNegativeButton(getString(R.string.alertDialogMaybeLater)) { dialog, _ ->
-                dialog.dismiss()
+            .setNegativeButton(getString(R.string.alertDialogMaybeLater)) { _, _ ->
                 requireActivity().onBackPressed()
             }
             .setOnCancelListener {
-                it.dismiss()
                 requireActivity().onBackPressed()
             }.create().show()
     }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="notificationIntervalEntries">
+        <item>"jamais"</item>
+        <item>"toutes les minutes"</item>
+        <item>"toutes les 5 minutes"</item>
+        <item>"toutes les 15 minutes"</item>
+        <item>"toutes les 30 minutes"</item>
+        <item>"toutes les heures"</item>
+        <item>"tous les jours"</item>
+    </array>
+</resources>
