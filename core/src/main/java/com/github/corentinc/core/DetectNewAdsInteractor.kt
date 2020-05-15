@@ -44,10 +44,10 @@ class DetectNewAdsInteractor(
                         httpStatusException
                     )
                 } else {
-                    sendUnknowErrorNotification(httpStatusException)
+                    NotifiCoinLogger.e("AlarmManager error when retrieving new ads : $httpStatusException")
                 }
             } catch (exception: Exception) {
-                sendUnknowErrorNotification(exception)
+                NotifiCoinLogger.e("AlarmManager error when retrieving new ads : $exception")
             }
             detectNewAdsPresenter.stopSelf()
         }
@@ -93,13 +93,5 @@ class DetectNewAdsInteractor(
                 )
             }
         }
-    }
-
-    private fun sendUnknowErrorNotification(exception: Exception) {
-        NotifiCoinLogger.e("Alarm Manager couldn't check new ads or send notifications $exception")
-        detectNewAdsPresenter.presentErrorNotification(
-            AdListErrorType.UNKNOWN,
-            exception
-        )
     }
 }
