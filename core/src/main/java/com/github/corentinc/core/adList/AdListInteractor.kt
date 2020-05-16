@@ -17,7 +17,7 @@ class AdListInteractor(
     private val searchAdsPositionRepository: SearchAdsPositionRepository
 ) {
 
-    fun onStart(searchId: Int) {
+    fun onRefresh(searchId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 searchAdsPositionRepository.updateAllSearchAdsPositionFromWebPage()

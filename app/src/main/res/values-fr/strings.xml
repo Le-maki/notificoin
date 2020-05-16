@@ -7,7 +7,7 @@
     <string name="titleAbout">À propos</string>
     <string name="settingsBatteryWarningTitle">Notifications exactes</string>
     <string name="settingsBatteryWarningSummary">Autoriser Notificoin à rester en arrière plan pour recevoir les notifications à l\'heure</string>
-    <string name="adListConnectionErrorMessage">Une erreur s\'est produite lors de la récupération des annonces sur le site, vérifiez votre connexion et l\'url de vos recherches</string>
+    <string name="adListConnectionErrorMessage">Une erreur s\'est produite lors de la récupération des annonces sur le site, vérifiez votre connexion, l\'url de vos recherches et réessayez</string>
     <string name="adListParsingErrorMessage">Impossible d\'analyser la page web, vérifiez l\'url de vos recherches</string>
     <string name="adListForbiddenErrorMessage">Vous avez recherché des nouvelles annonces trop souvent et Leboncoin a détecté que vous étiez un robot, cliquez ici pour corriger ce problème</string>
     <string name="adListForbiddenFixMessage">"Navigateur Chrome non trouvé, allez sur \"www.leboncoin.fr\" depuis votre navigateur mobile pour corriger ce problème"</string>

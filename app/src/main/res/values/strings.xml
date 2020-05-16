@@ -6,7 +6,7 @@
     <string name="titleAbout">About</string>
     <string name="settingsBatteryWarningTitle">Accurate notifications</string>
     <string name="settingsBatteryWarningSummary">Allow Notificoin to run in the background to get notifications on time</string>
-    <string name="adListConnectionErrorMessage">There was an error while trying to get new ads from the website, check your connection and the url of your searches</string>
+    <string name="adListConnectionErrorMessage">There was an error while trying to get new ads from the website, check your connection, the url of your searches and retry</string>
     <string name="adListParsingErrorMessage">Unable to parse the webpage, check the url of your searches</string>
     <string name="adListForbiddenErrorMessage">You have made too many requests and Leboncoin detected that you were a robot, click here to fix this problem</string>
     <string name="adListForbiddenFixMessage">"Chrome not found, go to \"www.leboncoin.fr\" from your mobile's browser to fix this problem"</string>

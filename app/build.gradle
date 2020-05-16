@@ -62,6 +62,7 @@ dependencies {
     // Views
     implementation parent.ext.material
     implementation parent.ext.constraintLayout
+    implementation parent.ext.swipeRefresh
 
     // Navigation
     implementation parent.ext.navigationFragment

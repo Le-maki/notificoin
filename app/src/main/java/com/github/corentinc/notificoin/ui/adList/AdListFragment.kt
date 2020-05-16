@@ -21,12 +21,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class AdListFragment(
     private val adListInteractor: AdListInteractor
 ): ChildFragment() {
+    private val adListViewModel: AdListViewModel by viewModel()
+    private val adapter = AdListAdapter()
+
     companion object {
         const val LEBONCOIN_URL = "http://www.leboncoin.fr"
     }
-
-    private val adListViewModel: AdListViewModel by viewModel()
-    private val adapter = AdListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,13 +36,13 @@ class AdListFragment(
         return inflater.inflate(R.layout.fragment_ad_list, container, false)
     }
 
-    override fun onStart() {
-        textAdsFragment?.isVisible = false
-        adListImageView?.isVisible = false
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         bindViewModel()
-        val adListFragmentArgs: AdListFragmentArgs by navArgs()
-        adListInteractor.onStart(adListFragmentArgs.searchId)
-        super.onStart()
+        refresh()
+        adListFragmentSwipeRefresh.setOnRefreshListener {
+            refresh()
+        }
+        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {
@@ -54,7 +54,6 @@ class AdListFragment(
         adListViewModel.adViewModelList.observe(
             this.viewLifecycleOwner,
             Observer {
-                hideProgressBar()
                 if (!adapter.isListInitialised() || (adapter.isListInitialised() && adapter.adViewModelList != it)) {
                     adapter.adViewModelList = it
                     adListFragmentRecyclerView.apply {
@@ -62,6 +61,9 @@ class AdListFragment(
                         adapter = this@AdListFragment.adapter
                     }
                 }
+                hideProgressBar()
+                showAdsRecyclerView()
+                stopRefreshing()
             })
         adListViewModel.errorType.observe(
             this.viewLifecycleOwner,
@@ -88,14 +90,43 @@ class AdListFragment(
                         EMPTY -> getString(R.string.adListEmpty)
                     }
                     textAdsFragment?.text = text
-                    textAdsFragment?.isVisible = true
-                    adListImageView?.isVisible = true
                     hideProgressBar()
+                    hideAdsRecyclerView()
+                    showErrorMessage()
+                    stopRefreshing()
                 }
             })
     }
 
     private fun hideProgressBar() {
         adListFragmentProgressBar?.isVisible = false
+    }
+
+    private fun stopRefreshing() {
+        adListFragmentSwipeRefresh.isRefreshing = false
+    }
+
+    private fun showErrorMessage() {
+        textAdsFragment?.isVisible = true
+        adListImageView?.isVisible = true
+    }
+
+    private fun hideErrorMessage() {
+        textAdsFragment?.isVisible = false
+        adListImageView?.isVisible = false
+    }
+
+    private fun showAdsRecyclerView() {
+        adListFragmentRecyclerView.isVisible = true
+    }
+
+    private fun hideAdsRecyclerView() {
+        adListFragmentRecyclerView.isVisible = false
+    }
+
+    private fun refresh() {
+        hideErrorMessage()
+        val adListFragmentArgs: AdListFragmentArgs by navArgs()
+        adListInteractor.onRefresh(adListFragmentArgs.searchId)
     }
 }
