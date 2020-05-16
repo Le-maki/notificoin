@@ -37,4 +37,17 @@
     <string name="adListImageViewContentDescription">sad duck</string>
     <string name="edtiSearchInvalidUrlError">Url is not valid, it should respect the pattern : https://www.leboncoin.fr/recherche/…</string>
     <string name="editSearchNotASearchUrlError">Url is from leboncoin but is not a search, it should respect the pattern : https://www.leboncoin.fr/recherche/…</string>
+    <string name="aboutAppDescription">This app was made voluntarily during my free time, it does not represent nor have any affiliation with Leboncoin.fr</string>
+    <string name="aboutConnectWithUsGroup">Connect with us</string>
+    <string name="aboutEmail" translatable="false">notificoin@gmail.com</string>
+    <string name="aboutPackageName" translatable="false">com.github.corentinc.notificoin</string>
+    <string name="aboutGithubId" translatable="false">corentin-c</string>
+    <string name="aboutEmailTitle">Email us</string>
+    <string name="aboutGithubTitle">On Github</string>
+    <string name="aboutDevelopedWith">Developed with</string>
+    <string name="aboutKoin" translatable="false">Koin</string>
+    <string name="aboutFlipper" translatable="false">Flipper</string>
+    <string name="aboutGlide" translatable="false">Glide</string>
+    <string name="aboutAndroidAboutPage" translatable="false">Android About Page</string>
+    <string name="aboutBubbleView" translatable="false">BubbleView</string>
 </resources>
