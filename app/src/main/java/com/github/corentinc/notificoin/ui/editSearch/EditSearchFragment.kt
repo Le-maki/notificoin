@@ -41,7 +41,13 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         }
         editSearchDeleteButton.setOnClickListener {
             editSearchInteractor.deleteSearch(editSearchFragmentArgs.id)
-            findNavController().navigateUp()
+            findNavController().navigate(
+                EditSearchFragmentDirections.editSearchToHomeAction(
+                    editSearchFragmentArgs.id,
+                    editSearchTitleEditText.text.toString(),
+                    editSearchUrlEditText.text.toString()
+                )
+            )
         }
         editSearchInteractor.onStart(
             editSearchFragmentArgs.id,

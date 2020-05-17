@@ -83,7 +83,7 @@ class SettingsFragment(
     }
 
     override fun displayAboutFragment() {
-        findNavController().navigate(R.id.action_navigation_settings_to_navigation_about)
+        findNavController().navigate(R.id.settingsToAboutAction)
     }
 
     override fun displayAccurateNotificationPreferenceValue(batteryWhiteListAlreadyGranted: Boolean) {
@@ -92,7 +92,7 @@ class SettingsFragment(
     }
 
     private fun displayBatteryWarningFragment() {
-        findNavController().navigate(R.id.action_navigation_settings_to_navigation_battery_warning)
+        findNavController().navigate(R.id.settingsToBatteryWarningAction)
     }
 
     private fun displayBatteryWhiteListSettings() {

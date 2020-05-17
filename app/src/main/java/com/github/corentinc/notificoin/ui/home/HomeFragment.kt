@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.home.HomeInteractor
 import com.github.corentinc.core.search.Search
@@ -49,9 +50,13 @@ class HomeFragment(
         val context = requireContext()
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
         bindViewModel()
+        val homeFragmentArgs: HomeFragmentArgs by navArgs()
         homeInteractor.onStart(
             powerManager != null && powerManager.isIgnoringBatteryOptimizations(context.packageName),
-            homeViewModel.shouldShowBatteryWhiteListAlertDialog.value == false
+            homeViewModel.shouldShowBatteryWhiteListAlertDialog.value == false,
+            homeFragmentArgs.id,
+            homeFragmentArgs.title,
+            homeFragmentArgs.url
         )
         addOnDestinationChangedListener()
         super.onStart()
@@ -88,7 +93,7 @@ class HomeFragment(
         if (id != null && url != null && title != null) {
             findNavController()
                 .navigate(
-                    HomeFragmentDirections.editSearchAction(
+                    HomeFragmentDirections.homeToEditSearchAction(
                         id,
                         url,
                         title
@@ -96,14 +101,14 @@ class HomeFragment(
                 )
         } else {
             findNavController()
-                .navigate(HomeFragmentDirections.editSearchAction())
+                .navigate(HomeFragmentDirections.homeToEditSearchAction())
         }
     }
 
     override fun displayAdListScreen(searchId: Int) {
         findNavController()
             .navigate(
-                HomeFragmentDirections.goToAdListAction(
+                HomeFragmentDirections.homeToAdListAction(
                     searchId
                 )
             )
@@ -125,7 +130,7 @@ class HomeFragment(
 
     override fun displayBatteryWarningFragment() {
         homeViewModel.shouldShowBatteryWhiteListAlertDialog.value = false
-        findNavController().navigate(R.id.action_navigation_home_to_navigation_battery_warning)
+        findNavController().navigate(R.id.homeToBatteryWarningAction)
     }
 
     private fun bindViewModel() {

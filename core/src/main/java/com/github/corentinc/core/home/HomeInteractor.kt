@@ -1,5 +1,6 @@
 package com.github.corentinc.core.home
 
+import com.github.corentinc.core.EditSearchInteractor
 import com.github.corentinc.core.SearchAdsPostionDefaultSorter
 import com.github.corentinc.core.alarmManager.AlarmManagerInteractor
 import com.github.corentinc.core.repository.GlobalSharedPreferencesRepository
@@ -9,7 +10,10 @@ import com.github.corentinc.core.repository.search.SearchRepository
 import com.github.corentinc.core.repository.searchAdsPosition.SearchAdsPositionRepository
 import com.github.corentinc.core.search.Search
 import com.github.corentinc.core.ui.home.HomePresenter
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeInteractor(
     val homePresenter: HomePresenter,
@@ -25,17 +29,18 @@ class HomeInteractor(
         "https://www.leboncoin.fr/recherche/?text=jeu%20switch&locations=Nantes__47.23898554566441_-1.5262136157260586_10000" to "Jeu Switch"
     )
 ) {
-    private var deletedSearchList: MutableList<Search> = mutableListOf()
 
     fun onStart(
         isBatteryWhiteListAlreadyGranted: Boolean,
-        wasBatteryWhiteListDialogAlreadyShown: Boolean
+        wasBatteryWhiteListDialogAlreadyShown: Boolean,
+        id: Int,
+        title: String,
+        url: String
     ) {
         if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && !isBatteryWhiteListAlreadyGranted && !wasBatteryWhiteListDialogAlreadyShown
         ) {
             homePresenter.presentBatteryWarningFragment()
         }
-        deletedSearchList = mutableListOf()
         CoroutineScope(Dispatchers.IO).launch {
             var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
             if (searchAdsPosition.isEmpty()) {
@@ -50,6 +55,9 @@ class HomeInteractor(
             }
         }
         alarmManagerInteractor.updateAlarm(globalSharedPreferencesRepository.alarmIntervalPreference)
+        if (id != EditSearchInteractor.DEFAULT_ID) {
+            homePresenter.presentUndoDeleteSearch(Search(id, title, url))
+        }
     }
 
     fun onCreateAdButtonPressed() {
@@ -61,21 +69,13 @@ class HomeInteractor(
     }
 
     fun onSearchDeleted(search: Search) {
-        deletedSearchList.add(search)
+        CoroutineScope(Dispatchers.IO).launch {
+            searchAdsPositionRepository.delete(search.id)
+        }
         homePresenter.presentUndoDeleteSearch(search)
     }
 
     fun beforeFragmentPause(searchList: MutableList<Search>) {
-        if (deletedSearchList.isNotEmpty()) {
-            runBlocking {
-                withContext(Dispatchers.Default) {
-                    deletedSearchList.forEach { search ->
-                        searchAdsPositionRepository.delete(search.id)
-                    }
-                    deletedSearchList = mutableListOf()
-                }
-            }
-        }
         CoroutineScope(Dispatchers.IO).launch {
             searchList.forEachIndexed { index, search ->
                 searchPositionRepository.updateSearchPosition(search.id, index)
@@ -88,6 +88,8 @@ class HomeInteractor(
     }
 
     fun onRestoreSearch(search: Search) {
-        deletedSearchList.remove(search)
+        CoroutineScope(Dispatchers.IO).launch {
+            searchRepository.addSearch(search)
+        }
     }
 }

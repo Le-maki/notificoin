@@ -1,5 +1,6 @@
 package com.github.corentinc.core.adList
 
+import com.github.corentinc.core.EditSearchInteractor
 import com.github.corentinc.core.repository.searchAdsPosition.SearchAdsPositionRepository
 import com.github.corentinc.core.ui.adList.AdListPresenter
 import com.github.corentinc.logger.NotifiCoinLogger
@@ -22,7 +23,7 @@ class AdListInteractor(
             try {
                 searchAdsPositionRepository.updateAllSearchAdsPositionFromWebPage()
                 var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
-                if (searchId != -1) {
+                if (searchId != EditSearchInteractor.DEFAULT_ID) {
                     searchAdsPosition = searchAdsPosition.filter { it.search.id == searchId }
                 }
                 if (searchAdsPosition.all { it.ads.isEmpty() }) {

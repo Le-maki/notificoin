@@ -33,7 +33,7 @@ class SearchViewHolder(
         button.setOnClickListener {
             Navigation.findNavController(itemView)
                 .navigate(
-                    HomeFragmentDirections.editSearchAction(
+                    HomeFragmentDirections.homeToEditSearchAction(
                         search.id,
                         search.url,
                         search.title

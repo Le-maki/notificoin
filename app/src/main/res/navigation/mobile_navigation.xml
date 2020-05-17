@@ -2,31 +2,44 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    android:id="@+id/mobileNavigation"
+    app:startDestination="@+id/navigationHome">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigationHome"
         android:name="com.github.corentinc.notificoin.ui.home.HomeFragment"
         android:label="@string/titleHome"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/editSearchAction"
-            app:destination="@id/navigation_editSearchFragment" />
+            android:id="@+id/homeToEditSearchAction"
+            app:destination="@id/navigationEditSearch" />
         <action
-            android:id="@+id/goToAdListAction"
-            app:destination="@id/navigation_ad_list" />
+            android:id="@+id/homeToAdListAction"
+            app:destination="@id/navigationAdList" />
         <action
-            android:id="@+id/action_navigation_home_to_navigation_battery_warning"
-            app:destination="@id/navigation_battery_warning" />
+            android:id="@+id/homeToBatteryWarningAction"
+            app:destination="@id/navigationBatteryWarning" />
+        <argument
+            android:name="id"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <argument
+            android:name="url"
+            android:defaultValue=" "
+            app:argType="string" />
+        <argument
+            android:name="title"
+            android:defaultValue=" "
+            app:argType="string" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_battery_warning"
+        android:id="@+id/navigationBatteryWarning"
         android:name="com.github.corentinc.notificoin.ui.batteryWarning.BatteryWarningFragment"
         tools:layout="@layout/battery_whitelist_alertdialog" />
+
     <fragment
-        android:id="@+id/navigation_ad_list"
+        android:id="@+id/navigationAdList"
         android:name="com.github.corentinc.notificoin.ui.adList.AdListFragment"
         android:label="@string/titleAdList"
         tools:layout="@layout/fragment_ad_list">
@@ -37,24 +50,24 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_settings"
+        android:id="@+id/navigationSettings"
         android:name="com.github.corentinc.notificoin.ui.settings.SettingsFragment"
         android:label="@string/titleSettings">
         <action
-            android:id="@+id/action_navigation_settings_to_navigation_about"
-            app:destination="@id/navigation_about" />
+            android:id="@+id/settingsToAboutAction"
+            app:destination="@id/navigationAbout" />
         <action
-            android:id="@+id/action_navigation_settings_to_navigation_battery_warning"
-            app:destination="@id/navigation_battery_warning" />
+            android:id="@+id/settingsToBatteryWarningAction"
+            app:destination="@id/navigationBatteryWarning" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_about"
+        android:id="@+id/navigationAbout"
         android:name="com.github.corentinc.notificoin.ui.settings.AboutFragment"
         android:label="@string/titleAbout" />
 
     <fragment
-        android:id="@+id/navigation_editSearchFragment"
+        android:id="@+id/navigationEditSearch"
         android:name="com.github.corentinc.notificoin.ui.editSearch.EditSearchFragment"
         android:label="@string/titleEditSearch"
         tools:layout="@layout/fragment_edit_search">
@@ -70,6 +83,9 @@
             android:name="title"
             android:defaultValue=" "
             app:argType="string" />
+        <action
+            android:id="@+id/editSearchToHomeAction"
+            app:destination="@id/navigationHome" />
 
     </fragment>
 
