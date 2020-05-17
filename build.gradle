@@ -28,7 +28,6 @@ allprojects {
         compileSdkVersion = 29
         minSdkVersion = 24
         targetSdkVersion = 29
-
         // Android
         appCompat = 'androidx.appcompat:appcompat:1.1.0'
 

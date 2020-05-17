@@ -19,3 +19,18 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-dontwarn org.xmlpull.v1.XmlPullParser
+-dontwarn org.xmlpull.v1.XmlSerializer
+-keep class org.xmlpull.v1.* {*;}
+-keep @com.facebook.jni.annotations.DoNotStrip class *
+-keep class * {
+    @com.facebook.proguard.annotations.DoNotStrip *;
+    @com.facebook.common.internal.DoNotStrip *;
+    @com.facebook.jni.annotations.DoNotStrip *;
+}
+-keepclassmembers class * {
+    @com.facebook.jni.annotations.DoNotStrip *;
+}
+-keep class com.facebook.jni.** { *; }
+-keep class com.facebook.flipper.** { *; }
