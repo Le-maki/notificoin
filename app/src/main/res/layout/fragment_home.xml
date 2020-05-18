@@ -33,28 +33,57 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/homeFragmentSearchesRecyclerView"
+            <ViewSwitcher
+                android:id="@+id/homeContentViewSwitcher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:measureAllChildren="false"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/homeFragmentRecyclerViewTitle"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_search_recyclerview" />
+                app:layout_constraintTop_toBottomOf="@id/homeFragmentRecyclerViewTitle">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/homeFragmentSearchesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_search_recyclerview" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:gravity="center"
+                    android:paddingTop="16dp"
+                    android:text="@string/homeEmptySearch"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </ViewSwitcher>
+
+            <com.github.corentinc.notificoin.ui.GlowingCircleView
+                android:id="@+id/homeGlowingCircleView"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginEnd="16dp"
+                android:alpha="0.35"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/homeContentViewSwitcher" />
 
             <ImageButton
                 android:id="@+id/homeFragmentCreateAdButton"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
-                android:layout_marginEnd="16dp"
                 android:background="@drawable/yellow_circle"
                 android:contentDescription="@string/createNewSearch"
                 android:src="@drawable/ic_add_circle_outline_24px"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/homeFragmentSearchesRecyclerView" />
+                app:layout_constraintBottom_toBottomOf="@id/homeGlowingCircleView"
+                app:layout_constraintEnd_toEndOf="@id/homeGlowingCircleView"
+                app:layout_constraintStart_toStartOf="@id/homeGlowingCircleView"
+                app:layout_constraintTop_toTopOf="@id/homeGlowingCircleView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -8,4 +8,5 @@ interface HomePresenter {
     fun presentAdListFragment(search: Search)
     fun presentUndoDeleteSearch(search: Search)
     fun presentBatteryWarningFragment()
+    fun presentEmptySearches()
 }

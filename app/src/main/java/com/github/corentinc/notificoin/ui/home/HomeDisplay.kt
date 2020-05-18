@@ -7,4 +7,5 @@ interface HomeDisplay {
     fun displayAdListScreen(searchId: Int)
     fun displayUndoDeleteSearch(search: Search)
     fun displayBatteryWarningFragment()
+    fun displayEmptySearches()
 }

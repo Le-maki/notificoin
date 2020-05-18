@@ -27,4 +27,8 @@ class HomePresenterImpl(
     override fun presentBatteryWarningFragment() {
         homeDisplay.displayBatteryWarningFragment()
     }
+
+    override fun presentEmptySearches() {
+        homeDisplay.displayEmptySearches()
+    }
 }

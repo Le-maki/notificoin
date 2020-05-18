@@ -15,6 +15,7 @@ import com.github.corentinc.notificoin.ui.ChildFragment
 class BatteryWarningFragment(
     val batteryWarningInteractor: BatteryWarningInteractor
 ): ChildFragment() {
+    lateinit var alertDialog: AlertDialog
 
     private fun presentBatteryWhitelistRequestAlertDialog() {
         val context = requireContext()
@@ -24,7 +25,7 @@ class BatteryWarningFragment(
         Glide.with(context)
             .load(R.raw.battery_whitelist)
             .into(view.findViewById(R.id.batteryWhiteListGif))
-        builder.setView(view)
+        alertDialog = builder.setView(view)
             .setMessage(alertMessage)
             .setPositiveButton(getString(R.string.OK)) { _, _ ->
                 try {
@@ -43,7 +44,13 @@ class BatteryWarningFragment(
             }
             .setOnCancelListener {
                 requireActivity().onBackPressed()
-            }.create().show()
+            }.create()
+        alertDialog.show()
+    }
+
+    override fun onPause() {
+        alertDialog.dismiss()
+        super.onPause()
     }
 
     private fun goToBatteryWhiteListOfTheApp(context: Context) {

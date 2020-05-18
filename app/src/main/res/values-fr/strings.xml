@@ -43,4 +43,5 @@
     <string name="aboutEmailTitle">Par mail</string>
     <string name="aboutGithubTitle">Sur Github</string>
     <string name="aboutDevelopedWith">Développé avec</string>
+    <string name="homeEmptySearch">Vous n\'avez pas encore de recherche, vous pouvez en ajouter en utilisant le bouton jaune juste en dessous</string>
 </resources>

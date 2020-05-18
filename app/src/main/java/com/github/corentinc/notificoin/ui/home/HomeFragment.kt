@@ -133,13 +133,18 @@ class HomeFragment(
         findNavController().navigate(R.id.homeToBatteryWarningAction)
     }
 
+    override fun displayEmptySearches() {
+        homeContentViewSwitcher.displayedChild = 1
+        homeGlowingCircleView.startCircleAnimation()
+    }
+
     private fun bindViewModel() {
         homeViewModel.searchAdsPositionList.observe(
             this.viewLifecycleOwner,
             Observer {
-                if (!adapter.isSearchAdsPositionListInitialized() || (adapter.isSearchAdsPositionListInitialized() && adapter.searchAdsPositionList != it)) {
-                    createRecyclerView(it)
-                }
+                homeContentViewSwitcher.displayedChild = 0
+                homeGlowingCircleView.stopAnimation()
+                createRecyclerView(it)
             }
         )
     }

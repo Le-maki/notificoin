@@ -36,17 +36,24 @@ class HomeInteractor(
         if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && !isBatteryWhiteListAlreadyGranted && !wasBatteryWhiteListDialogAlreadyShown
         ) {
             homePresenter.presentBatteryWarningFragment()
-        }
-        CoroutineScope(Dispatchers.IO).launch {
-            var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
-            withContext(Dispatchers.Main) {
+        } else {
+            CoroutineScope(Dispatchers.IO).launch {
+                var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
                 searchAdsPosition = searchAdsPosition.sortedWith(searchAdsPostionDefaultSorter)
-                homePresenter.presentSearches(searchAdsPosition.map { it.search }.toMutableList())
+                withContext(Dispatchers.Main) {
+                    if (searchAdsPosition.isEmpty()) {
+                        homePresenter.presentEmptySearches()
+                    } else {
+                        homePresenter.presentSearches(searchAdsPosition.map { it.search }
+                            .toMutableList())
+                    }
+                }
             }
-        }
-        alarmManagerInteractor.updateAlarm(globalSharedPreferencesRepository.alarmIntervalPreference)
-        if (id != EditSearchInteractor.DEFAULT_ID) {
-            homePresenter.presentUndoDeleteSearch(Search(id, title, url))
+            alarmManagerInteractor.updateAlarm(globalSharedPreferencesRepository.alarmIntervalPreference)
+            if (id != EditSearchInteractor.DEFAULT_ID) {
+                homePresenter.presentUndoDeleteSearch(Search(id, title, url))
+            }
+
         }
     }
 
@@ -61,6 +68,13 @@ class HomeInteractor(
     fun onSearchDeleted(search: Search) {
         CoroutineScope(Dispatchers.IO).launch {
             searchAdsPositionRepository.delete(search.id)
+            var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
+            searchAdsPosition = searchAdsPosition.sortedWith(searchAdsPostionDefaultSorter)
+            withContext(Dispatchers.Main) {
+                if (searchAdsPosition.isEmpty()) {
+                    homePresenter.presentEmptySearches()
+                }
+            }
         }
         homePresenter.presentUndoDeleteSearch(search)
     }
@@ -80,6 +94,11 @@ class HomeInteractor(
     fun onRestoreSearch(search: Search) {
         CoroutineScope(Dispatchers.IO).launch {
             searchRepository.addSearch(search)
+            var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
+            searchAdsPosition = searchAdsPosition.sortedWith(searchAdsPostionDefaultSorter)
+            withContext(Dispatchers.Main) {
+                homePresenter.presentSearches(searchAdsPosition.map { it.search }.toMutableList())
+            }
         }
     }
 }
