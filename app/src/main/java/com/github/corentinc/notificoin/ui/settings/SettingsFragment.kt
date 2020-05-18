@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
+import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.preference.DropDownPreference
@@ -21,6 +22,7 @@ class SettingsFragment(
     private val settingsInteractor: SettingsInteractor
 ): PreferenceFragmentCompat(), SettingsDisplay {
     private val settingsViewModel: SettingsViewModel by viewModel()
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     init {
         (settingsInteractor.settingsPresenter as SettingsPresenterImpl).settingsDisplay = this
@@ -31,6 +33,7 @@ class SettingsFragment(
     }
 
     override fun onStart() {
+        addOnBackPressedCallBack()
         findPreference<Preference>(resources.getString(R.string.aboutKey))?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 settingsInteractor.onAboutPreferenceClicked()
@@ -62,6 +65,11 @@ class SettingsFragment(
             )
         )
         super.onStart()
+    }
+
+    override fun onPause() {
+        onBackPressedCallback.remove()
+        super.onPause()
     }
 
     private fun bindViewModel() {
@@ -115,5 +123,15 @@ class SettingsFragment(
         val intent = Intent()
         intent.action = Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
         startActivity(intent)
+    }
+
+    private fun addOnBackPressedCallBack() {
+        onBackPressedCallback =
+            object: OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigateUp()
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 }
