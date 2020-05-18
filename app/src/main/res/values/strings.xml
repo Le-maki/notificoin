@@ -50,5 +50,5 @@
     <string name="aboutGlide" translatable="false">Glide</string>
     <string name="aboutAndroidAboutPage" translatable="false">Android About Page</string>
     <string name="aboutBubbleView" translatable="false">BubbleView</string>
-    <string name="homeEmptySearch">You have no searches yet, you can add some by clicking on the yellow button just bellow</string>
+    <string name="homeEmptySearch">You have no search yet, you can add one by clicking on the yellow button just bellow</string>
 </resources>

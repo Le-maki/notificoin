@@ -83,7 +83,7 @@ class GlowingCircleView: View {
             interpolatedTime: Float,
             transformation: Transformation
         ) {
-            val interval = (width * 0.012 / 2).toFloat()
+            val interval = (width * 0.01 / 2).toFloat()
             if (interpolatedTime < 0.5) {
                 circleRadius[0] = circleRadius[0] + interval
                 if (interpolatedTime > 0.02) {
