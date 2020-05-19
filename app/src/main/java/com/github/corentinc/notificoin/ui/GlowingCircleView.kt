@@ -11,9 +11,15 @@ import androidx.core.content.ContextCompat
 import com.github.corentinc.notificoin.R
 
 class GlowingCircleView: View {
-    private val paints = arrayListOf(Paint(), Paint(), Paint())
-    private val colors = IntArray(3)
-    val circleRadius = FloatArray(3)
+    private var circleList = arrayListOf<Circle>()
+
+    companion object {
+        private const val DURATION = 3000L
+        private const val START_RADIUS = 50F
+        private const val CIRCLE0_DELAY = 0.00
+        private const val CIRCLE1_DELAY = 0.1
+        private const val CIRCLE2_DELAY = 0.2
+    }
 
     constructor(context: Context?): super(context) {
         init()
@@ -27,43 +33,39 @@ class GlowingCircleView: View {
     }
 
     private fun init() {
-        colors[0] = ContextCompat.getColor(context, R.color.secondaryDarkColor)
-        colors[1] = ContextCompat.getColor(context, R.color.primaryDarkColor)
-        colors[2] = ContextCompat.getColor(context, R.color.primaryColor)
-        paints.forEachIndexed { index, paint ->
-            paint.isAntiAlias = true
-            paint.style = Paint.Style.FILL
-            paint.color = colors[index]
-        }
+        circleList = arrayListOf(
+            Circle(
+                color = ContextCompat.getColor(context, R.color.primaryColor),
+                delay = CIRCLE0_DELAY
+            ),
+            Circle(
+                color = ContextCompat.getColor(context, R.color.primaryDarkColor),
+                delay = CIRCLE1_DELAY
+            ),
+            Circle(
+                color = ContextCompat.getColor(context, R.color.secondaryDarkColor),
+                delay = CIRCLE2_DELAY
+            )
+        )
     }
 
     fun startCircleAnimation() {
         val animation = CircleRadiusAnimation()
-        animation.duration = 3000
+        animation.duration = DURATION
         animation.repeatCount = Animation.INFINITE
         startAnimation(animation)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawCircle(
-            width / 2.toFloat(),
-            height / 2.toFloat(),
-            circleRadius[0],
-            paints[0]
-        )
-        canvas.drawCircle(
-            width / 2.toFloat(),
-            height / 2.toFloat(),
-            circleRadius[1],
-            paints[1]
-        )
-        canvas.drawCircle(
-            width / 2.toFloat(),
-            height / 2.toFloat(),
-            circleRadius[2],
-            paints[2]
-        )
+        circleList.forEach {
+            canvas.drawCircle(
+                width / 2.toFloat(),
+                height / 2.toFloat(),
+                it.radius,
+                it.paint
+            )
+        }
     }
 
     fun stopAnimation() {
@@ -72,9 +74,9 @@ class GlowingCircleView: View {
 
     private inner class CircleRadiusAnimation: Animation() {
         override fun reset() {
-            circleRadius[0] = 0F
-            circleRadius[1] = 0F
-            circleRadius[2] = 0F
+            circleList.forEach {
+                it.radius = START_RADIUS
+            }
             requestLayout()
             this@GlowingCircleView.invalidate()
         }
@@ -83,21 +85,20 @@ class GlowingCircleView: View {
             interpolatedTime: Float,
             transformation: Transformation
         ) {
-            val interval = (width * 0.01 / 2).toFloat()
-            if (interpolatedTime < 0.5) {
-                circleRadius[0] = circleRadius[0] + interval
-                if (interpolatedTime > 0.02) {
-                    circleRadius[1] = circleRadius[1] + interval
+            circleList.forEach {
+                val time = if (interpolatedTime < 0.5) {
+                    interpolatedTime - it.delay
+                } else {
+                    1 - it.delay - interpolatedTime
                 }
-                if (interpolatedTime > 0.1) {
-                    circleRadius[2] = circleRadius[2] + interval
+                val currentRadius = width * time.toFloat() + START_RADIUS
+                val maxRadius = width.toFloat() / 2
+                if (time > 0 && currentRadius > maxRadius) {
+                    it.radius = maxRadius
+                } else if (time > 0) {
+                    it.radius = currentRadius
                 }
-            } else {
-                circleRadius[0] = circleRadius[0] - interval
-                circleRadius[1] = circleRadius[1] - interval
-                circleRadius[2] = circleRadius[2] - interval
             }
-            requestLayout()
             this@GlowingCircleView.invalidate()
         }
 
@@ -109,6 +110,20 @@ class GlowingCircleView: View {
                     reset()
                 }
             })
+        }
+    }
+
+    private data class Circle(
+        var radius: Float = START_RADIUS,
+        private val color: Int,
+        val delay: Double
+    ) {
+        val paint = Paint()
+
+        init {
+            paint.isAntiAlias = true
+            paint.style = Paint.Style.FILL
+            paint.color = color
         }
     }
 }
