@@ -14,44 +14,92 @@ class GlowingCircleView: View {
     private var circleList = arrayListOf<Circle>()
 
     companion object {
-        private const val DURATION = 3000L
-        private const val START_RADIUS = 50F
-        private const val CIRCLE0_DELAY = 0.00
-        private const val CIRCLE1_DELAY = 0.1
-        private const val CIRCLE2_DELAY = 0.2
+        private const val DEFAULT_DURATION = 3000F
+        private const val DEFAULT_START_RADIUS = 50.0
+        private const val DEFAULT_FIRST_CIRCLE_DELAY = 0.00F
+        private const val DEFAULT_SECOND_CIRCLE_DELAY = 0.1F
+        private const val DEFAULT_THIRD_CIRCLE_DELAY = 0.2F
+        private const val DEFAULT_FIRST_CIRCLE_COLOR = R.color.primaryColor
+        private const val DEFAULT_SECOND_CIRCLE_COLOR = R.color.primaryDarkColor
+        private const val DEFAULT_THIRD_COLOR = R.color.secondaryDarkColor
     }
 
+    private var duration = DEFAULT_DURATION
+    private var startRadius = DEFAULT_START_RADIUS
+    private var firstCircleDelay = DEFAULT_FIRST_CIRCLE_DELAY
+    private var secondCircleDelay = DEFAULT_SECOND_CIRCLE_DELAY
+    private var thirdCircleDelay = DEFAULT_THIRD_CIRCLE_DELAY
+    private var firstCircleColor: Int = 0
+    private var secondCircleColor: Int = 0
+    private var thirdCircleColor: Int = 0
+
     constructor(context: Context?): super(context) {
-        init()
+        init(null)
     }
 
     constructor(
         context: Context?,
         attrs: AttributeSet?
     ): super(context, attrs) {
-        init()
+        init(attrs)
     }
 
-    private fun init() {
+    private fun init(attrs: AttributeSet?) {
+        val typedArray =
+            context.theme.obtainStyledAttributes(attrs, R.styleable.GlowingCircleView, 0, 0)
+        duration = typedArray.getFloat(R.styleable.GlowingCircleView_duration, DEFAULT_DURATION)
+        startRadius =
+            typedArray.getDimensionPixelSize(
+                R.styleable.GlowingCircleView_startRadius,
+                DEFAULT_START_RADIUS.toInt()
+            ).toDouble()
+        firstCircleDelay = typedArray.getFloat(
+            R.styleable.GlowingCircleView_firstCircleDelay,
+            DEFAULT_FIRST_CIRCLE_DELAY
+        )
+        secondCircleDelay = typedArray.getFloat(
+            R.styleable.GlowingCircleView_secondCircleDelay,
+            DEFAULT_SECOND_CIRCLE_DELAY
+        )
+        thirdCircleDelay = typedArray.getFloat(
+            R.styleable.GlowingCircleView_thirdCircleDelay,
+            DEFAULT_THIRD_CIRCLE_DELAY
+        )
+        firstCircleColor = typedArray.getColor(
+            R.styleable.GlowingCircleView_firstCircleColor,
+            ContextCompat.getColor(context, DEFAULT_FIRST_CIRCLE_COLOR)
+        )
+        secondCircleColor = typedArray.getColor(
+            R.styleable.GlowingCircleView_secondCircleColor,
+            ContextCompat.getColor(context, DEFAULT_SECOND_CIRCLE_COLOR)
+        )
+        thirdCircleColor = typedArray.getColor(
+            R.styleable.GlowingCircleView_thirdCircleColor,
+            ContextCompat.getColor(context, DEFAULT_THIRD_COLOR)
+        )
+        typedArray.recycle()
         circleList = arrayListOf(
             Circle(
-                color = ContextCompat.getColor(context, R.color.primaryColor),
-                delay = CIRCLE0_DELAY
+                radius = startRadius,
+                color = firstCircleColor,
+                delay = firstCircleDelay
             ),
             Circle(
-                color = ContextCompat.getColor(context, R.color.primaryDarkColor),
-                delay = CIRCLE1_DELAY
+                radius = startRadius,
+                color = secondCircleColor,
+                delay = secondCircleDelay
             ),
             Circle(
-                color = ContextCompat.getColor(context, R.color.secondaryDarkColor),
-                delay = CIRCLE2_DELAY
+                radius = startRadius,
+                color = thirdCircleColor,
+                delay = thirdCircleDelay
             )
         )
     }
 
     fun startCircleAnimation() {
         val animation = CircleRadiusAnimation()
-        animation.duration = DURATION
+        animation.duration = duration.toLong()
         animation.repeatCount = Animation.INFINITE
         startAnimation(animation)
     }
@@ -62,7 +110,7 @@ class GlowingCircleView: View {
             canvas.drawCircle(
                 width / 2.toFloat(),
                 height / 2.toFloat(),
-                it.radius,
+                it.radius.toFloat(),
                 it.paint
             )
         }
@@ -75,7 +123,7 @@ class GlowingCircleView: View {
     private inner class CircleRadiusAnimation: Animation() {
         override fun reset() {
             circleList.forEach {
-                it.radius = START_RADIUS
+                it.radius = startRadius
             }
             requestLayout()
             this@GlowingCircleView.invalidate()
@@ -91,10 +139,10 @@ class GlowingCircleView: View {
                 } else {
                     1 - it.delay - interpolatedTime
                 }
-                val currentRadius = width * time.toFloat() + START_RADIUS
-                val maxRadius = width.toFloat() / 2
+                val currentRadius = width * time + startRadius
+                val maxRadius = width / 2
                 if (time > 0 && currentRadius > maxRadius) {
-                    it.radius = maxRadius
+                    it.radius = maxRadius.toDouble()
                 } else if (time > 0) {
                     it.radius = currentRadius
                 }
@@ -114,9 +162,9 @@ class GlowingCircleView: View {
     }
 
     private data class Circle(
-        var radius: Float = START_RADIUS,
+        var radius: Double,
         private val color: Int,
-        val delay: Double
+        val delay: Float
     ) {
         val paint = Paint()
 

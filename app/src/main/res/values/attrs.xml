@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GlowingCircleView">
+        <attr name="duration" format="float" />
+        <attr name="startRadius" format="dimension" />
+        <attr name="firstCircleColor" format="color" />
+        <attr name="secondCircleColor" format="color" />
+        <attr name="thirdCircleColor" format="color" />
+        <attr name="firstCircleDelay" format="float" />
+        <attr name="secondCircleDelay" format="float" />
+        <attr name="thirdCircleDelay" format="float" />
+    </declare-styleable>
+</resources>
