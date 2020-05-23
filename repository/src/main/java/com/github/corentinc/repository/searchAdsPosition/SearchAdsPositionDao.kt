@@ -1,4 +1,4 @@
-package com.github.corentinc.repository.searchWithAds
+package com.github.corentinc.repository.searchAdsPosition
 
 import androidx.room.Dao
 import androidx.room.Query

@@ -3,8 +3,8 @@ package com.github.corentinc.notificoin.injection
 import com.github.corentinc.core.SearchAdsPostionDefaultSorter
 import com.github.corentinc.core.repository.searchAdsPosition.SearchAdsPositionRepository
 import com.github.corentinc.repository.NotifiCoinDataBase
-import com.github.corentinc.repository.searchWithAds.SearchAdsPositionDataSource
-import com.github.corentinc.repository.searchWithAds.SearchAdsPositionPositionRepositoryImpl
+import com.github.corentinc.repository.searchAdsPosition.SearchAdsPositionDataSource
+import com.github.corentinc.repository.searchAdsPosition.SearchAdsPositionPositionRepositoryImpl
 import org.koin.dsl.module
 
 val searchAdsPositionModule = module {

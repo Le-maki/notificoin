@@ -9,9 +9,9 @@ import com.github.corentinc.repository.ad.AdEntity
 import com.github.corentinc.repository.ad.AdTypeConverter
 import com.github.corentinc.repository.search.SearchDao
 import com.github.corentinc.repository.search.SearchEntity
+import com.github.corentinc.repository.searchAdsPosition.SearchAdsPositionDao
 import com.github.corentinc.repository.searchPosition.SearchPositionDao
 import com.github.corentinc.repository.searchPosition.SearchPositionEntity
-import com.github.corentinc.repository.searchWithAds.SearchAdsPositionDao
 
 @Database(
     entities = [AdEntity::class, SearchEntity::class, SearchPositionEntity::class],

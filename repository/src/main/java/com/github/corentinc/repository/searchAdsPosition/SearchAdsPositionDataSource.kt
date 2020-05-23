@@ -1,4 +1,4 @@
-package com.github.corentinc.repository.searchWithAds
+package com.github.corentinc.repository.searchAdsPosition
 
 class SearchAdsPositionDataSource(
     private val searchAdsPositionDao: SearchAdsPositionDao

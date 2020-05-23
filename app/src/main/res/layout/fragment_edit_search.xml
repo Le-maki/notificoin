@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp">
+    android:layout_margin="@dimen/defaultMargin">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/editSearchEditLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/button_white_bg"
-        android:padding="8dp"
+        android:padding="@dimen/defaultMargin"
         app:layout_constraintBottom_toTopOf="@+id/editSearchSaveButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -83,11 +83,11 @@
             android:textColor="@android:color/black"
             android:translationY="-8dp"
             android:visibility="gone"
-            app:angle="8dp"
+            app:angle="@dimen/defaultMargin"
             app:arrowHeight="10dp"
             app:arrowLocation="top"
             app:arrowPosition="14dp"
-            app:arrowWidth="8dp"
+            app:arrowWidth="@dimen/defaultMargin"
             app:bubbleColor="@color/secondaryDarkColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editSearchUrlEditText"
@@ -97,10 +97,10 @@
 
     <Button
         android:id="@+id/editSearchSaveButton"
-        android:padding="8dp"
+        android:layout_margin="@dimen/defaultMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:padding="@dimen/defaultMargin"
         android:background="@drawable/button_yellow_bg"
         android:text="@string/editSearchSaveButton"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -110,7 +110,7 @@
 
     <Button
         android:id="@+id/editSearchDeleteButton"
-        android:padding="8dp"
+        android:padding="@dimen/defaultMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="25dp"

@@ -38,7 +38,7 @@
     <string name="adListImageViewContentDescription">canard triste</string>
     <string name="edtiSearchInvalidUrlError">L\'url n\'est pas valide, elle doit respecter le format : https://www.leboncoin.fr/recherche/…</string>
     <string name="editSearchNotASearchUrlError">L\'url provient de Leboncoin mais n\'est pas une recherche, elle doit respecter le format : https://www.leboncoin.fr/recherche/…</string>
-    <string name="aboutAppDescription"> Cette application est faite bénévolement sur mon temps personnel, elle ne réprésente pas et n\'a aucune affiliation avec Leboncoin.fr</string>
+    <string name="aboutAppDescription"> Cette application est faite bénévolement sur mon temps personnel, elle ne représente pas et n\'a aucune affiliation avec Leboncoin.fr</string>
     <string name="aboutConnectWithUsGroup">Contactez nous</string>
     <string name="aboutEmailTitle">Par mail</string>
     <string name="aboutGithubTitle">Sur Github</string>
