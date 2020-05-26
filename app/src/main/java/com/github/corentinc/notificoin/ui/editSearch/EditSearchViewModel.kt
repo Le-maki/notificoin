@@ -8,5 +8,6 @@ data class EditSearchViewModel(
     val title: SingleLiveEvent<String>,
     val url: SingleLiveEvent<String>,
     val isSaveButtonEnabled: SingleLiveEvent<Boolean>,
-    val urlError: SingleLiveEvent<UrlError?>
+    val urlError: SingleLiveEvent<UrlError?>,
+    val isEditSearchUrlInfoTextVisible: SingleLiveEvent<Boolean>
 ): ViewModel()

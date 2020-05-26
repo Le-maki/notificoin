@@ -62,7 +62,7 @@
 
         <EditText
             android:id="@+id/editSearchUrlEditText"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/editSearchUrlHint"
             android:importantForAutofill="no"
@@ -70,10 +70,39 @@
             android:maxLines="5"
             android:singleLine="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/editSearchUrlInfoButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editSearchUrlTextView"
             tools:ignore="TextFields" />
+
+        <ImageButton
+            android:id="@+id/editSearchUrlInfoButton"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:background="@color/transparent"
+            android:contentDescription="@string/EditSearchUrlInfoButtonContentDescription"
+            android:src="@drawable/ic_info_24px"
+            app:layout_constraintBottom_toBottomOf="@+id/editSearchUrlEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/editSearchUrlEditText" />
+
+        <com.github.library.bubbleview.BubbleTextView
+            android:id="@+id/editSearchUrlInfoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/editSearchUrlHelpBubble"
+            android:textColor="@android:color/black"
+            android:translationY="-8dp"
+            android:visibility="gone"
+            app:angle="@dimen/defaultMargin"
+            app:arrowHeight="10dp"
+            app:arrowLocation="top"
+            app:arrowWidth="@dimen/defaultMargin"
+            app:bubbleColor="@color/secondaryDarkColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editSearchUrlEditText"
+            tools:visibility="visible" />
 
         <com.github.library.bubbleview.BubbleTextView
             android:id="@+id/editSearchUrlErrorText"
@@ -86,13 +115,11 @@
             app:angle="@dimen/defaultMargin"
             app:arrowHeight="10dp"
             app:arrowLocation="top"
-            app:arrowPosition="14dp"
             app:arrowWidth="@dimen/defaultMargin"
             app:bubbleColor="@color/secondaryDarkColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editSearchUrlEditText"
-            tools:text="url Error Message"
-            tools:visibility="visible" />
+            tools:text="url Error Message" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button

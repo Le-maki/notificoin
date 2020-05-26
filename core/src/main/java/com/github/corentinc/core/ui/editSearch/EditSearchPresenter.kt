@@ -7,4 +7,5 @@ interface EditSearchPresenter {
     fun presentValidUrl()
     fun presentEditSearch(title: String, url: String)
     fun presentSaveButton(isEnabled: Boolean)
+    fun presentUrlInfo(isVisible: Boolean)
 }

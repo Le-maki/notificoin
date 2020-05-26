@@ -22,4 +22,8 @@ class EditSearchPresenterImpl(
     override fun presentSaveButton(isEnabled: Boolean) {
         editSearchViewModel.isSaveButtonEnabled.value = isEnabled
     }
+
+    override fun presentUrlInfo(isVisible: Boolean) {
+        editSearchViewModel.isEditSearchUrlInfoTextVisible.value = isVisible
+    }
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
@@ -17,7 +18,9 @@ import com.github.corentinc.core.EditSearchInteractor
 import com.github.corentinc.core.editSearch.UrlError.INVALID_FORMAT
 import com.github.corentinc.core.editSearch.UrlError.NOT_A_SEARCH
 import com.github.corentinc.notificoin.R
+import com.github.corentinc.notificoin.createChromeIntentFromUrl
 import com.github.corentinc.notificoin.ui.ChildFragment
+import com.github.corentinc.notificoin.ui.adList.AdListFragment.Companion.LEBONCOIN_URL
 import com.github.corentinc.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -27,6 +30,7 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
     private val editSearchViewModel: EditSearchViewModel by viewModel()
+
     override fun onStart() {
         super.onStart()
         bindViewModel()
@@ -38,6 +42,12 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                 editSearchUrlEditText.text.toString()
             )
             findNavController().navigateUp()
+        }
+        editSearchUrlInfoButton.setOnClickListener {
+            editSearchInteractor.onUrlInfoButtonClicked()
+        }
+        editSearchUrlInfoText.setOnClickListener {
+            startChromeIntent()
         }
         editSearchDeleteButton.setOnClickListener {
             editSearchInteractor.deleteSearch(editSearchFragmentArgs.id)
@@ -56,43 +66,19 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         )
         initializeUrlEditText()
         initializeTitleEditText()
+
     }
 
-    private fun initializeTitleEditText() {
-        editSearchTitleEditText.doOnTextChanged { text, _, _, _ ->
-            editSearchInteractor.onTitleTextChanged(
-                text,
-                editSearchUrlEditText.text.toString(),
-                editSearchViewModel.urlError.value == null
-            )
-        }
-    }
-
-    private fun initializeUrlEditText() {
-        editSearchUrlEditText.imeOptions = EditorInfo.IME_ACTION_DONE
-        editSearchUrlEditText.setRawInputType(InputType.TYPE_CLASS_TEXT)
-        editSearchUrlEditText.setOnEditorActionListener { _, editorAction, _ ->
-            when (editorAction) {
-                EditorInfo.IME_ACTION_DONE -> {
-                    requireActivity().hideKeyboard()
-                    true
-                }
-                else -> false
-            }
-        }
-        editSearchUrlEditText.doOnTextChanged { text, _, _, _ ->
-            editSearchInteractor.onUrlTextChanged(text, editSearchTitleEditText.text.toString())
-        }
-    }
-
-    private fun addOnDestinationChangedListener() {
-        onDestinationChangedListener =
-            OnDestinationChangedListener { _, destination, _ ->
-                if (destination.label == getString(R.string.titleHome)) {
-                    onNavigateUp()
-                }
-            }
-        findNavController().addOnDestinationChangedListener(onDestinationChangedListener)
+    private fun startChromeIntent() {
+        LEBONCOIN_URL.createChromeIntentFromUrl(requireActivity().packageManager)
+            ?.let { intent ->
+                editSearchViewModel.isEditSearchUrlInfoTextVisible.value = false
+                startActivity(intent)
+            } ?: Toast.makeText(
+            requireContext(),
+            getString(R.string.adListForbiddenFixMessage),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     override fun onCreateView(
@@ -137,6 +123,15 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                 editSearchSaveButton.isEnabled = it
             }
         )
+        editSearchViewModel.isEditSearchUrlInfoTextVisible.observe(
+            this.viewLifecycleOwner,
+            Observer {
+                if (it) {
+                    editSearchViewModel.urlError.value = null
+                }
+                editSearchUrlInfoText?.isVisible = it
+            }
+        )
     }
 
     private fun showUrlError(text: String) {
@@ -155,5 +150,43 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
             editSearchTitleEditText.text.toString(),
             editSearchUrlEditText.text.toString()
         )
+    }
+
+    private fun initializeTitleEditText() {
+        editSearchTitleEditText.doOnTextChanged { text, _, _, _ ->
+            editSearchInteractor.onTitleTextChanged(
+                text,
+                editSearchUrlEditText.text.toString(),
+                editSearchViewModel.urlError.value == null
+            )
+        }
+    }
+
+    private fun initializeUrlEditText() {
+        editSearchUrlEditText.imeOptions = EditorInfo.IME_ACTION_DONE
+        editSearchUrlEditText.setRawInputType(InputType.TYPE_CLASS_TEXT)
+        editSearchUrlEditText.setOnEditorActionListener { _, editorAction, _ ->
+            when (editorAction) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    requireActivity().hideKeyboard()
+                    true
+                }
+                else -> false
+            }
+        }
+        editSearchUrlEditText.doOnTextChanged { text, _, _, _ ->
+            editSearchViewModel.isEditSearchUrlInfoTextVisible.value = false
+            editSearchInteractor.onUrlTextChanged(text, editSearchTitleEditText.text.toString())
+        }
+    }
+
+    private fun addOnDestinationChangedListener() {
+        onDestinationChangedListener =
+            OnDestinationChangedListener { _, destination, _ ->
+                if (destination.label == getString(R.string.titleHome)) {
+                    onNavigateUp()
+                }
+            }
+        findNavController().addOnDestinationChangedListener(onDestinationChangedListener)
     }
 }

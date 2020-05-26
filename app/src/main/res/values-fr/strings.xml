@@ -44,4 +44,6 @@
     <string name="aboutGithubTitle">Sur Github</string>
     <string name="aboutDevelopedWith">Développé avec</string>
     <string name="homeEmptySearch">Vous n\'avez pas encore de recherche, vous pouvez en ajouter une en utilisant le bouton jaune juste en dessous</string>
+    <string name="EditSearchUrlInfoButtonContentDescription">Ou touver cette url</string>
+    <string name="editSearchUrlHelpBubble">Ouvrez Leboncoin sur Chrome et accédez à votre recherche pour copier l\'url, cliquez ici !</string>
 </resources>

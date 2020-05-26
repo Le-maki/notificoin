@@ -15,7 +15,8 @@ val editSearchModule = module {
             title = SingleLiveEvent(),
             url = SingleLiveEvent(),
             urlError = SingleLiveEvent(),
-            isSaveButtonEnabled = SingleLiveEvent()
+            isSaveButtonEnabled = SingleLiveEvent(),
+            isEditSearchUrlInfoTextVisible = SingleLiveEvent()
         )
     }
 }
