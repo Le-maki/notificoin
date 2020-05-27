@@ -8,4 +8,6 @@ interface EditSearchPresenter {
     fun presentEditSearch(title: String, url: String)
     fun presentSaveButton(isEnabled: Boolean)
     fun presentUrlInfo(isVisible: Boolean)
+    fun presentCopiedContent(clipBoardText: String)
+    fun presentUrlButtonDisplayedChild(displayedChildIndex: Int)
 }

@@ -24,6 +24,14 @@ class EditSearchPresenterImpl(
     }
 
     override fun presentUrlInfo(isVisible: Boolean) {
-        editSearchViewModel.isEditSearchUrlInfoTextVisible.value = isVisible
+        editSearchViewModel.isUrlInfoTextVisible.value = isVisible
+    }
+
+    override fun presentCopiedContent(clipBoardText: String) {
+        editSearchViewModel.url.value = clipBoardText
+    }
+
+    override fun presentUrlButtonDisplayedChild(displayedChildIndex: Int) {
+        editSearchViewModel.UrlButtonDisplayedChild.value = displayedChildIndex
     }
 }

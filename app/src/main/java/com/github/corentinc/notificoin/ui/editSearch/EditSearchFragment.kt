@@ -1,5 +1,7 @@
 package com.github.corentinc.notificoin.ui.editSearch
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -30,6 +32,7 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
     private val editSearchViewModel: EditSearchViewModel by viewModel()
+    private var clipboardManager: ClipboardManager? = null
 
     override fun onStart() {
         super.onStart()
@@ -59,10 +62,19 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                 )
             )
         }
+        clipboardManager = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+        editSearchUrlPasteButton.setOnClickListener {
+            editSearchInteractor.onEditSearchUrlPasteButtonClicked(
+                clipboardManager?.primaryClip?.getItemAt(
+                    0
+                )?.coerceToText(context).toString()
+            )
+        }
         editSearchInteractor.onStart(
             editSearchFragmentArgs.id,
             editSearchFragmentArgs.title,
-            editSearchFragmentArgs.url
+            editSearchFragmentArgs.url,
+            clipboardManager?.primaryClip?.getItemAt(0)?.coerceToText(context).toString()
         )
         initializeUrlEditText()
         initializeTitleEditText()
@@ -72,7 +84,7 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     private fun startChromeIntent() {
         LEBONCOIN_URL.createChromeIntentFromUrl(requireActivity().packageManager)
             ?.let { intent ->
-                editSearchViewModel.isEditSearchUrlInfoTextVisible.value = false
+                editSearchViewModel.isUrlInfoTextVisible.value = false
                 startActivity(intent)
             } ?: Toast.makeText(
             requireContext(),
@@ -123,13 +135,19 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                 editSearchSaveButton.isEnabled = it
             }
         )
-        editSearchViewModel.isEditSearchUrlInfoTextVisible.observe(
+        editSearchViewModel.isUrlInfoTextVisible.observe(
             this.viewLifecycleOwner,
             Observer {
                 if (it) {
                     editSearchViewModel.urlError.value = null
                 }
                 editSearchUrlInfoText?.isVisible = it
+            }
+        )
+        editSearchViewModel.UrlButtonDisplayedChild.observe(
+            this.viewLifecycleOwner,
+            Observer {
+                editSearchUrlButton.displayedChild = it
             }
         )
     }
@@ -175,7 +193,7 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
             }
         }
         editSearchUrlEditText.doOnTextChanged { text, _, _, _ ->
-            editSearchViewModel.isEditSearchUrlInfoTextVisible.value = false
+            editSearchViewModel.isUrlInfoTextVisible.value = false
             editSearchInteractor.onUrlTextChanged(text, editSearchTitleEditText.text.toString())
         }
     }

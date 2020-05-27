@@ -70,21 +70,36 @@
             android:maxLines="5"
             android:singleLine="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/editSearchUrlInfoButton"
+            app:layout_constraintEnd_toStartOf="@+id/editSearchUrlButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editSearchUrlTextView"
             tools:ignore="TextFields" />
 
-        <ImageButton
-            android:id="@+id/editSearchUrlInfoButton"
+        <ViewSwitcher
+            android:id="@+id/editSearchUrlButton"
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:background="@color/transparent"
-            android:contentDescription="@string/EditSearchUrlInfoButtonContentDescription"
-            android:src="@drawable/ic_info_24px"
             app:layout_constraintBottom_toBottomOf="@+id/editSearchUrlEditText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editSearchUrlEditText" />
+            app:layout_constraintTop_toTopOf="@+id/editSearchUrlEditText">
+
+            <ImageButton
+                android:id="@+id/editSearchUrlInfoButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:contentDescription="@string/EditSearchUrlInfoButtonContentDescription"
+                android:src="@drawable/ic_info_24px" />
+
+            <ImageButton
+                android:id="@+id/editSearchUrlPasteButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:contentDescription="@string/EditSearchUrlInfoButtonContentDescription"
+                android:src="@drawable/ic_clipboard_text" />
+
+        </ViewSwitcher>
 
         <com.github.library.bubbleview.BubbleTextView
             android:id="@+id/editSearchUrlInfoText"

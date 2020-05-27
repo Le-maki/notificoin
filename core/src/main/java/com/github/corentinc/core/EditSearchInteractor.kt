@@ -17,6 +17,7 @@ class EditSearchInteractor(
     companion object {
         private const val REGEX = "^(http://|https://)www\\.leboncoin\\.fr/(recherche/)?.+"
         private const val SEARCH_PATH = "recherche/"
+        private const val DEFAULT_CLIPBOARD_VALUE = "null"
         const val DEFAULT_ID = -1
     }
 
@@ -60,10 +61,29 @@ class EditSearchInteractor(
         editSearchPresenter.presentSaveButton(isUrlNotEmpty && !titleText.isBlank() && isUrlValid)
     }
 
-    fun onStart(id: Int, title: String, url: String) {
+    fun onStart(id: Int, title: String, url: String, clipBoardText: String) {
         if (id != DEFAULT_ID) {
             editSearchPresenter.presentEditSearch(title, url)
         }
+        val regex = REGEX.toRegex()
+        val isValidUrl =
+            !clipBoardText.isBlank() && clipBoardText != DEFAULT_CLIPBOARD_VALUE && clipBoardText.let {
+                regex.find(
+                    it
+                )
+            }
+                ?.let { matchResult ->
+                    matchResult.groupValues.getOrNull(2) == SEARCH_PATH
+                } ?: run {
+                false
+            }
+        editSearchPresenter.presentUrlButtonDisplayedChild(
+            if (isValidUrl) {
+                1
+            } else {
+                0
+            }
+        )
     }
 
     fun onSave(id: Int, title: String, url: String) {
@@ -80,5 +100,9 @@ class EditSearchInteractor(
 
     fun onUrlInfoButtonClicked() {
         editSearchPresenter.presentUrlInfo(true)
+    }
+
+    fun onEditSearchUrlPasteButtonClicked(clipBoardText: String) {
+        editSearchPresenter.presentCopiedContent(clipBoardText)
     }
 }
