@@ -30,8 +30,8 @@ android {
                 ]
             }
         }
-        versionCode = 2
-        versionName = "0.2"
+        versionCode = 3
+        versionName = "0.3"
     }
     buildTypes {
         release {
@@ -92,6 +92,3 @@ dependencies {
     // Joda time
     implementation parent.ext.jodaTime
 }
-
-sourceCompatibility = "8"
-targetCompatibility = "8"
