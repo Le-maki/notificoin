@@ -117,7 +117,20 @@ class GlowingCircleView: View {
     }
 
     fun stopAnimation() {
-        clearAnimation()
+        this.animation?.setAnimationListener(object: Animation.AnimationListener {
+            override fun onAnimationRepeat(animation: Animation?) {
+                clearAnimation()
+            }
+
+            override fun onAnimationEnd(animation: Animation?) {
+                // empty
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+                // empty
+            }
+
+        })
     }
 
     private inner class CircleRadiusAnimation: Animation() {
