@@ -37,7 +37,7 @@ class EditSearchInteractor(
         editSearchPresenter.presentSaveButton(titleText?.isBlank() == false && !urlText.isBlank() && isUrlValid)
     }
 
-    fun onUrlTextChanged(urlText: CharSequence?, titleText: String) {
+    fun onTextChanged(urlText: CharSequence?, titleText: String) {
         val regex = REGEX.toRegex()
         val isUrlNotEmpty = urlText?.isBlank() == false
         var isUrlValid = false

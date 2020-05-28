@@ -2,6 +2,7 @@ package com.github.corentinc.notificoin.ui.editSearch
 
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -33,6 +34,10 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
     private val editSearchViewModel: EditSearchViewModel by viewModel()
     private var clipboardManager: ClipboardManager? = null
+
+    companion object {
+        private var oldOrientationBit = 0
+    }
 
     override fun onStart() {
         super.onStart()
@@ -70,12 +75,19 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                 )?.coerceToText(context).toString()
             )
         }
-        editSearchInteractor.onStart(
-            editSearchFragmentArgs.id,
-            editSearchFragmentArgs.title,
-            editSearchFragmentArgs.url,
-            clipboardManager?.primaryClip?.getItemAt(0)?.coerceToText(context).toString()
-        )
+        if (oldOrientationBit and ActivityInfo.CONFIG_ORIENTATION != ActivityInfo.CONFIG_ORIENTATION) {
+            editSearchInteractor.onStart(
+                editSearchFragmentArgs.id,
+                editSearchFragmentArgs.title,
+                editSearchFragmentArgs.url,
+                clipboardManager?.primaryClip?.getItemAt(0)?.coerceToText(context).toString()
+            )
+        } else {
+            editSearchInteractor.onTextChanged(
+                editSearchUrlEditText.text,
+                editSearchTitleEditText.text.toString()
+            )
+        }
         initializeUrlEditText()
         initializeTitleEditText()
 
@@ -104,6 +116,11 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     override fun onPause() {
         findNavController().removeOnDestinationChangedListener(onDestinationChangedListener)
         super.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        oldOrientationBit = activity?.changingConfigurations ?: 0
     }
 
     private fun bindViewModel() {
@@ -194,7 +211,7 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         }
         editSearchUrlEditText.doOnTextChanged { text, _, _, _ ->
             editSearchViewModel.isUrlInfoTextVisible.value = false
-            editSearchInteractor.onUrlTextChanged(text, editSearchTitleEditText.text.toString())
+            editSearchInteractor.onTextChanged(text, editSearchTitleEditText.text.toString())
         }
     }
 
