@@ -3,14 +3,18 @@ package com.github.corentinc.notificoin.ui.batteryWarning
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.provider.Settings
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.github.corentinc.core.BatteryWarningInteractor
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.ChildFragment
+
 
 class BatteryWarningFragment(
     val batteryWarningInteractor: BatteryWarningInteractor
@@ -19,33 +23,33 @@ class BatteryWarningFragment(
 
     private fun presentBatteryWhitelistRequestAlertDialog() {
         val context = requireContext()
-        val alertMessage = getString(R.string.settingsBatteryWarningSummary)
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         val view: View = View.inflate(context, R.layout.battery_whitelist_alertdialog, null)
         Glide.with(context)
             .load(R.raw.battery_whitelist)
             .into(view.findViewById(R.id.batteryWhiteListGif))
         alertDialog = builder.setView(view)
-            .setMessage(alertMessage)
-            .setPositiveButton(getString(R.string.OK)) { _, _ ->
-                try {
-                    goToBatteryWhiteListOfTheApp(context)
-                } catch (exception: ActivityNotFoundException) {
-                    goToBatteryWhiteList()
-                }
-                requireActivity().onBackPressed()
-            }
-            .setNeutralButton(getString(R.string.alertDialogStopAsking)) { _, _ ->
-                batteryWarningInteractor.onBatteryWhiteListAlertDialogNeutralButtonPressed()
-                requireActivity().onBackPressed()
-            }
-            .setNegativeButton(getString(R.string.alertDialogMaybeLater)) { _, _ ->
-                requireActivity().onBackPressed()
-            }
             .setOnCancelListener {
                 requireActivity().onBackPressed()
-            }.create()
+            }
+            .create()
+        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         alertDialog.show()
+        view.findViewById<Button>(R.id.batteryWhiteListOKButton).setOnClickListener {
+            try {
+                goToBatteryWhiteListOfTheApp(context)
+            } catch (exception: ActivityNotFoundException) {
+                goToBatteryWhiteList()
+            }
+            requireActivity().onBackPressed()
+        }
+        view.findViewById<Button>(R.id.batteryWhiteListStopAskingButton).setOnClickListener {
+            batteryWarningInteractor.onBatteryWhiteListAlertDialogNeutralButtonPressed()
+            requireActivity().onBackPressed()
+        }
+        view.findViewById<Button>(R.id.batteryWhiteListMaybeButton).setOnClickListener {
+            requireActivity().onBackPressed()
+        }
     }
 
     override fun onPause() {
