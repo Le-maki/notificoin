@@ -22,9 +22,9 @@
 
     <ImageView
         android:id="@+id/batteryWhiteListGif"
-        android:layout_margin="@dimen/defaultMargin"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:layout_margin="@dimen/defaultMargin"
         android:contentDescription="@string/settingsBatteryWarningSummary"
         app:layout_constraintBottom_toTopOf="@id/batteryWhiteListOKButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,31 +33,33 @@
 
     <Button
         android:id="@+id/batteryWhiteListStopAskingButton"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_white_bg"
         android:padding="@dimen/defaultMargin"
         android:text="@string/alertDialogStopAsking"
         android:textAllCaps="false"
+        android:textColor="@color/secondaryTextColor"
         app:layout_constraintEnd_toStartOf="@+id/batteryWhiteListMaybeButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/batteryWhiteListOKButton" />
 
     <Button
         android:id="@+id/batteryWhiteListMaybeButton"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_white_bg"
         android:padding="@dimen/defaultMargin"
         android:text="@string/alertDialogMaybeLater"
         android:textAllCaps="false"
+        android:textColor="@color/secondaryTextColor"
         app:layout_constraintEnd_toStartOf="@+id/batteryWhiteListOKButton"
         app:layout_constraintStart_toEndOf="@+id/batteryWhiteListStopAskingButton"
         app:layout_constraintTop_toTopOf="@+id/batteryWhiteListOKButton" />
 
     <Button
         android:id="@+id/batteryWhiteListOKButton"
-        android:layout_width="wrap_content"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
