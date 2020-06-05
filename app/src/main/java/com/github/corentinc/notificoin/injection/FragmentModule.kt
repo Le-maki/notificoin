@@ -16,5 +16,5 @@ val fragmentModule = module {
     single { AdListFragment(adListInteractor = get()) }
     single { SettingsFragment(settingsInteractor = get()) }
     single { AboutFragment() }
-    single { BatteryWarningFragment(batteryWarningInteractor = get()) }
+    factory { BatteryWarningFragment(batteryWarningInteractor = get()) }
 }

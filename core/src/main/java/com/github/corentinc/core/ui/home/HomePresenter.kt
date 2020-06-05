@@ -7,6 +7,6 @@ interface HomePresenter {
     fun presentEditSearchScreen(id: Int? = null, url: String? = null, title: String? = null)
     fun presentAdListFragment(search: Search)
     fun presentUndoDeleteSearch(search: Search)
-    fun presentBatteryWarningFragment()
+    fun presentBatteryWarningFragment(shouldDisplayDefaultDialog: Boolean)
     fun presentEmptySearches()
 }

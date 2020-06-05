@@ -29,13 +29,14 @@ class HomeInteractor(
     fun onStart(
         isBatteryWhiteListAlreadyGranted: Boolean,
         wasBatteryWhiteListDialogAlreadyShown: Boolean,
+        shouldDisplaySpecialConstructorDialog: Boolean,
         id: Int,
         title: String,
         url: String
     ) {
-        if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && !isBatteryWhiteListAlreadyGranted && !wasBatteryWhiteListDialogAlreadyShown
-        ) {
-            homePresenter.presentBatteryWarningFragment()
+        val shouldDisplayDefaultDialog = !isBatteryWhiteListAlreadyGranted
+        if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && !wasBatteryWhiteListDialogAlreadyShown && (shouldDisplaySpecialConstructorDialog || shouldDisplayDefaultDialog)) {
+            homePresenter.presentBatteryWarningFragment(shouldDisplayDefaultDialog)
         } else {
             CoroutineScope(Dispatchers.IO).launch {
                 var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
@@ -53,7 +54,6 @@ class HomeInteractor(
             if (id != EditSearchInteractor.DEFAULT_ID) {
                 homePresenter.presentUndoDeleteSearch(Search(id, title, url))
             }
-
         }
     }
 

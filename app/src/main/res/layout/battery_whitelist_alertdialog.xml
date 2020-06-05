@@ -6,7 +6,7 @@
     android:background="@drawable/alertdialog_bg">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/batteryWhiteListTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/defaultMargin"
@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toTopOf="@id/batteryWhiteListOKButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/batteryWhiteListTitle" />
 
     <Button
         android:id="@+id/batteryWhiteListStopAskingButton"

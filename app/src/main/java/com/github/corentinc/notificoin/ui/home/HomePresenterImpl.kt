@@ -24,8 +24,10 @@ class HomePresenterImpl(
         homeDisplay.displayUndoDeleteSearch(search)
     }
 
-    override fun presentBatteryWarningFragment() {
-        homeDisplay.displayBatteryWarningFragment()
+    override fun presentBatteryWarningFragment(
+        shouldDisplayDefaultDialog: Boolean
+    ) {
+        homeDisplay.displayBatteryWarningFragment(shouldDisplayDefaultDialog)
     }
 
     override fun presentEmptySearches() {

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.home.HomeInteractor
 import com.github.corentinc.core.search.Search
 import com.github.corentinc.notificoin.R
+import com.github.corentinc.notificoin.ui.batteryWarning.PowerManagementPackages
 import com.github.corentinc.notificoin.ui.home.searchesRecyclerView.SearchAdapter
 import com.github.corentinc.notificoin.ui.home.searchesRecyclerView.SearchAdapterListener
 import com.google.android.material.snackbar.Snackbar
@@ -54,6 +55,7 @@ class HomeFragment(
         homeInteractor.onStart(
             powerManager != null && powerManager.isIgnoringBatteryOptimizations(context.packageName),
             homeViewModel.shouldShowBatteryWhiteListAlertDialog.value == false,
+            PowerManagementPackages.isAnyIntentCallable(context),
             homeFragmentArgs.id,
             homeFragmentArgs.title,
             homeFragmentArgs.url
@@ -128,9 +130,13 @@ class HomeFragment(
             .show()
     }
 
-    override fun displayBatteryWarningFragment() {
+    override fun displayBatteryWarningFragment(
+        shouldDisplayDefaultDialog: Boolean
+    ) {
         homeViewModel.shouldShowBatteryWhiteListAlertDialog.value = false
-        findNavController().navigate(R.id.homeToBatteryWarningAction)
+        findNavController().navigate(
+            HomeFragmentDirections.homeToBatteryWarningAction(shouldDisplayDefaultDialog)
+        )
     }
 
     override fun displayEmptySearches() {

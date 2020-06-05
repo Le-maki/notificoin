@@ -6,6 +6,6 @@ interface HomeDisplay {
     fun displayEditSearchScreen(id: Int?, url: String?, title: String?)
     fun displayAdListScreen(searchId: Int)
     fun displayUndoDeleteSearch(search: Search)
-    fun displayBatteryWarningFragment()
+    fun displayBatteryWarningFragment(shouldDisplayDefaultDialog: Boolean)
     fun displayEmptySearches()
 }

@@ -36,7 +36,12 @@
     <fragment
         android:id="@+id/navigationBatteryWarning"
         android:name="com.github.corentinc.notificoin.ui.batteryWarning.BatteryWarningFragment"
-        tools:layout="@layout/battery_whitelist_alertdialog" />
+        tools:layout="@layout/battery_whitelist_alertdialog">
+        <argument
+            android:name="shouldDisplayDefaultDialog"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigationAdList"
