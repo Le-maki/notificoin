@@ -46,5 +46,5 @@
     <string name="homeEmptySearch">Vous n\'avez pas encore de recherche, vous pouvez en ajouter une en utilisant le bouton jaune juste en dessous</string>
     <string name="EditSearchUrlInfoButtonContentDescription">Ou touver cette url</string>
     <string name="editSearchUrlHelpBubble">Ouvrez Leboncoin sur Chrome et accédez à votre recherche pour copier l\'url, cliquez ici !</string>
-    <string name="BatteryWarningDetectedSpecialConstructor">Le constructeur de votre téléphone utilise aussi une application spéciale pour gérer la batterie, vous devez autoriser NotifiCoin à rester en arrière plan dans celle-ci</string>
+    <string name="BatteryWarningDetectedSpecialConstructor">Le constructeur de votre téléphone utilise aussi une application spéciale pour gérer la batterie, autorisez NotifiCoin à rester en arrière plan dans celle-ci</string>
 </resources>

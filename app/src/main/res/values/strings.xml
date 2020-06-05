@@ -53,5 +53,5 @@
     <string name="homeEmptySearch">You have no search yet, you can add one by clicking on the yellow button just bellow</string>
     <string name="EditSearchUrlInfoButtonContentDescription">Where to find this url</string>
     <string name="editSearchUrlHelpBubble">Open Leboncoin on Chrome and go to your search to copy the url, click here !</string>
-    <string name="BatteryWarningDetectedSpecialConstructor">The constructor of your phone is also using a special app to manage battery, you need to allow NotifiCoin to run in the background in this app</string>
+    <string name="BatteryWarningDetectedSpecialConstructor">The constructor of your phone is also using a special app to manage battery, allow NotifiCoin to run in the background in this app</string>
 </resources>
