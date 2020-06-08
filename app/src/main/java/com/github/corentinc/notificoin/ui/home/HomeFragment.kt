@@ -67,11 +67,14 @@ class HomeFragment(
     private fun addOnDestinationChangedListener() {
         onDestinationChangedListener =
             NavController.OnDestinationChangedListener { _, destination, _ ->
-                if (destination.label != resources.getString(R.string.titleHome)) {
-                    beforeFragmentPause()
+                context?.let {
+                    if (destination.label != resources.getString(R.string.titleHome)) {
+                        beforeFragmentPause()
+                    }
                 }
             }
         findNavController().addOnDestinationChangedListener(onDestinationChangedListener)
+
     }
 
     override fun onPause() {
