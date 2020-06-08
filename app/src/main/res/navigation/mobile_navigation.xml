@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobileNavigation"
-    app:startDestination="@+id/navigationHome">
+    app:startDestination="@id/navigationEditSearch">
 
     <fragment
         android:id="@+id/navigationHome"
@@ -69,7 +69,8 @@
     <fragment
         android:id="@+id/navigationAbout"
         android:name="com.github.corentinc.notificoin.ui.settings.AboutFragment"
-        android:label="@string/titleAbout" />
+        android:label="@string/titleAbout"
+        tools:layout="@layout/about_page" />
 
     <fragment
         android:id="@+id/navigationEditSearch"

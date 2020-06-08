@@ -1,12 +1,8 @@
 package com.github.corentinc.notificoin.ui.settings
 
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.PowerManager
-import android.provider.Settings
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -82,11 +78,7 @@ class SettingsFragment(
         settingsViewModel.isAccurateNotificationChecked.observe(
             viewLifecycleOwner,
             Observer {
-                if (it) {
-                    displayBatteryWarningFragment()
-                } else {
-                    displayBatteryWhiteListSettings()
-                }
+                displayBatteryWarningFragment()
             })
     }
 
@@ -101,28 +93,6 @@ class SettingsFragment(
 
     private fun displayBatteryWarningFragment() {
         findNavController().navigate(R.id.settingsToBatteryWarningAction)
-    }
-
-    private fun displayBatteryWhiteListSettings() {
-        try {
-            goToBatteryWhiteListOfTheApp(requireContext())
-        } catch (exception: ActivityNotFoundException) {
-            goToBatteryWhiteList()
-        }
-    }
-
-    private fun goToBatteryWhiteListOfTheApp(context: Context) {
-        val intent = Intent()
-        intent.action = Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
-        val packageName: String = context.packageName
-        intent.data = Uri.parse("package:$packageName")
-        startActivity(intent)
-    }
-
-    private fun goToBatteryWhiteList() {
-        val intent = Intent()
-        intent.action = Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
-        startActivity(intent)
     }
 
     private fun addOnBackPressedCallBack() {
