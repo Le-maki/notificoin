@@ -20,31 +20,52 @@ import com.github.corentinc.core.BatteryWarningInteractor
 import com.github.corentinc.logger.NotifiCoinLogger
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.ChildFragment
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BatteryWarningFragment(
     val batteryWarningInteractor: BatteryWarningInteractor
-): ChildFragment() {
-    private var wasDefaultDialogAlreadyShown = false
-    private var shouldDisplaySpecialConstructorDialog = false
-    private var specialIntent: Intent? = null
-    private lateinit var alertDialog: AlertDialog
+): ChildFragment(), BatteryWarningDisplay {
+    private val batteryWarningFragmentViewModel: BatteryWarningFragmentViewModel by viewModel()
+    private var defaultAlertDialog: AlertDialog? = null
+    private var specialAlertDialog: AlertDialog? = null
 
-    private fun presentBatteryWhitelistRequestAlertDialog(): View {
+    init {
+        (batteryWarningInteractor.batteryWarningPresenter as BatteryWarningPresenterImpl).batteryWarningDisplay =
+            this
+    }
+
+    override fun onPause() {
+        defaultAlertDialog?.dismiss()
+        specialAlertDialog?.dismiss()
+        super.onPause()
+    }
+
+    override fun onStart() {
+        val batteryWarningFragmentArgs: BatteryWarningFragmentArgs by navArgs()
+        batteryWarningInteractor.onStart(
+            PowerManagementPackages.isAnyIntentCallable(requireContext()),
+            batteryWarningFragmentArgs.shouldDisplayDefaultDialog,
+            batteryWarningFragmentViewModel.wasDefaultDialogAlreadyShown
+        )
+        super.onStart()
+    }
+
+    override fun displayBatteryWhitelistRequestAlertDialog(shouldDisplaySpecialConstructorDialog: Boolean) {
         val context = requireContext()
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         val view: View = View.inflate(context, R.layout.battery_whitelist_alertdialog, null)
         Glide.with(context)
             .load(R.raw.battery_whitelist)
             .into(view.findViewById(R.id.batteryWhiteListGif))
-        alertDialog = builder.setView(view)
+        defaultAlertDialog = builder.setView(view)
             .setOnCancelListener {
+                // empty
             }
             .create()
-        alertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        alertDialog.show()
+        defaultAlertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        defaultAlertDialog?.show()
         view.findViewById<Button>(R.id.batteryWhiteListOKButton).setOnClickListener {
-            wasDefaultDialogAlreadyShown = true
+            batteryWarningFragmentViewModel.wasDefaultDialogAlreadyShown = true
             try {
                 goToBatteryWhiteListOfTheApp(context)
             } catch (exception: ActivityNotFoundException) {
@@ -63,15 +84,29 @@ class BatteryWarningFragment(
         }
         view.findViewById<ImageView>(R.id.batteryWhiteListGif).isVisible =
             activity?.resources?.configuration?.orientation != Configuration.ORIENTATION_LANDSCAPE
-        return view
     }
 
-    private fun presentSpecialConstructorDialog(view: View) {
-        view.findViewById<ImageView>(R.id.batteryWhiteListGif).isVisible = false
-        view.findViewById<TextView>(R.id.batteryWhiteListTitle).text =
-            getString(R.string.BatteryWarningDetectedSpecialConstructor)
-        view.findViewById<TextView>(R.id.batteryWhiteListOKButton).setOnClickListener {
-            specialIntent?.let {
+    override fun displaySpecialConstructorDialog() {
+        val context = requireContext()
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        val view: View = View.inflate(context, R.layout.battery_whitelist_special_alertdialog, null)
+        specialAlertDialog = builder.setView(view)
+            .setOnCancelListener {
+                // empty
+            }
+            .create()
+        specialAlertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        specialAlertDialog?.show()
+        view.findViewById<Button>(R.id.batteryWhiteListSpecialStopAskingButton).setOnClickListener {
+            batteryWarningInteractor.onBatteryWhiteListAlertDialogNeutralButtonPressed()
+            requireActivity().onBackPressed()
+        }
+        view.findViewById<Button>(R.id.batteryWhiteListSpecialMaybeButton).setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+        view.findViewById<TextView>(R.id.batteryWhiteListSpecialOKButton).setOnClickListener {
+            PowerManagementPackages.findCallableIntent(requireContext())?.let {
+                NotifiCoinLogger.i("BatteryWarningFragment detected special intent : ${it.component}")
                 try {
                     startActivity(it)
                 } catch (exception: ActivityNotFoundException) {
@@ -83,11 +118,6 @@ class BatteryWarningFragment(
             } ?: NotifiCoinLogger.e("Tried to open special power management app, not intent found")
             requireActivity().onBackPressed()
         }
-    }
-
-    override fun onPause() {
-        alertDialog.dismiss()
-        super.onPause()
     }
 
     private fun goToBatteryWhiteListOfTheApp(context: Context) {
@@ -102,21 +132,5 @@ class BatteryWarningFragment(
         val intent = Intent()
         intent.action = Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS
         startActivity(intent)
-    }
-
-    override fun onStart() {
-        PowerManagementPackages.findCallableIntent(requireContext())?.let {
-            specialIntent = it
-            shouldDisplaySpecialConstructorDialog = true
-            NotifiCoinLogger.i("BatteryWarningFragment detected special intent : ${it.component}")
-        }
-        val batteryWarningFragmentArgs: BatteryWarningFragmentArgs by navArgs()
-        val view = presentBatteryWhitelistRequestAlertDialog()
-        if (shouldDisplaySpecialConstructorDialog &&
-            (!batteryWarningFragmentArgs.shouldDisplayDefaultDialog || (batteryWarningFragmentArgs.shouldDisplayDefaultDialog && wasDefaultDialogAlreadyShown))
-        ) {
-            presentSpecialConstructorDialog(view)
-        }
-        super.onStart()
     }
 }

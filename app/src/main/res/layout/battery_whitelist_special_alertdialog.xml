@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/alertdialog_bg">
+
+    <TextView
+        android:id="@+id/batteryWhiteListSpecialTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultMargin"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/batteryWarningDetectedSpecialConstructor"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/batteryWhiteListSpecialStopAskingButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Button
+        android:id="@+id/batteryWhiteListSpecialStopAskingButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_white_bg"
+        android:padding="@dimen/defaultMargin"
+        android:text="@string/alertDialogStopAsking"
+        android:textAllCaps="false"
+        android:textColor="@color/secondaryTextColor"
+        app:layout_constraintEnd_toStartOf="@+id/batteryWhiteListSpecialMaybeButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/batteryWhiteListSpecialOKButton" />
+
+    <Button
+        android:id="@+id/batteryWhiteListSpecialMaybeButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_white_bg"
+        android:padding="@dimen/defaultMargin"
+        android:text="@string/alertDialogMaybeLater"
+        android:textAllCaps="false"
+        android:textColor="@color/secondaryTextColor"
+        app:layout_constraintEnd_toStartOf="@+id/batteryWhiteListSpecialOKButton"
+        app:layout_constraintStart_toEndOf="@+id/batteryWhiteListSpecialStopAskingButton"
+        app:layout_constraintTop_toTopOf="@+id/batteryWhiteListSpecialOKButton" />
+
+    <Button
+        android:id="@+id/batteryWhiteListSpecialOKButton"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_yellow_bg"
+        android:padding="@dimen/defaultMargin"
+        android:text="@string/OK"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/batteryWhiteListSpecialMaybeButton"
+        app:layout_constraintTop_toBottomOf="@+id/batteryWhiteListSpecialTitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
