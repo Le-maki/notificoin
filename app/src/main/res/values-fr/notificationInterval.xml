@@ -2,7 +2,7 @@
 <resources>
     <array name="notificationIntervalEntries">
         <item>"jamais"</item>
-        <item>"toutes les minutes"</item>
+        <item>"toutes les 3 minutes"</item>
         <item>"toutes les 5 minutes"</item>
         <item>"toutes les 15 minutes"</item>
         <item>"toutes les 30 minutes"</item>

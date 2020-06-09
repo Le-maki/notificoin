@@ -2,7 +2,7 @@
 <resources>
     <array name="notificationIntervalEntries">
         <item>"never"</item>
-        <item>"every minute"</item>
+        <item>"every 3 minutes"</item>
         <item>"every 5 minutes"</item>
         <item>"every 15 minutes"</item>
         <item>"every 30 minutes"</item>
@@ -11,7 +11,7 @@
     </array>
     <array name="notificationIntervalValues">
         <item>"0"</item>
-        <item>"1"</item>
+        <item>"3"</item>
         <item>"5"</item>
         <item>"15"</item>
         <item>"30"</item>
