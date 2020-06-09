@@ -90,7 +90,7 @@ sealed class NotifiCoinEventParameter(val name: String, open val value: String) 
         NotifiCoinEventParameter("POPUP", enumvalue.name)
 
     data class SearchStatus(val enumvalue: NotifiCoinEventSearchStatus):
-        NotifiCoinEventParameter("POPUP", enumvalue.name)
+        NotifiCoinEventParameter("SEARCH_STATUS", enumvalue.name)
 }
 
 enum class NotifiCoinEventScreen {
