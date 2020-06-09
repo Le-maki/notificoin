@@ -18,7 +18,6 @@ import com.facebook.soloader.SoLoader
 import com.github.corentinc.core.repository.SharedPreferencesRepository
 import com.github.corentinc.logger.NotifiCoinLogger
 import com.github.corentinc.notificoin.injection.*
-import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,10 +29,9 @@ import org.koin.core.context.startKoin
 
 
 class MainActivity: AppCompatActivity() {
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
     override fun onCreate(savedInstanceState: Bundle?) {
         // Obtain the FirebaseAnalytics instance.
-        firebaseAnalytics = Firebase.analytics
+        AnalyticsEventSender.firebaseAnalytics = Firebase.analytics
         super.onCreate(savedInstanceState)
         try {
             startKoin {

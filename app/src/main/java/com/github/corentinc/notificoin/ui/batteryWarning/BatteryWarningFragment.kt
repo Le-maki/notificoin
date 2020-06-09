@@ -18,6 +18,8 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.github.corentinc.core.BatteryWarningInteractor
 import com.github.corentinc.logger.NotifiCoinLogger
+import com.github.corentinc.logger.analytics.NotificoinEvent
+import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.ChildFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -41,6 +43,7 @@ class BatteryWarningFragment(
     }
 
     override fun onStart() {
+        AnalyticsEventSender.sendEvent(NotificoinEvent.BATTERY_WARNING_START)
         val batteryWarningFragmentArgs: BatteryWarningFragmentArgs by navArgs()
         batteryWarningInteractor.onStart(
             PowerManagementPackages.isAnyIntentCallable(requireContext()),

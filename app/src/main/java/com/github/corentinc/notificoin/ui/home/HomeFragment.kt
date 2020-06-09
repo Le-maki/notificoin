@@ -14,6 +14,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.home.HomeInteractor
 import com.github.corentinc.core.search.Search
+import com.github.corentinc.logger.analytics.NotificoinEvent.HOME_START
+import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.batteryWarning.PowerManagementPackages
 import com.github.corentinc.notificoin.ui.home.searchesRecyclerView.SearchAdapter
@@ -42,6 +44,7 @@ class HomeFragment(
     }
 
     override fun onStart() {
+        AnalyticsEventSender.sendEvent(HOME_START)
         homeFragmentSearchesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
         }
