@@ -8,6 +8,8 @@ import com.github.corentinc.core.adList.AdListErrorType
 import com.github.corentinc.core.adList.AdListErrorType.FORBIDDEN
 import com.github.corentinc.core.ui.detectNewAds.DetectNewAdsPresenter
 import com.github.corentinc.logger.NotifiCoinLogger
+import com.github.corentinc.logger.analytics.NotifiCoinEvent
+import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.createChromeIntentFromUrl
 import com.github.corentinc.notificoin.injection.*
@@ -90,13 +92,17 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
 
     override fun presentErrorNotification(errorType: AdListErrorType, exception: Exception) {
         when (errorType) {
-            FORBIDDEN -> notificationManager.sendBigtextNotification(
-                title = "Oops, there was an Error",
-                text = "Too many requests",
-                bigText = getString(R.string.adListForbiddenErrorMessage),
-                intent = AdListFragment.LEBONCOIN_URL.createChromeIntentFromUrl(application.packageManager)
-            )
+            FORBIDDEN -> {
+                AnalyticsEventSender.sendEvent(NotifiCoinEvent.DETECT_NEW_ADS_FORBIDDEN_ERROR)
+                notificationManager.sendBigtextNotification(
+                    title = "Oops, there was an Error",
+                    text = "Too many requests",
+                    bigText = getString(R.string.adListForbiddenErrorMessage),
+                    intent = AdListFragment.LEBONCOIN_URL.createChromeIntentFromUrl(application.packageManager)
+                )
+            }
             else -> {
+                AnalyticsEventSender.sendEvent(NotifiCoinEvent.DETECT_NEW_ADS_UNKNOWN_ERROR)
                 notificationManager.sendBigtextNotification(
                     title = "Oops, there was an Error",
                     text = "Error at ${DateTime.now().toString("HH:mm")}, you were offline maybe ?",

@@ -18,7 +18,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.github.corentinc.core.BatteryWarningInteractor
 import com.github.corentinc.logger.NotifiCoinLogger
-import com.github.corentinc.logger.analytics.NotificoinEvent
+import com.github.corentinc.logger.analytics.NotifiCoinEvent
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.ChildFragment
@@ -43,7 +43,7 @@ class BatteryWarningFragment(
     }
 
     override fun onStart() {
-        AnalyticsEventSender.sendEvent(NotificoinEvent.BATTERY_WARNING_START)
+        AnalyticsEventSender.sendEvent(NotifiCoinEvent.BATTERY_WARNING_START)
         val batteryWarningFragmentArgs: BatteryWarningFragmentArgs by navArgs()
         batteryWarningInteractor.onStart(
             PowerManagementPackages.isAnyIntentCallable(requireContext()),
@@ -54,6 +54,7 @@ class BatteryWarningFragment(
     }
 
     override fun displayBatteryWhitelistRequestAlertDialog(shouldDisplaySpecialConstructorDialog: Boolean) {
+        AnalyticsEventSender.sendEvent(NotifiCoinEvent.BATTERY_WARNING_DEFAULT_POPUP)
         val context = requireContext()
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         val view: View = View.inflate(context, R.layout.battery_whitelist_alertdialog, null)
@@ -90,6 +91,7 @@ class BatteryWarningFragment(
     }
 
     override fun displaySpecialConstructorDialog() {
+        AnalyticsEventSender.sendEvent(NotifiCoinEvent.BATTERY_WARNING_SPECIAL_POPUP)
         val context = requireContext()
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         val view: View = View.inflate(context, R.layout.battery_whitelist_special_alertdialog, null)
@@ -117,6 +119,7 @@ class BatteryWarningFragment(
                         "Tried to open special power management app, found Intent but app not found",
                         exception
                     )
+                    AnalyticsEventSender.sendEvent(NotifiCoinEvent.BATTERY_WARNING_NO_APP_FOR_INTENT)
                 }
             } ?: NotifiCoinLogger.e("Tried to open special power management app, not intent found")
             requireActivity().onBackPressed()

@@ -11,7 +11,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.github.corentinc.core.SettingsInteractor
-import com.github.corentinc.logger.analytics.NotificoinEvent
+import com.github.corentinc.logger.analytics.NotifiCoinEvent
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,7 +31,7 @@ class SettingsFragment(
     }
 
     override fun onStart() {
-        AnalyticsEventSender.sendEvent(NotificoinEvent.SETTINGS_START)
+        AnalyticsEventSender.sendEvent(NotifiCoinEvent.SETTINGS_START)
         addOnBackPressedCallBack()
         findPreference<Preference>(resources.getString(R.string.aboutKey))?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {

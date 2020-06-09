@@ -11,7 +11,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.adList.AdListErrorType.*
 import com.github.corentinc.core.adList.AdListInteractor
-import com.github.corentinc.logger.analytics.NotificoinEvent
+import com.github.corentinc.logger.analytics.NotifiCoinEvent
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.createChromeIntentFromUrl
@@ -32,7 +32,7 @@ class AdListFragment(
 
     override fun onStart() {
         super.onStart()
-        AnalyticsEventSender.sendEvent(NotificoinEvent.LIST_OF_ADS_START)
+        AnalyticsEventSender.sendEvent(NotifiCoinEvent.LIST_OF_ADS_START)
     }
 
     override fun onCreateView(

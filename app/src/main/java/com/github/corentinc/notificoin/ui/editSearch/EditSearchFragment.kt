@@ -20,7 +20,7 @@ import androidx.navigation.fragment.navArgs
 import com.github.corentinc.core.EditSearchInteractor
 import com.github.corentinc.core.editSearch.UrlError.INVALID_FORMAT
 import com.github.corentinc.core.editSearch.UrlError.NOT_A_SEARCH
-import com.github.corentinc.logger.analytics.NotificoinEvent
+import com.github.corentinc.logger.analytics.NotifiCoinEvent
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.createChromeIntentFromUrl
@@ -42,11 +42,12 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     }
 
     override fun onStart() {
-        AnalyticsEventSender.sendEvent(NotificoinEvent.EDIT_SEARCH_START)
+        AnalyticsEventSender.sendEvent(NotifiCoinEvent.EDIT_SEARCH_START)
         super.onStart()
         bindViewModel()
         addOnDestinationChangedListener()
         editSearchSaveButton.setOnClickListener {
+            AnalyticsEventSender.sendEvent(NotifiCoinEvent.EDIT_SEARCH_SAVED)
             editSearchInteractor.onSave(
                 editSearchFragmentArgs.id,
                 editSearchTitleEditText.text.toString(),
@@ -61,6 +62,7 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
             startChromeIntent()
         }
         editSearchDeleteButton.setOnClickListener {
+            AnalyticsEventSender.sendEvent(NotifiCoinEvent.EDIT_SEARCH_DELETED)
             editSearchInteractor.deleteSearch(editSearchFragmentArgs.id)
             findNavController().navigate(
                 EditSearchFragmentDirections.editSearchToHomeAction(
