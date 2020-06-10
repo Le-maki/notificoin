@@ -1,10 +1,13 @@
 package com.github.corentinc.logger.analytics
 
+import com.github.corentinc.logger.analytics.NotifiCoinEventButtonName.*
 import com.github.corentinc.logger.analytics.NotifiCoinEventException.*
 import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.*
 import com.github.corentinc.logger.analytics.NotifiCoinEventPopUp.DEFAULT
 import com.github.corentinc.logger.analytics.NotifiCoinEventPopUp.SPECIAL_CONSTRUCTOR
 import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.*
+import com.github.corentinc.logger.analytics.NotifiCoinEventSearchStatus.SEARCH_DELETED
+import com.github.corentinc.logger.analytics.NotifiCoinEventSearchStatus.SEARCH_SAVED
 
 enum class NotifiCoinEvent(val parameters: List<NotifiCoinEventParameter>) {
     HOME_START(listOf(Screen(HOME))),
@@ -46,13 +49,13 @@ enum class NotifiCoinEvent(val parameters: List<NotifiCoinEventParameter>) {
             EventException(FORBIDDEN)
         )
     ),
-    BATTERY_WARNING_DEFAULT_POPUP(
+    BATTERY_WARNING_DEFAULT_POPUP_SHOW(
         listOf(
             PopUp(DEFAULT),
             Screen(BATTERY_WARNING)
         )
     ),
-    BATTERY_WARNING_SPECIAL_POPUP(
+    BATTERY_WARNING_SPECIAL_POPUP_SHOW(
         listOf(
             PopUp(SPECIAL_CONSTRUCTOR),
             Screen(BATTERY_WARNING)
@@ -68,13 +71,61 @@ enum class NotifiCoinEvent(val parameters: List<NotifiCoinEventParameter>) {
     EDIT_SEARCH_SAVED(
         listOf(
             Screen(EDIT_SEARCH),
-            SearchStatus(NotifiCoinEventSearchStatus.SEARCH_SAVED)
+            SearchStatus(SEARCH_SAVED)
         )
     ),
     EDIT_SEARCH_DELETED(
         listOf(
             Screen(EDIT_SEARCH),
-            SearchStatus(NotifiCoinEventSearchStatus.SEARCH_DELETED)
+            SearchStatus(SEARCH_DELETED)
+        )
+    ),
+    ADD_SEARCH_CLICKED(
+        listOf(
+            Screen(HOME),
+            ButtonName(ADD_SEARCH)
+        )
+    ),
+    DEFAULT_OK_CLICKED(
+        listOf(
+            Screen(BATTERY_WARNING),
+            PopUp(DEFAULT),
+            ButtonName(OK)
+        )
+    ),
+    DEFAULT_MAYBE_LATER_CLICKED(
+        listOf(
+            Screen(BATTERY_WARNING),
+            ButtonName(MAYBE_LATER),
+            PopUp(DEFAULT)
+        )
+    ),
+    DEFAULT_STOP_ASKING_CLICKED(
+        listOf(
+            Screen(BATTERY_WARNING),
+            ButtonName(STOP_ASKING),
+            PopUp(DEFAULT)
+        )
+    ),
+    SPECIAL_OK_CLICKED(
+        listOf(
+            Screen(BATTERY_WARNING),
+            ButtonName(OK),
+            PopUp(SPECIAL_CONSTRUCTOR)
+        )
+    ),
+    SPECIAL_MAYBE_LATER_CLICKED(
+        listOf(
+            Screen(BATTERY_WARNING),
+            ButtonName(MAYBE_LATER),
+            PopUp(SPECIAL_CONSTRUCTOR)
+        )
+    ),
+    SPECIAL_STOP_ASKING_CLICKED(
+        listOf(
+            Screen(BATTERY_WARNING),
+            ButtonName(STOP_ASKING),
+            PopUp(SPECIAL_CONSTRUCTOR)
         )
     )
 }
@@ -91,6 +142,9 @@ sealed class NotifiCoinEventParameter(val name: String, open val value: String) 
 
     data class SearchStatus(val enumvalue: NotifiCoinEventSearchStatus):
         NotifiCoinEventParameter("SEARCH_STATUS", enumvalue.name)
+
+    data class ButtonName(val enumvalue: NotifiCoinEventButtonName):
+        NotifiCoinEventParameter("BUTTON_NAME", enumvalue.name)
 }
 
 enum class NotifiCoinEventScreen {
@@ -107,4 +161,8 @@ enum class NotifiCoinEventPopUp {
 
 enum class NotifiCoinEventSearchStatus {
     SEARCH_SAVED, SEARCH_DELETED
+}
+
+enum class NotifiCoinEventButtonName {
+    ADD_SEARCH, OK, MAYBE_LATER, STOP_ASKING
 }

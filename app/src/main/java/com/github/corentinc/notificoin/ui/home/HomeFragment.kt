@@ -14,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.home.HomeInteractor
 import com.github.corentinc.core.search.Search
+import com.github.corentinc.logger.analytics.NotifiCoinEvent
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.HOME_START
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
@@ -49,6 +50,7 @@ class HomeFragment(
             layoutManager = LinearLayoutManager(context)
         }
         homeFragmentCreateAdButton.setOnClickListener {
+            AnalyticsEventSender.sendEvent(NotifiCoinEvent.ADD_SEARCH_CLICKED)
             homeInteractor.onCreateAdButtonPressed()
         }
         val context = requireContext()
