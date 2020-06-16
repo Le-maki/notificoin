@@ -11,7 +11,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.github.corentinc.core.SettingsInteractor
-import com.github.corentinc.logger.analytics.EventKey.SETTINGS_START
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
 import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen
 import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.SETTINGS
@@ -36,7 +35,6 @@ class SettingsFragment(
     override fun onStart() {
         AnalyticsEventSender.sendEvent(
             ScreenStarted(
-                SETTINGS_START,
                 Screen(SETTINGS)
             )
         )

@@ -20,7 +20,6 @@ import androidx.navigation.fragment.navArgs
 import com.github.corentinc.core.EditSearchInteractor
 import com.github.corentinc.core.editSearch.UrlError.INVALID_FORMAT
 import com.github.corentinc.core.editSearch.UrlError.NOT_A_SEARCH
-import com.github.corentinc.logger.analytics.EventKey.*
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.SearchChanged
 import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen
@@ -37,7 +36,6 @@ import com.github.corentinc.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor): ChildFragment() {
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
@@ -51,7 +49,6 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     override fun onStart() {
         AnalyticsEventSender.sendEvent(
             ScreenStarted(
-                EDIT_SEARCH_START,
                 Screen(EDIT_SEARCH)
             )
         )
@@ -61,7 +58,6 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         editSearchSaveButton.setOnClickListener {
             AnalyticsEventSender.sendEvent(
                 SearchChanged(
-                    EDIT_SEARCH_SAVED,
                     SearchStatus(SEARCH_SAVED)
                 )
             )
@@ -81,7 +77,6 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         editSearchDeleteButton.setOnClickListener {
             AnalyticsEventSender.sendEvent(
                 SearchChanged(
-                    EDIT_SEARCH_DELETED,
                     SearchStatus(SEARCH_DELETED)
                 )
             )

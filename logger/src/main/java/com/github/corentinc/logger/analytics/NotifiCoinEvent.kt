@@ -2,53 +2,25 @@ package com.github.corentinc.logger.analytics
 
 import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.*
 
-open class NotifiCoinEvent(val key: EventKey, val parameters: List<NotifiCoinEventParameter?>) {
-    class ScreenStarted(key: EventKey, screen: Screen): NotifiCoinEvent(key, listOf(screen))
+open class NotifiCoinEvent(val key: String, val parameters: List<NotifiCoinEventParameter?>) {
+    class ScreenStarted(screen: Screen): NotifiCoinEvent("SCREEN_START", listOf(screen))
     class ExceptionThrown(
-        key: EventKey,
         exception: EventException,
         screen: Screen? = null,
         popUp: PopUp? = null
-    ): NotifiCoinEvent(key, listOf(screen, exception, popUp))
+    ): NotifiCoinEvent("EXCEPTION_THROWN", listOf(screen, exception, popUp))
 
-    class PopUpShown(key: EventKey, popUp: PopUp, screen: Screen):
-        NotifiCoinEvent(key, listOf(screen, popUp))
+    class PopUpShown(popUp: PopUp, screen: Screen):
+        NotifiCoinEvent("POP_UP_SHOWN", listOf(screen, popUp))
 
-    class SearchChanged(key: EventKey, searchStatus: SearchStatus):
-        NotifiCoinEvent(key, listOf(searchStatus))
+    class SearchChanged(searchStatus: SearchStatus):
+        NotifiCoinEvent("SEARCH_CHANGED", listOf(searchStatus))
 
     class ButtonClicked(
-        key: EventKey,
         buttonName: ButtonName,
         screen: Screen? = null,
         popUp: PopUp? = null
-    ): NotifiCoinEvent(key, listOf(screen, buttonName, popUp))
-}
-
-enum class EventKey {
-    HOME_START,
-    LIST_OF_ADS_START,
-    EDIT_SEARCH_START,
-    BATTERY_WARNING_START,
-    SETTINGS_START,
-    LIST_OF_ADS_CONNECTION_ERROR,
-    LIST_OF_ADS_PARSING_ERROR,
-    LIST_OF_ADS_FORBIDDEN_ERROR,
-    LIST_OF_ADS_UNKNOWN_ERROR,
-    DETECT_NEW_ADS_UNKNOWN_ERROR,
-    DETECT_NEW_ADS_FORBIDDEN_ERROR,
-    BATTERY_WARNING_DEFAULT_POPUP_SHOW,
-    BATTERY_WARNING_SPECIAL_POPUP_SHOW,
-    BATTERY_WARNING_NO_APP_FOR_INTENT,
-    EDIT_SEARCH_SAVED,
-    EDIT_SEARCH_DELETED,
-    ADD_SEARCH_CLICKED,
-    DEFAULT_OK_CLICKED,
-    DEFAULT_MAYBE_LATER_CLICKED,
-    DEFAULT_STOP_ASKING_CLICKED,
-    SPECIAL_OK_CLICKED,
-    SPECIAL_MAYBE_LATER_CLICKED,
-    SPECIAL_STOP_ASKING_CLICKED
+    ): NotifiCoinEvent("BUTTON_CLICKED", listOf(screen, buttonName, popUp))
 }
 
 open class NotifiCoinEventParameter(val name: String, open val value: String) {

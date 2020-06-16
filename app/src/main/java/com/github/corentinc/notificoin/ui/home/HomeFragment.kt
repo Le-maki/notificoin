@@ -14,8 +14,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.home.HomeInteractor
 import com.github.corentinc.core.search.Search
-import com.github.corentinc.logger.analytics.EventKey.ADD_SEARCH_CLICKED
-import com.github.corentinc.logger.analytics.EventKey.HOME_START
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ButtonClicked
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
 import com.github.corentinc.logger.analytics.NotifiCoinEventButtonName.ADD_SEARCH
@@ -52,7 +50,7 @@ class HomeFragment(
 
     override fun onStart() {
         AnalyticsEventSender.sendEvent(
-            ScreenStarted(HOME_START, Screen(HOME))
+            ScreenStarted(Screen(HOME))
         )
         homeFragmentSearchesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
@@ -60,7 +58,6 @@ class HomeFragment(
         homeFragmentCreateAdButton.setOnClickListener {
             AnalyticsEventSender.sendEvent(
                 ButtonClicked(
-                    ADD_SEARCH_CLICKED,
                     ButtonName(ADD_SEARCH),
                     Screen(HOME)
                 )

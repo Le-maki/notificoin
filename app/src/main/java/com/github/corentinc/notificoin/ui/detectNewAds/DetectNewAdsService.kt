@@ -8,8 +8,6 @@ import com.github.corentinc.core.adList.AdListErrorType
 import com.github.corentinc.core.adList.AdListErrorType.FORBIDDEN
 import com.github.corentinc.core.ui.detectNewAds.DetectNewAdsPresenter
 import com.github.corentinc.logger.NotifiCoinLogger
-import com.github.corentinc.logger.analytics.EventKey.DETECT_NEW_ADS_FORBIDDEN_ERROR
-import com.github.corentinc.logger.analytics.EventKey.DETECT_NEW_ADS_UNKNOWN_ERROR
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ExceptionThrown
 import com.github.corentinc.logger.analytics.NotifiCoinEventException
 import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.EventException
@@ -99,7 +97,6 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
             FORBIDDEN -> {
                 AnalyticsEventSender.sendEvent(
                     ExceptionThrown(
-                        DETECT_NEW_ADS_FORBIDDEN_ERROR,
                         EventException(NotifiCoinEventException.FORBIDDEN)
                     )
                 )
@@ -113,7 +110,6 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
             else -> {
                 AnalyticsEventSender.sendEvent(
                     ExceptionThrown(
-                        DETECT_NEW_ADS_UNKNOWN_ERROR,
                         EventException(NotifiCoinEventException.UNKNOWN)
                     )
                 )

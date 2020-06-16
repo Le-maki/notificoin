@@ -18,7 +18,6 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.github.corentinc.core.BatteryWarningInteractor
 import com.github.corentinc.logger.NotifiCoinLogger
-import com.github.corentinc.logger.analytics.EventKey.*
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.*
 import com.github.corentinc.logger.analytics.NotifiCoinEventButtonName.*
 import com.github.corentinc.logger.analytics.NotifiCoinEventException.NO_APP_FOR_INTENT
@@ -51,7 +50,7 @@ class BatteryWarningFragment(
 
     override fun onStart() {
         AnalyticsEventSender.sendEvent(
-            ScreenStarted(BATTERY_WARNING_START, Screen(BATTERY_WARNING))
+            ScreenStarted(Screen(BATTERY_WARNING))
         )
         val batteryWarningFragmentArgs: BatteryWarningFragmentArgs by navArgs()
         batteryWarningInteractor.onStart(
@@ -78,7 +77,6 @@ class BatteryWarningFragment(
         defaultAlertDialog?.show()
         AnalyticsEventSender.sendEvent(
             PopUpShown(
-                BATTERY_WARNING_DEFAULT_POPUP_SHOW,
                 PopUp(DEFAULT),
                 Screen(BATTERY_WARNING)
             )
@@ -86,7 +84,7 @@ class BatteryWarningFragment(
         view.findViewById<Button>(R.id.batteryWhiteListOKButton).setOnClickListener {
             AnalyticsEventSender.sendEvent(
                 ButtonClicked(
-                    DEFAULT_OK_CLICKED, ButtonName(OK), Screen(BATTERY_WARNING), PopUp(DEFAULT)
+                    ButtonName(OK), Screen(BATTERY_WARNING), PopUp(DEFAULT)
                 )
             )
             batteryWarningFragmentViewModel.wasDefaultDialogAlreadyShown = true
@@ -102,7 +100,6 @@ class BatteryWarningFragment(
         view.findViewById<Button>(R.id.batteryWhiteListStopAskingButton).setOnClickListener {
             AnalyticsEventSender.sendEvent(
                 ButtonClicked(
-                    DEFAULT_STOP_ASKING_CLICKED,
                     ButtonName(STOP_ASKING),
                     Screen(BATTERY_WARNING),
                     PopUp(DEFAULT)
@@ -114,7 +111,6 @@ class BatteryWarningFragment(
         view.findViewById<Button>(R.id.batteryWhiteListMaybeButton).setOnClickListener {
             AnalyticsEventSender.sendEvent(
                 ButtonClicked(
-                    DEFAULT_MAYBE_LATER_CLICKED,
                     ButtonName(MAYBE_LATER),
                     Screen(BATTERY_WARNING),
                     PopUp(DEFAULT)
@@ -139,7 +135,6 @@ class BatteryWarningFragment(
         specialAlertDialog?.show()
         AnalyticsEventSender.sendEvent(
             PopUpShown(
-                BATTERY_WARNING_SPECIAL_POPUP_SHOW,
                 PopUp(SPECIAL_CONSTRUCTOR),
                 Screen(BATTERY_WARNING)
             )
@@ -147,7 +142,6 @@ class BatteryWarningFragment(
         view.findViewById<Button>(R.id.batteryWhiteListSpecialStopAskingButton).setOnClickListener {
             AnalyticsEventSender.sendEvent(
                 ButtonClicked(
-                    SPECIAL_STOP_ASKING_CLICKED,
                     ButtonName(STOP_ASKING),
                     Screen(BATTERY_WARNING),
                     PopUp(SPECIAL_CONSTRUCTOR)
@@ -159,7 +153,6 @@ class BatteryWarningFragment(
         view.findViewById<Button>(R.id.batteryWhiteListSpecialMaybeButton).setOnClickListener {
             AnalyticsEventSender.sendEvent(
                 ButtonClicked(
-                    SPECIAL_MAYBE_LATER_CLICKED,
                     ButtonName(MAYBE_LATER),
                     Screen(BATTERY_WARNING),
                     PopUp(SPECIAL_CONSTRUCTOR)
@@ -170,7 +163,6 @@ class BatteryWarningFragment(
         view.findViewById<TextView>(R.id.batteryWhiteListSpecialOKButton).setOnClickListener {
             AnalyticsEventSender.sendEvent(
                 ButtonClicked(
-                    SPECIAL_OK_CLICKED,
                     ButtonName(OK),
                     Screen(BATTERY_WARNING),
                     PopUp(SPECIAL_CONSTRUCTOR)
@@ -187,7 +179,6 @@ class BatteryWarningFragment(
                     )
                     AnalyticsEventSender.sendEvent(
                         ExceptionThrown(
-                            BATTERY_WARNING_NO_APP_FOR_INTENT,
                             EventException(NO_APP_FOR_INTENT),
                             Screen(BATTERY_WARNING),
                             PopUp(SPECIAL_CONSTRUCTOR)

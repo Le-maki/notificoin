@@ -11,7 +11,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.adList.AdListErrorType.*
 import com.github.corentinc.core.adList.AdListInteractor
-import com.github.corentinc.logger.analytics.EventKey.LIST_OF_ADS_START
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
 import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen
 import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.LIST_OF_ADS
@@ -36,7 +35,6 @@ class AdListFragment(
     override fun onStart() {
         AnalyticsEventSender.sendEvent(
             ScreenStarted(
-                LIST_OF_ADS_START,
                 Screen(LIST_OF_ADS)
             )
         )
