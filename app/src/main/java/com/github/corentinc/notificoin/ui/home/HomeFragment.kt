@@ -14,8 +14,14 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.home.HomeInteractor
 import com.github.corentinc.core.search.Search
-import com.github.corentinc.logger.analytics.NotifiCoinEvent
-import com.github.corentinc.logger.analytics.NotifiCoinEvent.HOME_START
+import com.github.corentinc.logger.analytics.EventKey.ADD_SEARCH_CLICKED
+import com.github.corentinc.logger.analytics.EventKey.HOME_START
+import com.github.corentinc.logger.analytics.NotifiCoinEvent.ButtonClicked
+import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
+import com.github.corentinc.logger.analytics.NotifiCoinEventButtonName.ADD_SEARCH
+import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.ButtonName
+import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen
+import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.HOME
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.batteryWarning.PowerManagementPackages
@@ -45,12 +51,20 @@ class HomeFragment(
     }
 
     override fun onStart() {
-        AnalyticsEventSender.sendEvent(HOME_START)
+        AnalyticsEventSender.sendEvent(
+            ScreenStarted(HOME_START, Screen(HOME))
+        )
         homeFragmentSearchesRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
         }
         homeFragmentCreateAdButton.setOnClickListener {
-            AnalyticsEventSender.sendEvent(NotifiCoinEvent.ADD_SEARCH_CLICKED)
+            AnalyticsEventSender.sendEvent(
+                ButtonClicked(
+                    ADD_SEARCH_CLICKED,
+                    ButtonName(ADD_SEARCH),
+                    Screen(HOME)
+                )
+            )
             homeInteractor.onCreateAdButtonPressed()
         }
         val context = requireContext()

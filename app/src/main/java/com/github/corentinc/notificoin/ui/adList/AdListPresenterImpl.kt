@@ -4,7 +4,12 @@ import com.github.corentinc.core.SearchAdsPosition
 import com.github.corentinc.core.adList.AdListErrorType
 import com.github.corentinc.core.adList.AdListErrorType.*
 import com.github.corentinc.core.ui.adList.AdListPresenter
-import com.github.corentinc.logger.analytics.NotifiCoinEvent
+import com.github.corentinc.logger.analytics.EventKey.*
+import com.github.corentinc.logger.analytics.NotifiCoinEvent.ExceptionThrown
+import com.github.corentinc.logger.analytics.NotifiCoinEventException
+import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.EventException
+import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen
+import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.LIST_OF_ADS
 import com.github.corentinc.notificoin.AnalyticsEventSender
 
 class AdListPresenterImpl(
@@ -16,17 +21,35 @@ class AdListPresenterImpl(
     }
 
     override fun presentConnectionError() {
-        AnalyticsEventSender.sendEvent(NotifiCoinEvent.LIST_OF_ADS_CONNECTION_ERROR)
+        AnalyticsEventSender.sendEvent(
+            ExceptionThrown(
+                LIST_OF_ADS_CONNECTION_ERROR,
+                EventException(NotifiCoinEventException.CONNECTION),
+                Screen(LIST_OF_ADS)
+            )
+        )
         presentError(CONNECTION)
     }
 
     override fun presentParsingError() {
-        AnalyticsEventSender.sendEvent(NotifiCoinEvent.LIST_OF_ADS_PARSING_ERROR)
+        AnalyticsEventSender.sendEvent(
+            ExceptionThrown(
+                LIST_OF_ADS_PARSING_ERROR,
+                EventException(NotifiCoinEventException.PARSING),
+                Screen(LIST_OF_ADS)
+            )
+        )
         presentError(PARSING)
     }
 
     override fun presentUnknownError() {
-        AnalyticsEventSender.sendEvent(NotifiCoinEvent.LIST_OF_ADS_UNKNOWN_ERROR)
+        AnalyticsEventSender.sendEvent(
+            ExceptionThrown(
+                LIST_OF_ADS_UNKNOWN_ERROR,
+                EventException(NotifiCoinEventException.UNKNOWN),
+                Screen(LIST_OF_ADS)
+            )
+        )
         presentError(UNKNOWN)
     }
 
@@ -36,7 +59,13 @@ class AdListPresenterImpl(
     }
 
     override fun presentForbiddenError() {
-        AnalyticsEventSender.sendEvent(NotifiCoinEvent.LIST_OF_ADS_FORBIDDEN_ERROR)
+        AnalyticsEventSender.sendEvent(
+            ExceptionThrown(
+                LIST_OF_ADS_FORBIDDEN_ERROR,
+                EventException(NotifiCoinEventException.FORBIDDEN),
+                Screen(LIST_OF_ADS)
+            )
+        )
         presentError(FORBIDDEN)
     }
 

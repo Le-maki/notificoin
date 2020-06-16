@@ -18,7 +18,14 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.github.corentinc.core.BatteryWarningInteractor
 import com.github.corentinc.logger.NotifiCoinLogger
-import com.github.corentinc.logger.analytics.NotifiCoinEvent
+import com.github.corentinc.logger.analytics.EventKey.*
+import com.github.corentinc.logger.analytics.NotifiCoinEvent.*
+import com.github.corentinc.logger.analytics.NotifiCoinEventButtonName.*
+import com.github.corentinc.logger.analytics.NotifiCoinEventException.NO_APP_FOR_INTENT
+import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.*
+import com.github.corentinc.logger.analytics.NotifiCoinEventPopUp.DEFAULT
+import com.github.corentinc.logger.analytics.NotifiCoinEventPopUp.SPECIAL_CONSTRUCTOR
+import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.BATTERY_WARNING
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.ChildFragment
@@ -43,7 +50,9 @@ class BatteryWarningFragment(
     }
 
     override fun onStart() {
-        AnalyticsEventSender.sendEvent(NotifiCoinEvent.BATTERY_WARNING_START)
+        AnalyticsEventSender.sendEvent(
+            ScreenStarted(BATTERY_WARNING_START, Screen(BATTERY_WARNING))
+        )
         val batteryWarningFragmentArgs: BatteryWarningFragmentArgs by navArgs()
         batteryWarningInteractor.onStart(
             PowerManagementPackages.isAnyIntentCallable(requireContext()),
@@ -54,7 +63,6 @@ class BatteryWarningFragment(
     }
 
     override fun displayBatteryWhitelistRequestAlertDialog(shouldDisplaySpecialConstructorDialog: Boolean) {
-        AnalyticsEventSender.sendEvent(NotifiCoinEvent.BATTERY_WARNING_DEFAULT_POPUP_SHOW)
         val context = requireContext()
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         val view: View = View.inflate(context, R.layout.battery_whitelist_alertdialog, null)
@@ -68,8 +76,19 @@ class BatteryWarningFragment(
             .create()
         defaultAlertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         defaultAlertDialog?.show()
+        AnalyticsEventSender.sendEvent(
+            PopUpShown(
+                BATTERY_WARNING_DEFAULT_POPUP_SHOW,
+                PopUp(DEFAULT),
+                Screen(BATTERY_WARNING)
+            )
+        )
         view.findViewById<Button>(R.id.batteryWhiteListOKButton).setOnClickListener {
-            AnalyticsEventSender.sendEvent(NotifiCoinEvent.DEFAULT_OK_CLICKED)
+            AnalyticsEventSender.sendEvent(
+                ButtonClicked(
+                    DEFAULT_OK_CLICKED, ButtonName(OK), Screen(BATTERY_WARNING), PopUp(DEFAULT)
+                )
+            )
             batteryWarningFragmentViewModel.wasDefaultDialogAlreadyShown = true
             try {
                 goToBatteryWhiteListOfTheApp(context)
@@ -81,12 +100,26 @@ class BatteryWarningFragment(
             }
         }
         view.findViewById<Button>(R.id.batteryWhiteListStopAskingButton).setOnClickListener {
-            AnalyticsEventSender.sendEvent(NotifiCoinEvent.DEFAULT_STOP_ASKING_CLICKED)
+            AnalyticsEventSender.sendEvent(
+                ButtonClicked(
+                    DEFAULT_STOP_ASKING_CLICKED,
+                    ButtonName(STOP_ASKING),
+                    Screen(BATTERY_WARNING),
+                    PopUp(DEFAULT)
+                )
+            )
             batteryWarningInteractor.onBatteryWhiteListAlertDialogNeutralButtonPressed()
             requireActivity().onBackPressed()
         }
         view.findViewById<Button>(R.id.batteryWhiteListMaybeButton).setOnClickListener {
-            AnalyticsEventSender.sendEvent(NotifiCoinEvent.DEFAULT_MAYBE_LATER_CLICKED)
+            AnalyticsEventSender.sendEvent(
+                ButtonClicked(
+                    DEFAULT_MAYBE_LATER_CLICKED,
+                    ButtonName(MAYBE_LATER),
+                    Screen(BATTERY_WARNING),
+                    PopUp(DEFAULT)
+                )
+            )
             requireActivity().onBackPressed()
         }
         view.findViewById<ImageView>(R.id.batteryWhiteListGif).isVisible =
@@ -94,7 +127,6 @@ class BatteryWarningFragment(
     }
 
     override fun displaySpecialConstructorDialog() {
-        AnalyticsEventSender.sendEvent(NotifiCoinEvent.BATTERY_WARNING_SPECIAL_POPUP_SHOW)
         val context = requireContext()
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         val view: View = View.inflate(context, R.layout.battery_whitelist_special_alertdialog, null)
@@ -105,17 +137,45 @@ class BatteryWarningFragment(
             .create()
         specialAlertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         specialAlertDialog?.show()
+        AnalyticsEventSender.sendEvent(
+            PopUpShown(
+                BATTERY_WARNING_SPECIAL_POPUP_SHOW,
+                PopUp(SPECIAL_CONSTRUCTOR),
+                Screen(BATTERY_WARNING)
+            )
+        )
         view.findViewById<Button>(R.id.batteryWhiteListSpecialStopAskingButton).setOnClickListener {
-            AnalyticsEventSender.sendEvent(NotifiCoinEvent.SPECIAL_STOP_ASKING_CLICKED)
+            AnalyticsEventSender.sendEvent(
+                ButtonClicked(
+                    SPECIAL_STOP_ASKING_CLICKED,
+                    ButtonName(STOP_ASKING),
+                    Screen(BATTERY_WARNING),
+                    PopUp(SPECIAL_CONSTRUCTOR)
+                )
+            )
             batteryWarningInteractor.onBatteryWhiteListAlertDialogNeutralButtonPressed()
             requireActivity().onBackPressed()
         }
         view.findViewById<Button>(R.id.batteryWhiteListSpecialMaybeButton).setOnClickListener {
-            AnalyticsEventSender.sendEvent(NotifiCoinEvent.SPECIAL_MAYBE_LATER_CLICKED)
+            AnalyticsEventSender.sendEvent(
+                ButtonClicked(
+                    SPECIAL_MAYBE_LATER_CLICKED,
+                    ButtonName(MAYBE_LATER),
+                    Screen(BATTERY_WARNING),
+                    PopUp(SPECIAL_CONSTRUCTOR)
+                )
+            )
             requireActivity().onBackPressed()
         }
         view.findViewById<TextView>(R.id.batteryWhiteListSpecialOKButton).setOnClickListener {
-            AnalyticsEventSender.sendEvent(NotifiCoinEvent.SPECIAL_OK_CLICKED)
+            AnalyticsEventSender.sendEvent(
+                ButtonClicked(
+                    SPECIAL_OK_CLICKED,
+                    ButtonName(OK),
+                    Screen(BATTERY_WARNING),
+                    PopUp(SPECIAL_CONSTRUCTOR)
+                )
+            )
             PowerManagementPackages.findCallableIntent(requireContext())?.let {
                 NotifiCoinLogger.i("BatteryWarningFragment detected special intent : ${it.component}")
                 try {
@@ -125,7 +185,14 @@ class BatteryWarningFragment(
                         "Tried to open special power management app, found Intent but app not found",
                         exception
                     )
-                    AnalyticsEventSender.sendEvent(NotifiCoinEvent.BATTERY_WARNING_NO_APP_FOR_INTENT)
+                    AnalyticsEventSender.sendEvent(
+                        ExceptionThrown(
+                            BATTERY_WARNING_NO_APP_FOR_INTENT,
+                            EventException(NO_APP_FOR_INTENT),
+                            Screen(BATTERY_WARNING),
+                            PopUp(SPECIAL_CONSTRUCTOR)
+                        )
+                    )
                 }
             } ?: NotifiCoinLogger.e("Tried to open special power management app, not intent found")
             requireActivity().onBackPressed()

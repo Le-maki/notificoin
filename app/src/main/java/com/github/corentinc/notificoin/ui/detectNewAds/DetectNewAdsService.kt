@@ -8,7 +8,11 @@ import com.github.corentinc.core.adList.AdListErrorType
 import com.github.corentinc.core.adList.AdListErrorType.FORBIDDEN
 import com.github.corentinc.core.ui.detectNewAds.DetectNewAdsPresenter
 import com.github.corentinc.logger.NotifiCoinLogger
-import com.github.corentinc.logger.analytics.NotifiCoinEvent
+import com.github.corentinc.logger.analytics.EventKey.DETECT_NEW_ADS_FORBIDDEN_ERROR
+import com.github.corentinc.logger.analytics.EventKey.DETECT_NEW_ADS_UNKNOWN_ERROR
+import com.github.corentinc.logger.analytics.NotifiCoinEvent.ExceptionThrown
+import com.github.corentinc.logger.analytics.NotifiCoinEventException
+import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.EventException
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.createChromeIntentFromUrl
@@ -90,10 +94,15 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
         notificationManager.sendNewAdNotifications(size, titlesString, title, url)
     }
 
-    override fun presentErrorNotification(errorType: AdListErrorType, exception: Exception) {
+    override fun presentErrorNotification(errorType: AdListErrorType, exception: Exception) =
         when (errorType) {
             FORBIDDEN -> {
-                AnalyticsEventSender.sendEvent(NotifiCoinEvent.DETECT_NEW_ADS_FORBIDDEN_ERROR)
+                AnalyticsEventSender.sendEvent(
+                    ExceptionThrown(
+                        DETECT_NEW_ADS_FORBIDDEN_ERROR,
+                        EventException(NotifiCoinEventException.FORBIDDEN)
+                    )
+                )
                 notificationManager.sendBigtextNotification(
                     title = "Oops, there was an Error",
                     text = "Too many requests",
@@ -102,7 +111,12 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
                 )
             }
             else -> {
-                AnalyticsEventSender.sendEvent(NotifiCoinEvent.DETECT_NEW_ADS_UNKNOWN_ERROR)
+                AnalyticsEventSender.sendEvent(
+                    ExceptionThrown(
+                        DETECT_NEW_ADS_UNKNOWN_ERROR,
+                        EventException(NotifiCoinEventException.UNKNOWN)
+                    )
+                )
                 notificationManager.sendBigtextNotification(
                     title = "Oops, there was an Error",
                     text = "Error at ${DateTime.now().toString("HH:mm")}, you were offline maybe ?",
@@ -110,5 +124,4 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
                 )
             }
         }
-    }
 }

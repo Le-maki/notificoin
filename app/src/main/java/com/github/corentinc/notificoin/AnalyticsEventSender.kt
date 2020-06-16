@@ -9,9 +9,11 @@ object AnalyticsEventSender {
 
     fun sendEvent(event: NotifiCoinEvent) {
         val params = Bundle()
-        event.parameters.forEach {
-            params.putString(it.name, it.value)
+        event.parameters.forEach { parameter ->
+            parameter?.let {
+                params.putString(it.name, it.value)
+            }
         }
-        firebaseAnalytics.logEvent(event.name, params)
+        firebaseAnalytics.logEvent(event.key.name, params)
     }
 }

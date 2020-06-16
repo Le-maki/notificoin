@@ -20,7 +20,14 @@ import androidx.navigation.fragment.navArgs
 import com.github.corentinc.core.EditSearchInteractor
 import com.github.corentinc.core.editSearch.UrlError.INVALID_FORMAT
 import com.github.corentinc.core.editSearch.UrlError.NOT_A_SEARCH
-import com.github.corentinc.logger.analytics.NotifiCoinEvent
+import com.github.corentinc.logger.analytics.EventKey.*
+import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
+import com.github.corentinc.logger.analytics.NotifiCoinEvent.SearchChanged
+import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen
+import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.SearchStatus
+import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.EDIT_SEARCH
+import com.github.corentinc.logger.analytics.NotifiCoinEventSearchStatus.SEARCH_DELETED
+import com.github.corentinc.logger.analytics.NotifiCoinEventSearchStatus.SEARCH_SAVED
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.createChromeIntentFromUrl
@@ -42,12 +49,22 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     }
 
     override fun onStart() {
-        AnalyticsEventSender.sendEvent(NotifiCoinEvent.EDIT_SEARCH_START)
+        AnalyticsEventSender.sendEvent(
+            ScreenStarted(
+                EDIT_SEARCH_START,
+                Screen(EDIT_SEARCH)
+            )
+        )
         super.onStart()
         bindViewModel()
         addOnDestinationChangedListener()
         editSearchSaveButton.setOnClickListener {
-            AnalyticsEventSender.sendEvent(NotifiCoinEvent.EDIT_SEARCH_SAVED)
+            AnalyticsEventSender.sendEvent(
+                SearchChanged(
+                    EDIT_SEARCH_SAVED,
+                    SearchStatus(SEARCH_SAVED)
+                )
+            )
             editSearchInteractor.onSave(
                 editSearchFragmentArgs.id,
                 editSearchTitleEditText.text.toString(),
@@ -62,7 +79,12 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
             startChromeIntent()
         }
         editSearchDeleteButton.setOnClickListener {
-            AnalyticsEventSender.sendEvent(NotifiCoinEvent.EDIT_SEARCH_DELETED)
+            AnalyticsEventSender.sendEvent(
+                SearchChanged(
+                    EDIT_SEARCH_DELETED,
+                    SearchStatus(SEARCH_DELETED)
+                )
+            )
             editSearchInteractor.deleteSearch(editSearchFragmentArgs.id)
             findNavController().navigate(
                 EditSearchFragmentDirections.editSearchToHomeAction(
