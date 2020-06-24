@@ -17,6 +17,8 @@ import com.github.corentinc.notificoin.createChromeIntentFromUrl
 import com.github.corentinc.notificoin.injection.*
 import com.github.corentinc.notificoin.ui.adList.AdListFragment
 import com.github.corentinc.notificoin.ui.notificationPush.NotificationManager
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.Firebase
 import org.joda.time.DateTime
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -60,6 +62,7 @@ class DetectNewAdsService: JobIntentService(), DetectNewAdsPresenter {
         } catch (exception: IllegalStateException) {
             NotifiCoinLogger.i(getString(R.string.koinAlreadyStarted))
         }
+        AnalyticsEventSender.firebaseAnalytics = Firebase.analytics
         detectNewAdsInteractor.onServiceStarted()
     }
 
