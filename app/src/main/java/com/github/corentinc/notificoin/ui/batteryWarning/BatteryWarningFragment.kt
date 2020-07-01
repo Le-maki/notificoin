@@ -196,6 +196,8 @@ class BatteryWarningFragment(
     override fun displayHuaweiDialog() {
         val view = displaySpecialConstructorDialog()
         view.findViewById<ImageView>(R.id.batteryWhiteListGif).isVisible = true
+        view.findViewById<TextView>(R.id.batteryWhiteListSpecialTitle).text =
+            resources.getString(R.string.batteryWarningDetectedHuawei)
         Glide.with(requireContext())
             .load(R.raw.huawei_battery)
             .into(view.findViewById(R.id.batteryWhiteListGif))
