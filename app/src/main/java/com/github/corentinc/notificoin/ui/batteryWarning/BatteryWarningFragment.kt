@@ -56,7 +56,8 @@ class BatteryWarningFragment(
         batteryWarningInteractor.onStart(
             PowerManagementPackages.isAnyIntentCallable(requireContext()),
             batteryWarningFragmentArgs.shouldDisplayDefaultDialog,
-            batteryWarningFragmentViewModel.wasDefaultDialogAlreadyShown
+            batteryWarningFragmentViewModel.wasDefaultDialogAlreadyShown,
+            PowerManagementPackages.findCallableConstructor(requireContext())
         )
         super.onStart()
     }
@@ -122,7 +123,7 @@ class BatteryWarningFragment(
             activity?.resources?.configuration?.orientation != Configuration.ORIENTATION_LANDSCAPE
     }
 
-    override fun displaySpecialConstructorDialog() {
+    override fun displaySpecialConstructorDialog(): View {
         val context = requireContext()
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         val view: View = View.inflate(context, R.layout.battery_whitelist_special_alertdialog, null)
@@ -169,9 +170,9 @@ class BatteryWarningFragment(
                 )
             )
             PowerManagementPackages.findCallableIntent(requireContext())?.let {
-                NotifiCoinLogger.i("BatteryWarningFragment detected special intent : ${it.component}")
+                NotifiCoinLogger.i("BatteryWarningFragment detected special intent : ${it.intent}")
                 try {
-                    startActivity(it)
+                    startActivity(it.intent)
                 } catch (exception: ActivityNotFoundException) {
                     NotifiCoinLogger.e(
                         "Tried to open special power management app, found Intent but app not found",
@@ -188,6 +189,14 @@ class BatteryWarningFragment(
             } ?: NotifiCoinLogger.e("Tried to open special power management app, not intent found")
             requireActivity().onBackPressed()
         }
+        return view
+    }
+
+    override fun displayHuaweiDialog() {
+        val view = displaySpecialConstructorDialog()
+        Glide.with(requireContext())
+            .load(R.raw.huawei_battery)
+            .into(view.findViewById(R.id.batteryWhiteListGif))
     }
 
     private fun goToBatteryWhiteListOfTheApp(context: Context) {

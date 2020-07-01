@@ -15,4 +15,8 @@ class BatteryWarningPresenterImpl(
     override fun presentSpecialConstructorDialog() {
         batteryWarningDisplay.displaySpecialConstructorDialog()
     }
+
+    override fun presentHuaweiDialog() {
+        batteryWarningDisplay.displayHuaweiDialog()
+    }
 }
