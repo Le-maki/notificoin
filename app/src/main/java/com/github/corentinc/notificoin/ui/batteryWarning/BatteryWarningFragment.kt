@@ -161,6 +161,7 @@ class BatteryWarningFragment(
             )
             requireActivity().onBackPressed()
         }
+        view.findViewById<ImageView>(R.id.batteryWhiteListGif).isVisible = false
         view.findViewById<TextView>(R.id.batteryWhiteListSpecialOKButton).setOnClickListener {
             AnalyticsEventSender.sendEvent(
                 ButtonClicked(
@@ -194,6 +195,7 @@ class BatteryWarningFragment(
 
     override fun displayHuaweiDialog() {
         val view = displaySpecialConstructorDialog()
+        view.findViewById<ImageView>(R.id.batteryWhiteListGif).isVisible = true
         Glide.with(requireContext())
             .load(R.raw.huawei_battery)
             .into(view.findViewById(R.id.batteryWhiteListGif))

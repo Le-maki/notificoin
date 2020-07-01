@@ -15,10 +15,21 @@
         android:text="@string/batteryWarningDetectedSpecialConstructor"
         android:textColor="@color/primaryTextColor"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@id/batteryWhiteListSpecialStopAskingButton"
+        app:layout_constraintBottom_toTopOf="@id/batteryWhiteListGif"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
+
+    <ImageView
+        android:id="@+id/batteryWhiteListGif"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_margin="@dimen/defaultMargin"
+        android:contentDescription="@string/settingsBatteryWarningSummary"
+        app:layout_constraintBottom_toTopOf="@id/batteryWhiteListSpecialOKButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/batteryWhiteListSpecialTitle" />
 
     <Button
         android:id="@+id/batteryWhiteListSpecialStopAskingButton"
@@ -58,6 +69,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/batteryWhiteListSpecialMaybeButton"
-        app:layout_constraintTop_toBottomOf="@+id/batteryWhiteListSpecialTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/batteryWhiteListGif" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
