@@ -98,13 +98,13 @@ private val POWER_MANAGER_INTENTS_MAP: Map<SpecialConstructor, List<Intent>> = m
                 Intent().setComponent(
                     ComponentName(
                         "com.huawei.systemmanager",
-                        "com.huawei.systemmanager.appcontrol.activity.StartupAppControlActivity"
+                        "com.huawei.systemmanager.startupmgr.ui.StartupNormalAppListActivity"
                     )
                 ),
                 Intent().setComponent(
                     ComponentName(
                         "com.huawei.systemmanager",
-                        "com.huawei.systemmanager.startupmgr.ui.StartupNormalAppListActivity"
+                        "com.huawei.systemmanager.appcontrol.activity.StartupAppControlActivity"
                     )
                 ),
                 Intent().setComponent(
