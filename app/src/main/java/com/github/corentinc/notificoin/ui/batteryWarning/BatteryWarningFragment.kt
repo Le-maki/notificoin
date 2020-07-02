@@ -71,7 +71,7 @@ class BatteryWarningFragment(
             .into(view.findViewById(R.id.batteryWhiteListGif))
         defaultAlertDialog = builder.setView(view)
             .setOnCancelListener {
-                // empty
+                requireActivity().onBackPressed()
             }
             .create()
         defaultAlertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -129,7 +129,7 @@ class BatteryWarningFragment(
         val view: View = View.inflate(context, R.layout.battery_whitelist_special_alertdialog, null)
         specialAlertDialog = builder.setView(view)
             .setOnCancelListener {
-                // empty
+                requireActivity().onBackPressed()
             }
             .create()
         specialAlertDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
