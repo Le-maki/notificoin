@@ -12,7 +12,7 @@
         app:key="@string/notificationIntervalKey"
         app:singleLineTitle="false" />
 
-    <SwitchPreferenceCompat
+    <Preference
         app:icon="@drawable/ic_access_alarm_24px"
         app:key="@string/accurateNotificationsKey"
         app:summary="@string/settingsBatteryWarningSummary"

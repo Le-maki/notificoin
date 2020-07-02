@@ -1,15 +1,12 @@
 package com.github.corentinc.notificoin.ui.settings
 
-import android.content.Context
 import android.os.Bundle
-import android.os.PowerManager
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.preference.DropDownPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
 import com.github.corentinc.core.SettingsInteractor
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
 import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen
@@ -44,10 +41,11 @@ class SettingsFragment(
                 settingsInteractor.onAboutPreferenceClicked()
                 true
             }
-        findPreference<SwitchPreferenceCompat>(resources.getString(R.string.accurateNotificationsKey))?.setOnPreferenceChangeListener { _, newValue ->
-            settingsInteractor.onAccurateNotificationsSwicthed(newValue as Boolean)
-            true
-        }
+        findPreference<Preference>(resources.getString(R.string.accurateNotificationsKey))?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                settingsInteractor.onAccurateNotificationsClicked()
+                true
+            }
         val dropDown =
             findPreference<DropDownPreference>(resources.getString(R.string.notificationIntervalKey))
         dropDown?.title =
@@ -62,13 +60,6 @@ class SettingsFragment(
             true
         }
         bindViewModel()
-        val context = requireContext()
-        val powerManager = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
-        settingsInteractor.onStart(
-            powerManager != null && powerManager.isIgnoringBatteryOptimizations(
-                context.packageName
-            )
-        )
         super.onStart()
     }
 
@@ -84,23 +75,13 @@ class SettingsFragment(
                 findPreference<DropDownPreference>(resources.getString(R.string.notificationIntervalKey))?.title =
                     resources.getString(R.string.settingsNotificationIntervalTitle) + it
             })
-        settingsViewModel.isAccurateNotificationChecked.observe(
-            viewLifecycleOwner,
-            Observer {
-                displayBatteryWarningFragment()
-            })
     }
 
     override fun displayAboutFragment() {
         findNavController().navigate(R.id.settingsToAboutAction)
     }
 
-    override fun displayAccurateNotificationPreferenceValue(batteryWhiteListAlreadyGranted: Boolean) {
-        findPreference<SwitchPreferenceCompat>(resources.getString(R.string.accurateNotificationsKey))?.isChecked =
-            batteryWhiteListAlreadyGranted
-    }
-
-    private fun displayBatteryWarningFragment() {
+    override fun displayBatteryWarningFragment() {
         findNavController().navigate(R.id.settingsToBatteryWarningAction)
     }
 

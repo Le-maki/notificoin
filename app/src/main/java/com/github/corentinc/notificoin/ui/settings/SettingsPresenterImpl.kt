@@ -10,12 +10,8 @@ class SettingsPresenterImpl(
         settingsDisplay.displayAboutFragment()
     }
 
-    override fun presentAccurateNotificationPreferenceValue(batteryWhiteListAlreadyGranted: Boolean) {
-        settingsDisplay.displayAccurateNotificationPreferenceValue(batteryWhiteListAlreadyGranted)
-    }
-
-    override fun presentAccurateNotificationChanged(isChecked: Boolean) {
-        settingsViewModel.isAccurateNotificationChecked.value = isChecked
+    override fun presentAccurateNotificationClicked() {
+        settingsDisplay.displayBatteryWarningFragment()
     }
 
     override fun presentNotificationIntervalPreference(entry: CharSequence) {

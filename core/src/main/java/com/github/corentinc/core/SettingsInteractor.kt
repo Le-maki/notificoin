@@ -7,18 +7,12 @@ class SettingsInteractor(
     val settingsPresenter: SettingsPresenter,
     private val alarmManagerInteractor: AlarmManagerInteractor
 ) {
-    fun onStart(isBatteryWhiteListAlreadyGranted: Boolean) {
-        settingsPresenter.presentAccurateNotificationPreferenceValue(
-            isBatteryWhiteListAlreadyGranted
-        )
-    }
-
     fun onAboutPreferenceClicked() {
         settingsPresenter.presentAboutFragment()
     }
 
-    fun onAccurateNotificationsSwicthed(isChecked: Boolean) {
-        settingsPresenter.presentAccurateNotificationChanged(isChecked)
+    fun onAccurateNotificationsClicked() {
+        settingsPresenter.presentAccurateNotificationClicked()
     }
 
     fun onNotificationIntervalPreferenceChanged(minutes: Int, entry: CharSequence) {
