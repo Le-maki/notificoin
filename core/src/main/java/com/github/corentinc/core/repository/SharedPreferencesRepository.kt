@@ -5,4 +5,5 @@ interface SharedPreferencesRepository {
         const val PREFERENCE_FILE = "NOTIFICOIN"
     }
     var shouldShowBatteryWhiteListDialog: Boolean
+    var connexionErrorDuringLastAdCheck: Boolean
 }

@@ -8,7 +8,10 @@ val detectNewAdsModule = module {
     single { (detectNewAdsPresenter: DetectNewAdsPresenter) ->
         DetectNewAdsInteractor(
             searchAdsPositionRepository = get(),
-            detectNewAdsPresenter = detectNewAdsPresenter
+            detectNewAdsPresenter = detectNewAdsPresenter,
+            adComparator = get(),
+            sharePreferencesRepository = get(),
+            globalSharedPreferencesRepository = get()
         )
     }
 }
