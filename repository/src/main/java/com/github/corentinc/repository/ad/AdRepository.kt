@@ -25,6 +25,7 @@ class AdRepository(
         val remoteAdList = getSortedRemoteAds(search.url)
         val localAdList = getAds()
         val mergedDistinctAdList = (remoteAdList + localAdList).distinct()
+        deleteAll()
         adDataSource.putAll(mergedDistinctAdList, search.id)
         return mergedDistinctAdList
     }
