@@ -22,9 +22,11 @@ class AdRepository(
     }
 
     fun updateAdsFromWebPage(search: Search): List<Ad> {
-        val adList = getSortedRemoteAds(search.url)
-        adDataSource.putAll(adList, search.id)
-        return adList
+        val remoteAdList = getSortedRemoteAds(search.url)
+        val localAdList = getAds()
+        val mergedDistinctAdList = (remoteAdList + localAdList).distinct()
+        adDataSource.putAll(mergedDistinctAdList, search.id)
+        return mergedDistinctAdList
     }
 
     fun putAll(adList: List<Ad>, searchId: Int) {
