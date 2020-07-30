@@ -77,23 +77,13 @@ class DetectNewAdsInteractor(
         }
     }
 
-    private suspend fun logDifferences(localAds: List<Ad>, newAdList: List<Ad>) {
+    private fun logDifferences(localAds: List<Ad>, newAdList: List<Ad>) {
         val oldAds = newAdList.filter { oldAd ->
             localAds.any { newAd ->
                 oldAd.title == newAd.title || oldAd.publicationDate == newAd.publicationDate || oldAd.url == newAd.url
             }
         }
         NotifiCoinLogger.i("OLD ADS : $oldAds")
-        if(oldAds.isNotEmpty()) {
-            withContext(Dispatchers.Main) {
-                detectNewAdsPresenter.presentNewAdNotifications(
-                    size = 1,
-                    titlesString = "OLD $oldAds",
-                    title ="OLD $oldAds",
-                    url = "searchAdsPosition.search.url"
-                )
-            }
-        }
         NotifiCoinLogger.i("NEW ADS : $newAdList")
     }
 
@@ -164,14 +154,6 @@ class DetectNewAdsInteractor(
             val minutesDiff = TimeUnit.MILLISECONDS.toMinutes(now - publicationDate)
             if (minutesDiff > 3) {
                 NotifiCoinLogger.i("THIS AD IS DETECTED TOO LATE BUT STILL NOTIFIED: $it by $minutesDiff minutes")
-                withContext(Dispatchers.Main) {
-                    detectNewAdsPresenter.presentNewAdNotifications(
-                        size = 1,
-                        titlesString = "More than 3 minutes AND NOTIFIED : $minutesDiff minutes for ${it.title})",
-                        title = searchAdsPosition.search.title,
-                        url = searchAdsPosition.search.url
-                    )
-                }
             }
         }
     }
