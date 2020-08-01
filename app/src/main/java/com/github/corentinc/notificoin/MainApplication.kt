@@ -1,7 +1,6 @@
 package com.github.corentinc.notificoin
 
 import android.app.Application
-import android.content.Intent
 import com.github.corentinc.logger.NotifiCoinLogger
 import com.github.corentinc.notificoin.injection.*
 import org.koin.android.ext.koin.androidContext
@@ -43,8 +42,5 @@ class MainApplication : Application() {
         } catch (exception: IllegalStateException) {
             NotifiCoinLogger.i(this.applicationContext.resources.getString(R.string.koinAlreadyStarted))
         }
-        val intent = Intent(applicationContext, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(intent)
     }
 }
