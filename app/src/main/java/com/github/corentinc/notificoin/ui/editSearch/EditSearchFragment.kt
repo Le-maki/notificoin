@@ -36,7 +36,7 @@ import com.github.corentinc.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor): ChildFragment() {
+class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor) : ChildFragment() {
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
     private val editSearchViewModel: EditSearchViewModel by viewModel()

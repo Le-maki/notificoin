@@ -16,54 +16,17 @@ import com.facebook.flipper.plugins.network.NetworkFlipperPlugin
 import com.facebook.flipper.plugins.sharedpreferences.SharedPreferencesFlipperPlugin
 import com.facebook.soloader.SoLoader
 import com.github.corentinc.core.repository.SharedPreferencesRepository
-import com.github.corentinc.logger.NotifiCoinLogger
-import com.github.corentinc.notificoin.injection.*
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.fragment.android.setupKoinFragmentFactory
-import org.koin.androidx.fragment.koin.fragmentFactory
-import org.koin.core.context.startKoin
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Obtain the FirebaseAnalytics instance.
         AnalyticsEventSender.firebaseAnalytics = Firebase.analytics
-        super.onCreate(savedInstanceState)
-        try {
-            startKoin {
-                androidLogger()
-                fragmentFactory()
-                androidContext(this@MainActivity)
-                modules(
-                    listOf(
-                        fragmentModule,
-                        homeModule,
-                        databaseModule,
-                        adModule,
-                        searchModule,
-                        webPageModule,
-                        notificationModule,
-                        alarmManagerModule,
-                        searchAdsPositionModule,
-                        detectNewAdsModule,
-                        sharedPreferencesModule,
-                        adListModule,
-                        editSearchModule,
-                        searchesRecyclerViewModule,
-                        searchPositionModule,
-                        settingsModule,
-                        batteryWarningModule
-                    )
-                )
-            }
-        } catch (exception: IllegalStateException) {
-            NotifiCoinLogger.i(this.applicationContext.resources.getString(R.string.koinAlreadyStarted))
-        }
         setupKoinFragmentFactory()
-
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment

@@ -12,6 +12,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".MainApplication"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@drawable/ic_duck"
         android:label="@string/appName"
