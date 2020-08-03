@@ -2,6 +2,7 @@ package com.github.corentinc.notificoin.ui.editSearch
 
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -35,9 +36,7 @@ import com.github.corentinc.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EditSearchFragment(
-    private val editSearchInteractor: EditSearchInteractor
-) : ChildFragment() {
+class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor) : ChildFragment() {
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
     private val editSearchViewModel: EditSearchViewModel by viewModel()
@@ -67,8 +66,7 @@ class EditSearchFragment(
                 editSearchTitleEditText.text.toString(),
                 editSearchUrlEditText.text.toString()
             )
-            findNavController()
-                .navigate(EditSearchFragmentDirections.editSearchToHomeAction())
+            findNavController().navigateUp()
         }
         editSearchUrlInfoButton.setOnClickListener {
             editSearchInteractor.onUrlInfoButtonClicked()
@@ -99,12 +97,19 @@ class EditSearchFragment(
                 )?.coerceToText(context).toString()
             )
         }
-        editSearchInteractor.onStart(
-            editSearchFragmentArgs.id,
-            editSearchFragmentArgs.title,
-            editSearchFragmentArgs.url,
-            clipboardManager?.primaryClip?.getItemAt(0)?.coerceToText(context).toString()
-        )
+        if (oldOrientationBit and ActivityInfo.CONFIG_ORIENTATION != ActivityInfo.CONFIG_ORIENTATION) {
+            editSearchInteractor.onStart(
+                editSearchFragmentArgs.id,
+                editSearchFragmentArgs.title,
+                editSearchFragmentArgs.url,
+                clipboardManager?.primaryClip?.getItemAt(0)?.coerceToText(context).toString()
+            )
+        } else {
+            editSearchInteractor.onTextChanged(
+                editSearchUrlEditText.text,
+                editSearchTitleEditText.text.toString()
+            )
+        }
         initializeUrlEditText()
         initializeTitleEditText()
 
