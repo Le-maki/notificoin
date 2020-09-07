@@ -70,10 +70,13 @@ dependencies {
     implementation project(':repository')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    // Android
+    implementation parent.ext.appCompat
+    
     // Kotlin
     implementation parent.ext.kotlinStdLib
-    implementation parent.ext.appCompat
     implementation parent.ext.kotlinCore
+    implementation parent.ext.kotlinCoroutines
 
     // Views
     implementation parent.ext.material

@@ -13,7 +13,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -34,6 +33,10 @@ import com.github.corentinc.notificoin.ui.ChildFragment
 import com.github.corentinc.notificoin.ui.adList.AdListFragment.Companion.LEBONCOIN_URL
 import com.github.corentinc.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor) : ChildFragment() {
@@ -61,11 +64,16 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                     SearchStatus(SEARCH_SAVED)
                 )
             )
-            editSearchInteractor.onSave(
-                editSearchFragmentArgs.id,
-                editSearchTitleEditText.text.toString(),
-                editSearchUrlEditText.text.toString()
-            )
+            runBlocking {
+                CoroutineScope(Dispatchers.IO).launch {
+                    editSearchInteractor.onSave(
+                        editSearchFragmentArgs.id,
+                        editSearchTitleEditText.text.toString(),
+                        editSearchUrlEditText.text.toString()
+                    )
+                }.join()
+            }
+
             findNavController().navigateUp()
         }
         editSearchUrlInfoButton.setOnClickListener {
@@ -148,19 +156,19 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     private fun bindViewModel() {
         editSearchViewModel.title.observe(
             this.viewLifecycleOwner,
-            Observer {
+            {
                 editSearchTitleEditText.text = Editable.Factory().newEditable(it)
             }
         )
         editSearchViewModel.url.observe(
             this.viewLifecycleOwner,
-            Observer {
+            {
                 editSearchUrlEditText.text = Editable.Factory().newEditable(it)
             }
         )
         editSearchViewModel.urlError.observe(
             this.viewLifecycleOwner,
-            Observer {
+            {
                 when (it) {
                     INVALID_FORMAT -> showUrlError(getString(R.string.edtiSearchInvalidUrlError))
                     NOT_A_SEARCH -> showUrlError(getString(R.string.editSearchNotASearchUrlError))
@@ -170,13 +178,13 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         )
         editSearchViewModel.isSaveButtonEnabled.observe(
             this.viewLifecycleOwner,
-            Observer {
+            {
                 editSearchSaveButton.isEnabled = it
             }
         )
         editSearchViewModel.isUrlInfoTextVisible.observe(
             this.viewLifecycleOwner,
-            Observer {
+            {
                 if (it) {
                     editSearchViewModel.urlError.value = null
                 }
@@ -185,7 +193,7 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         )
         editSearchViewModel.UrlButtonDisplayedChild.observe(
             this.viewLifecycleOwner,
-            Observer {
+            {
                 editSearchUrlButton.displayedChild = it
             }
         )
