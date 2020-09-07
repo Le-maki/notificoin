@@ -22,7 +22,9 @@ class AdDataSource(
 
     fun deleteAll() = adDao.deleteAll()
 
-    fun getAds(url: String): List<Ad> {
-        return adDao.getAds(url).map { it.toAd() }
+    fun deleteAll(searchId: Int) = adDao.deleteAll(searchId)
+
+    fun getAds(searchId: Int): List<Ad> {
+        return adDao.getAds(searchId).map { it.toAd() }
     }
 }

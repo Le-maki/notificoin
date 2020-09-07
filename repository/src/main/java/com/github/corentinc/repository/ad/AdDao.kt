@@ -20,8 +20,11 @@ abstract class AdDao: BaseDao<AdEntity>() {
     abstract fun getAll(): List<AdEntity>
 
     @Query("DELETE FROM ads WHERE adId in (:idList)")
-    abstract fun delete(idList: List<Int>)
+    abstract fun deleteAll(idList: List<Int>)
 
-    @Query("SELECT * FROM ads WHERE adUrl = :url")
-    abstract fun getAds(url: String): List<AdEntity>
+    @Query("DELETE FROM ads WHERE searchId = :searchId")
+    abstract fun deleteAll(searchId: Int)
+
+    @Query("SELECT * FROM ads WHERE searchId = :searchId")
+    abstract fun getAds(searchId: Int): List<AdEntity>
 }

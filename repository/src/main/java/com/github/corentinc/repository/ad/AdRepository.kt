@@ -23,9 +23,9 @@ class AdRepository(
 
     fun updateAdsFromWebPage(search: Search): List<Ad> {
         val remoteAdList = getSortedRemoteAds(search.url)
-        val localAdList = getAds()
+        val localAdList = getAll(search.id)
         val mergedDistinctAdList = (remoteAdList + localAdList).distinct()
-        deleteAll()
+        deleteAll(search.id)
         adDataSource.putAll(mergedDistinctAdList, search.id)
         return mergedDistinctAdList
     }
@@ -34,7 +34,7 @@ class AdRepository(
         adDataSource.putAll(adList, searchId)
     }
 
-    fun getAds() = adDataSource.getAll()
+    fun getAll() = adDataSource.getAll()
 
     fun getSortedRemoteAds(url: String): List<Ad> {
         val document = webPageRepository.getWebPage(url)
@@ -57,7 +57,9 @@ class AdRepository(
 
     fun deleteAll() = adDataSource.deleteAll()
 
-    fun getAds(url: String): List<Ad> {
-        return adDataSource.getAds(url)
+    fun deleteAll(searchId: Int) = adDataSource.deleteAll(searchId)
+
+    fun getAll(searchId: Int): List<Ad> {
+        return adDataSource.getAds(searchId)
     }
 }
