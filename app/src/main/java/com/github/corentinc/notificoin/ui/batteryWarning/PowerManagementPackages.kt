@@ -183,14 +183,13 @@ private val POWER_MANAGER_INTENTS_MAP: Map<SpecialConstructor, List<Intent>> = m
             listOf(
                 Intent().setComponent(
                     ComponentName(
-                        "om.oneplus.security",
+                        "com.oneplus.security",
                         "com.oneplus.security.chainlaunch.view.ChainLaunchAppListActivity"
                     )
                 )
             )
     ,
     HTC to
-
             listOf(
                 Intent().setComponent(
                     ComponentName(
@@ -201,7 +200,6 @@ private val POWER_MANAGER_INTENTS_MAP: Map<SpecialConstructor, List<Intent>> = m
             )
     ,
     DEWAP to
-
             listOf(
                 Intent().setComponent(
                     ComponentName(
