@@ -32,8 +32,8 @@ android {
         minSdkVersion parent.ext.minSdkVersion
         targetSdkVersion parent.ext.targetSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        versionCode = 11
-        versionName = "0.11"
+        versionCode = 12
+        versionName = "1.0.0"
     }
     buildTypes {
         release {
