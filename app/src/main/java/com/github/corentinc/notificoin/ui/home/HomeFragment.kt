@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -65,6 +64,7 @@ class HomeFragment(
             homeInteractor.onCreateAdButtonPressed()
         }
         val context = requireContext()
+        PowerManagementPackages.logDeviceBrandActivities(context)
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
         bindViewModel()
         val homeFragmentArgs: HomeFragmentArgs by navArgs()
@@ -166,7 +166,7 @@ class HomeFragment(
     private fun bindViewModel() {
         homeViewModel.searchAdsPositionList.observe(
             this.viewLifecycleOwner,
-            Observer {
+            {
                 homeContentViewSwitcher.displayedChild = 0
                 homeGlowingCircleView.stopAnimation()
                 createRecyclerView(it)
