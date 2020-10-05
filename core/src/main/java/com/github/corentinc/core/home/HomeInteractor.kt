@@ -1,6 +1,7 @@
 package com.github.corentinc.core.home
 
 import com.github.corentinc.core.EditSearchInteractor
+import com.github.corentinc.core.SearchAdsPosition
 import com.github.corentinc.core.SearchAdsPostionDefaultSorter
 import com.github.corentinc.core.alarmManager.AlarmManagerInteractor
 import com.github.corentinc.core.repository.GlobalSharedPreferencesRepository
@@ -10,10 +11,7 @@ import com.github.corentinc.core.repository.search.SearchRepository
 import com.github.corentinc.core.repository.searchAdsPosition.SearchAdsPositionRepository
 import com.github.corentinc.core.search.Search
 import com.github.corentinc.core.ui.home.HomePresenter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class HomeInteractor(
     val homePresenter: HomePresenter,
@@ -92,13 +90,15 @@ class HomeInteractor(
     }
 
     fun onRestoreSearch(search: Search) {
-        CoroutineScope(Dispatchers.IO).launch {
-            searchRepository.addSearch(search)
-            var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
-            searchAdsPosition = searchAdsPosition.sortedWith(searchAdsPostionDefaultSorter)
-            withContext(Dispatchers.Main) {
-                homePresenter.presentSearches(searchAdsPosition.map { it.search }.toMutableList())
-            }
+        lateinit var searchAdsPosition: List<SearchAdsPosition>
+        runBlocking {
+            CoroutineScope(Dispatchers.IO).launch {
+                searchRepository.addSearch(search)
+                searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
+                searchAdsPosition = searchAdsPosition.sortedWith(searchAdsPostionDefaultSorter)
+
+            }.join()
         }
+        homePresenter.presentSearches(searchAdsPosition.map { it.search }.toMutableList())
     }
 }

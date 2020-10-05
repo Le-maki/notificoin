@@ -1,5 +1,6 @@
 package com.github.corentinc.repository.searchAdsPosition
 
+import androidx.room.Transaction
 import com.github.corentinc.core.SearchAdsPosition
 import com.github.corentinc.core.ad.Ad
 import com.github.corentinc.core.repository.search.SearchPositionRepository
@@ -26,7 +27,7 @@ class SearchAdsPositionPositionRepositoryImpl(
                 adRepository.getSortedRemoteAds(search.url),
                 searchPositionRepository.getSearchPosition(search.id)
             )
-    }
+        }
 
     override fun updateAllSearchAdsPositionFromWebPage() {
         searchRepository.getAllSearches().forEach {
@@ -34,6 +35,8 @@ class SearchAdsPositionPositionRepositoryImpl(
         }
     }
 
+
+    @Transaction
     override fun replaceAll(searchAdsPositionList: List<SearchAdsPosition>) {
         searchRepository.deleteAll()
         searchAdsPositionList.forEach {

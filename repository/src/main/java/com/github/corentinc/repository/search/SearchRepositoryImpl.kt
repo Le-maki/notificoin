@@ -1,5 +1,6 @@
 package com.github.corentinc.repository.search
 
+import androidx.room.Transaction
 import com.github.corentinc.core.repository.search.SearchPositionRepository
 import com.github.corentinc.core.repository.search.SearchRepository
 import com.github.corentinc.core.search.Search
@@ -11,6 +12,8 @@ class SearchRepositoryImpl(
 ):
     SearchRepository {
     override fun getAllSearches() = searchDataSource.getAll()
+
+    @Transaction
     override fun addSearch(search: Search): Long {
         val id = searchDataSource.put(search)
         searchPositionRepository.addSearchPosition(
