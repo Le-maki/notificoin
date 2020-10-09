@@ -28,12 +28,12 @@ import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.BATTERY_WARNI
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.ui.ChildFragment
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class BatteryWarningFragment(
     val batteryWarningInteractor: BatteryWarningInteractor
 ): ChildFragment(), BatteryWarningDisplay {
-    private val batteryWarningFragmentViewModel: BatteryWarningFragmentViewModel by viewModel()
+    private val batteryWarningFragmentViewModel: BatteryWarningFragmentViewModel by sharedViewModel()
     private var defaultAlertDialog: AlertDialog? = null
     private var specialAlertDialog: AlertDialog? = null
 
