@@ -3,35 +3,34 @@ package com.github.corentinc.notificoin.ui.editSearch
 import com.github.corentinc.core.editSearch.UrlError
 import com.github.corentinc.core.ui.editSearch.EditSearchPresenter
 
-class EditSearchPresenterImpl(
-    private val editSearchViewModel: EditSearchViewModel
-): EditSearchPresenter {
+class EditSearchPresenterImpl : EditSearchPresenter {
+    lateinit var editSearchDisplay: EditSearchDisplay
+
     override fun presentUrlError(error: UrlError) {
-        editSearchViewModel.urlError.value = error
+        editSearchDisplay.displayUrlError(error)
     }
 
     override fun presentValidUrl() {
-        editSearchViewModel.urlError.value = null
+        editSearchDisplay.displayValidUrl()
     }
 
     override fun presentEditSearch(title: String, url: String) {
-        editSearchViewModel.title.value = title
-        editSearchViewModel.url.value = url
+        editSearchDisplay.displayEditSearch(title, url)
     }
 
     override fun presentSaveButton(isEnabled: Boolean) {
-        editSearchViewModel.isSaveButtonEnabled.value = isEnabled
+        editSearchDisplay.displaySaveButton(isEnabled)
     }
 
     override fun presentUrlInfo(isVisible: Boolean) {
-        editSearchViewModel.isUrlInfoTextVisible.value = isVisible
+        editSearchDisplay.displayUrlInfo(isVisible)
     }
 
     override fun presentCopiedContent(clipBoardText: String) {
-        editSearchViewModel.url.value = clipBoardText
+        editSearchDisplay.displayCopiedContent(clipBoardText)
     }
 
     override fun presentUrlButtonDisplayedChild(displayedChildIndex: Int) {
-        editSearchViewModel.UrlButtonDisplayedChild.value = displayedChildIndex
+        editSearchDisplay.displayUrlButtonDisplayedChild(displayedChildIndex)
     }
 }

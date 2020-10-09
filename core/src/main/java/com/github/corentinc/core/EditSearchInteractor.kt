@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class EditSearchInteractor(
     private val searchRepository: SearchRepository,
-    private val editSearchPresenter: EditSearchPresenter
+    val editSearchPresenter: EditSearchPresenter
 ) {
     companion object {
         private const val REGEX = "^(http://|https://)www\\.leboncoin\\.fr/(recherche/)?.+"

@@ -17,6 +17,7 @@ import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.github.corentinc.core.EditSearchInteractor
+import com.github.corentinc.core.editSearch.UrlError
 import com.github.corentinc.core.editSearch.UrlError.INVALID_FORMAT
 import com.github.corentinc.core.editSearch.UrlError.NOT_A_SEARCH
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
@@ -37,16 +38,22 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor) : ChildFragment() {
+class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor) : ChildFragment(),
+    EditSearchDisplay {
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
-    private val editSearchViewModel: EditSearchViewModel by viewModel()
+    private val editSearchViewModel: EditSearchViewModel by sharedViewModel()
     private var clipboardManager: ClipboardManager? = null
 
     companion object {
         private var oldOrientationBit = 0
+    }
+
+    init {
+        (editSearchInteractor.editSearchPresenter as EditSearchPresenterImpl).editSearchDisplay =
+            this
     }
 
     override fun onStart() {
@@ -253,5 +260,34 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                 }
             }
         findNavController().addOnDestinationChangedListener(onDestinationChangedListener)
+    }
+
+    override fun displayUrlError(error: UrlError) {
+        editSearchViewModel.urlError.value = error
+    }
+
+    override fun displayValidUrl() {
+        editSearchViewModel.urlError.value = null
+    }
+
+    override fun displayEditSearch(title: String, url: String) {
+        editSearchViewModel.title.value = title
+        editSearchViewModel.url.value = url
+    }
+
+    override fun displaySaveButton(isEnabled: Boolean) {
+        editSearchViewModel.isSaveButtonEnabled.value = isEnabled
+    }
+
+    override fun displayUrlInfo(isVisible: Boolean) {
+        editSearchViewModel.isUrlInfoTextVisible.value = isVisible
+    }
+
+    override fun displayCopiedContent(clipBoardText: String) {
+        editSearchViewModel.url.value = clipBoardText
+    }
+
+    override fun displayUrlButtonDisplayedChild(displayedChildIndex: Int) {
+        editSearchViewModel.UrlButtonDisplayedChild.value = displayedChildIndex
     }
 }
