@@ -2,7 +2,6 @@ package com.github.corentinc.notificoin.ui.settings
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.preference.DropDownPreference
 import androidx.preference.Preference
@@ -13,12 +12,12 @@ import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen
 import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.SETTINGS
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SettingsFragment(
     private val settingsInteractor: SettingsInteractor
 ): PreferenceFragmentCompat(), SettingsDisplay {
-    private val settingsViewModel: SettingsViewModel by viewModel()
+    private val settingsViewModel: SettingsViewModel by sharedViewModel()
     private lateinit var onBackPressedCallback: OnBackPressedCallback
 
     init {
@@ -71,7 +70,7 @@ class SettingsFragment(
     private fun bindViewModel() {
         settingsViewModel.notificationIntervalEntry.observe(
             viewLifecycleOwner,
-            Observer {
+            {
                 findPreference<DropDownPreference>(resources.getString(R.string.notificationIntervalKey))?.title =
                     resources.getString(R.string.settingsNotificationIntervalTitle) + it
             })
@@ -87,11 +86,16 @@ class SettingsFragment(
 
     private fun addOnBackPressedCallBack() {
         onBackPressedCallback =
-            object: OnBackPressedCallback(true) {
+            object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     findNavController().navigateUp()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+
+    override fun displayNotificationIntervalPreference(entry: String) {
+        settingsViewModel.notificationIntervalEntry.value = entry
     }
 }
