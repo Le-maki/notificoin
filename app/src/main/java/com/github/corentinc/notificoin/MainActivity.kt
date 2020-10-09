@@ -1,7 +1,6 @@
 package com.github.corentinc.notificoin
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,12 +19,13 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.fragment.android.setupKoinFragmentFactory
+import org.koin.androidx.scope.ScopeActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ScopeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         // Obtain the FirebaseAnalytics instance.
         AnalyticsEventSender.firebaseAnalytics = Firebase.analytics
-        setupKoinFragmentFactory()
+        setupKoinFragmentFactory(scope)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navHostFragment =

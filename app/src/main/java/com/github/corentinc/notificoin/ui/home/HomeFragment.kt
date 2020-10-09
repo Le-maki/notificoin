@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -27,13 +26,13 @@ import com.github.corentinc.notificoin.ui.home.searchesRecyclerView.SearchAdapte
 import com.github.corentinc.notificoin.ui.home.searchesRecyclerView.SearchAdapterListener
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment(
-    val homeInteractor: HomeInteractor,
+    private val homeInteractor: HomeInteractor,
     private val adapter: SearchAdapter
 ): Fragment(), HomeDisplay {
-    private val homeViewModel: HomeViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by sharedViewModel()
     private lateinit var onDestinationChangedListener: NavController.OnDestinationChangedListener
 
     override fun onCreateView(
@@ -163,12 +162,16 @@ class HomeFragment(
         homeGlowingCircleView.startCircleAnimation()
     }
 
+    override fun displaySearches(search: MutableList<Search>) {
+        homeViewModel.searchAdsPositionList.value = search
+    }
+
     private fun bindViewModel() {
         homeViewModel.searchAdsPositionList.observe(
             this.viewLifecycleOwner,
-            Observer {
+            {
                 homeContentViewSwitcher.displayedChild = 0
-                homeGlowingCircleView.stopAnimation()
+                homeGlowingCircleView.startCircleAnimation()
                 createRecyclerView(it)
             }
         )

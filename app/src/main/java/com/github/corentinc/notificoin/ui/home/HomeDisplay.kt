@@ -8,4 +8,5 @@ interface HomeDisplay {
     fun displayUndoDeleteSearch(search: Search)
     fun displayBatteryWarningFragment(shouldDisplayDefaultDialog: Boolean)
     fun displayEmptySearches()
+    fun displaySearches(search: MutableList<Search>)
 }

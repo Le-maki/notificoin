@@ -5,6 +5,7 @@ import com.github.corentinc.core.ui.home.HomePresenter
 import com.github.corentinc.notificoin.ui.SingleLiveEvent
 import com.github.corentinc.notificoin.ui.home.HomePresenterImpl
 import com.github.corentinc.notificoin.ui.home.HomeViewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val homeModule = module {
@@ -20,8 +21,8 @@ val homeModule = module {
             globalSharedPreferencesRepository = get()
         )
     }
-    single<HomePresenter> { HomePresenterImpl(homeViewModel = get()) }
-    single {
+    single<HomePresenter> { HomePresenterImpl() }
+    viewModel {
         HomeViewModel(
             shouldShowBatteryWhiteListAlertDialog = SingleLiveEvent(),
             searchAdsPositionList = SingleLiveEvent()
