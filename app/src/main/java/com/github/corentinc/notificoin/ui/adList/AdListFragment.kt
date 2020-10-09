@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.corentinc.core.adList.AdListErrorType
 import com.github.corentinc.core.adList.AdListErrorType.*
 import com.github.corentinc.core.adList.AdListInteractor
+import com.github.corentinc.logger.analytics.NotifiCoinEvent
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
+import com.github.corentinc.logger.analytics.NotifiCoinEventException
+import com.github.corentinc.logger.analytics.NotifiCoinEventParameter
 import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen
 import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.LIST_OF_ADS
 import com.github.corentinc.notificoin.AnalyticsEventSender
@@ -20,16 +23,20 @@ import com.github.corentinc.notificoin.createChromeIntentFromUrl
 import com.github.corentinc.notificoin.ui.ChildFragment
 import com.github.corentinc.notificoin.ui.adList.adListRecyclerView.AdListAdapter
 import kotlinx.android.synthetic.main.fragment_ad_list.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class AdListFragment(
     private val adListInteractor: AdListInteractor
-): ChildFragment() {
-    private val adListViewModel: AdListViewModel by viewModel()
+) : ChildFragment(), AdListDisplay {
+    private val adListViewModel: AdListViewModel by sharedViewModel()
     private val adapter = AdListAdapter()
 
     companion object {
         const val LEBONCOIN_URL = "http://www.leboncoin.fr"
+    }
+
+    init {
+        (adListInteractor.adListPresenter as AdListPresenterImpl).adListDisplay = this
     }
 
     override fun onStart() {
@@ -66,7 +73,7 @@ class AdListFragment(
     private fun bindViewModel() {
         adListViewModel.adViewModelList.observe(
             this.viewLifecycleOwner,
-            Observer {
+            {
                 if (!adapter.isListInitialised() || (adapter.isListInitialised() && adapter.adViewModelList != it)) {
                     adapter.adViewModelList = it
                     adListFragmentRecyclerView.apply {
@@ -81,7 +88,7 @@ class AdListFragment(
             })
         adListViewModel.errorType.observe(
             this.viewLifecycleOwner,
-            Observer { adListErrorType ->
+            { adListErrorType ->
                 textAdsFragment.setOnClickListener {}
                 adListErrorType?.let {
                     val text = when (it) {
@@ -142,5 +149,42 @@ class AdListFragment(
         hideErrorMessage()
         val adListFragmentArgs: AdListFragmentArgs by navArgs()
         adListInteractor.onRefresh(adListFragmentArgs.searchId)
+    }
+
+    private fun displayErrorAndSendEvent(
+        errorType: AdListErrorType,
+        eventType: NotifiCoinEventException
+    ) {
+        AnalyticsEventSender.sendEvent(
+            NotifiCoinEvent.ExceptionThrown(
+                NotifiCoinEventParameter.EventException(eventType),
+                Screen(LIST_OF_ADS)
+            )
+        )
+        adListViewModel.errorType.value = errorType
+    }
+
+    override fun displayConnectionError() {
+        displayErrorAndSendEvent(CONNECTION, NotifiCoinEventException.CONNECTION)
+    }
+
+    override fun displayParsingError() {
+        displayErrorAndSendEvent(PARSING, NotifiCoinEventException.PARSING)
+    }
+
+    override fun displayUnknownError() {
+        displayErrorAndSendEvent(UNKNOWN, NotifiCoinEventException.UNKNOWN)
+    }
+
+    override fun displayAdList(adViewModelList: MutableList<AdViewModel>) {
+        adListViewModel.adViewModelList.value = adViewModelList
+    }
+
+    override fun displayForbiddenError() {
+        displayErrorAndSendEvent(FORBIDDEN, NotifiCoinEventException.FORBIDDEN)
+    }
+
+    override fun displayEmptyList() {
+        adListViewModel.errorType.value = EMPTY
     }
 }

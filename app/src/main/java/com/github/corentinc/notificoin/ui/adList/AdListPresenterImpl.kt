@@ -1,70 +1,38 @@
 package com.github.corentinc.notificoin.ui.adList
 
 import com.github.corentinc.core.SearchAdsPosition
-import com.github.corentinc.core.adList.AdListErrorType
-import com.github.corentinc.core.adList.AdListErrorType.*
 import com.github.corentinc.core.ui.adList.AdListPresenter
-import com.github.corentinc.logger.analytics.NotifiCoinEvent.ExceptionThrown
-import com.github.corentinc.logger.analytics.NotifiCoinEventException
-import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.EventException
-import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen
-import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.LIST_OF_ADS
-import com.github.corentinc.notificoin.AnalyticsEventSender
 
 class AdListPresenterImpl(
-    private val adsListToAdViewModelListTransformer: AdListToAdViewModelListTransformer,
-    private val adListViewModel: AdListViewModel
-): AdListPresenter {
-    private fun presentError(errorType: AdListErrorType) {
-        adListViewModel.errorType.value = errorType
-    }
+    private val adsListToAdViewModelListTransformer: AdListToAdViewModelListTransformer
+) : AdListPresenter {
+    lateinit var adListDisplay: AdListDisplay
 
     override fun presentConnectionError() {
-        AnalyticsEventSender.sendEvent(
-            ExceptionThrown(
-                EventException(NotifiCoinEventException.CONNECTION),
-                Screen(LIST_OF_ADS)
-            )
-        )
-        presentError(CONNECTION)
+        adListDisplay.displayConnectionError()
     }
 
     override fun presentParsingError() {
-        AnalyticsEventSender.sendEvent(
-            ExceptionThrown(
-                EventException(NotifiCoinEventException.PARSING),
-                Screen(LIST_OF_ADS)
-            )
-        )
-        presentError(PARSING)
+        adListDisplay.displayParsingError()
     }
 
     override fun presentUnknownError() {
-        AnalyticsEventSender.sendEvent(
-            ExceptionThrown(
-                EventException(NotifiCoinEventException.UNKNOWN),
-                Screen(LIST_OF_ADS)
-            )
-        )
-        presentError(UNKNOWN)
+        adListDisplay.displayUnknownError()
     }
 
     override fun presentAdList(searchAdsPositionList: List<SearchAdsPosition>) {
-        adListViewModel.adViewModelList.value =
-            adsListToAdViewModelListTransformer.transform(searchAdsPositionList)
+        adListDisplay.displayAdList(
+            adsListToAdViewModelListTransformer.transform(
+                searchAdsPositionList
+            )
+        )
     }
 
     override fun presentForbiddenError() {
-        AnalyticsEventSender.sendEvent(
-            ExceptionThrown(
-                EventException(NotifiCoinEventException.FORBIDDEN),
-                Screen(LIST_OF_ADS)
-            )
-        )
-        presentError(FORBIDDEN)
+        adListDisplay.displayForbiddenError()
     }
 
     override fun presentEmptyList() {
-        presentError(EMPTY)
+        adListDisplay.displayEmptyList()
     }
 }

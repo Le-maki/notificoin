@@ -14,7 +14,7 @@ import java.net.UnknownHostException
 import java.text.ParseException
 
 class AdListInteractor(
-    private val adListPresenter: AdListPresenter,
+    val adListPresenter: AdListPresenter,
     private val searchAdsPositionRepository: SearchAdsPositionRepository
 ) {
 
