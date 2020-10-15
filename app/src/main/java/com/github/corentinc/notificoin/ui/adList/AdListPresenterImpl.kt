@@ -35,4 +35,22 @@ class AdListPresenterImpl(
     override fun presentEmptyList() {
         adListDisplay.displayEmptyList()
     }
+
+    override fun hideProgressBar() {
+        adListDisplay.hideProgressBar()
+    }
+
+    override fun presentErrorMessage(isVisible: Boolean) {
+        adListDisplay.displayErrorMessage(isVisible)
+    }
+
+    override fun presentAdsRecyclerView(isVisible: Boolean) {
+        adListDisplay.displayAdsRecyclerView(isVisible)
+    }
+
+    override fun stopRefreshing() {
+        adListDisplay.stopRefreshing()
+    }
+
+
 }

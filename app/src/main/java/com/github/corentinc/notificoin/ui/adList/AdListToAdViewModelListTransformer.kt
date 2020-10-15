@@ -6,7 +6,7 @@ import com.github.corentinc.core.ad.Ad
 class AdListToAdViewModelListTransformer(
     private val adComparator: Comparator<Ad>
 ) {
-    fun transform(searchAdsPositionList: List<SearchAdsPosition>): MutableList<AdViewModel> {
+    fun transform(searchAdsPositionList: List<SearchAdsPosition>): MutableList<AdViewData> {
         val adSearchTitlePairList = searchAdsPositionList.fold(
             mutableListOf<Pair<Ad, String>>(),
             { acc, searchAdsPosition ->
@@ -16,15 +16,15 @@ class AdListToAdViewModelListTransformer(
                     }
                 )
                 acc
-        })
-        adSearchTitlePairList.sortWith(Comparator { o1, o2 ->
+            })
+        adSearchTitlePairList.sortWith { o1, o2 ->
             adComparator.compare(
                 o1?.first,
                 o2?.first
             )
-        })
+        }
         return adSearchTitlePairList.map {
-            AdViewModel(
+            AdViewData(
                 it.first.title,
                 it.second,
                 it.first.publicationDate.toString("HH:mm"),

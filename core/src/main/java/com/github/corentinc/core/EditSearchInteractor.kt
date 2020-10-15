@@ -67,7 +67,7 @@ class EditSearchInteractor(
         onClipBoardTextChanged(clipBoardText)
     }
 
-    fun onClipBoardTextChanged(clipBoardText: String) {
+    private fun onClipBoardTextChanged(clipBoardText: String) {
         val regex = REGEX.toRegex()
         val isValidUrl =
             !clipBoardText.isBlank() && clipBoardText != DEFAULT_CLIPBOARD_VALUE && clipBoardText.let {

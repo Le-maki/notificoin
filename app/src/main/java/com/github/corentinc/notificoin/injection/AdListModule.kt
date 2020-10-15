@@ -9,7 +9,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val adListModule = module {
-    single { AdListInteractor(adListPresenter = get(), searchAdsPositionRepository = get()) }
+    factory { AdListInteractor(adListPresenter = get(), searchAdsPositionRepository = get()) }
     single<AdListPresenter> {
         AdListPresenterImpl(
             adsListToAdViewModelListTransformer = get()
@@ -17,7 +17,7 @@ val adListModule = module {
     }
     viewModel {
         AdListViewModel(
-            adViewModelList = SingleLiveEvent(),
+            adViewDataList = SingleLiveEvent(),
             errorType = SingleLiveEvent()
         )
     }

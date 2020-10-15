@@ -158,7 +158,7 @@ class HomeFragment(
     }
 
     override fun displayEmptySearches() {
-        homeContentViewSwitcher.displayedChild = 1
+        homeContentViewSwitcher?.displayedChild = 1
         homeGlowingCircleView.startCircleAnimation()
     }
 
@@ -170,7 +170,7 @@ class HomeFragment(
         homeViewModel.searchAdsPositionList.observe(
             this.viewLifecycleOwner,
             {
-                homeContentViewSwitcher.displayedChild = 0
+                homeContentViewSwitcher?.displayedChild = 0
                 homeGlowingCircleView.startCircleAnimation()
                 createRecyclerView(it)
             }

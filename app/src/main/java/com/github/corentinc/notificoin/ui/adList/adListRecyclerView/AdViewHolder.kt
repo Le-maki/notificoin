@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.createIntentFromUrl
-import com.github.corentinc.notificoin.ui.adList.AdViewModel
+import com.github.corentinc.notificoin.ui.adList.AdViewData
 
 class AdViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder(
     inflater.inflate(
@@ -22,8 +22,8 @@ class AdViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.Vi
     private var adItemSearchTitle: TextView = itemView.findViewById(R.id.adItemSearchTitle)
     private var adItemPrice: TextView = itemView.findViewById(R.id.adItemPrice)
 
-    fun bind(adViewModel: AdViewModel) {
-        with(adViewModel) {
+    fun bind(adViewData: AdViewData) {
+        with(adViewData) {
             adItemAdTitle.text = adTitle
             adItemHour.text = hour
             adItemDate.text = date
@@ -33,7 +33,7 @@ class AdViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.Vi
             }
         }
         itemView.findViewById<ConstraintLayout>(R.id.adItem).setOnClickListener {
-            itemView.context.startActivity(adViewModel.url.createIntentFromUrl())
+            itemView.context.startActivity(adViewData.url.createIntentFromUrl())
         }
 
     }

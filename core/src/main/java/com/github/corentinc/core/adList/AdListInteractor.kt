@@ -4,10 +4,7 @@ import com.github.corentinc.core.EditSearchInteractor
 import com.github.corentinc.core.repository.searchAdsPosition.SearchAdsPositionRepository
 import com.github.corentinc.core.ui.adList.AdListPresenter
 import com.github.corentinc.logger.NotifiCoinLogger
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.jsoup.HttpStatusException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
@@ -17,9 +14,10 @@ class AdListInteractor(
     val adListPresenter: AdListPresenter,
     private val searchAdsPositionRepository: SearchAdsPositionRepository
 ) {
+    private var refreshJob: Job? = null
 
     fun onRefresh(searchId: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
+        refreshJob = CoroutineScope(Dispatchers.IO).launch {
             try {
                 searchAdsPositionRepository.updateAllSearchAdsPositionFromWebPage()
                 var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
@@ -32,7 +30,13 @@ class AdListInteractor(
                     }
                 } else {
                     withContext(Dispatchers.Main) {
-                        adListPresenter.presentAdList(searchAdsPosition)
+                        with(adListPresenter) {
+                            presentAdList(searchAdsPosition)
+                            hideProgressBar()
+                            presentErrorMessage(false)
+                            presentAdsRecyclerView(true)
+                            stopRefreshing()
+                        }
                     }
                 }
             } catch (error: Exception) {
@@ -64,7 +68,21 @@ class AdListInteractor(
                         }
                     }
                 }
+                withContext(Dispatchers.Main) {
+                    with(adListPresenter) {
+                        hideProgressBar()
+                        presentErrorMessage(true)
+                        presentAdsRecyclerView(false)
+                        stopRefreshing()
+                    }
+                }
             }
+        }
+    }
+
+    fun stopRefresh() {
+        runBlocking {
+            refreshJob?.cancelAndJoin()
         }
     }
 }
