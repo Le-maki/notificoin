@@ -31,16 +31,12 @@ class DocumentToAdJsonArrayTransformer {
             adList?.let {
                 val adMatcher = Pattern.compile(AD_REGEX).matcher(it)
                 while (adMatcher.find()) {
-                    try {
                         adJsonArray.add(
                             Gson().fromJson(
                                 adMatcher.group(1),
                                 JsonElement::class.java
                             )
                         )
-                    } catch (exception: Exception) {
-                        println()
-                    }
                 }
             } ?: throw ParseException("Unable to parse the webpage", 0)
         } ?: throw ParseException("Unable to parse the webpage", 0)

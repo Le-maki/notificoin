@@ -24,13 +24,16 @@ class AdListInteractor(
                 if (searchId != EditSearchInteractor.DEFAULT_ID) {
                     searchAdsPosition = searchAdsPosition.filter { it.search.id == searchId }
                 }
-                if (searchAdsPosition.all { it.ads.isEmpty() }) {
-                    withContext(Dispatchers.Main) {
-                        adListPresenter.presentEmptyList()
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        with(adListPresenter) {
+
+                withContext(Dispatchers.Main) {
+                    with(adListPresenter) {
+                        if (searchAdsPosition.all { it.ads.isEmpty() }) {
+                            presentEmptyList()
+                            hideProgressBar()
+                            presentErrorMessage(true)
+                            presentAdsRecyclerView(false)
+                            stopRefreshing()
+                        } else {
                             presentAdList(searchAdsPosition)
                             hideProgressBar()
                             presentErrorMessage(false)
