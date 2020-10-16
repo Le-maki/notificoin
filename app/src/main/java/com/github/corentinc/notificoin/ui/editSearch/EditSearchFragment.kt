@@ -34,10 +34,6 @@ import com.github.corentinc.notificoin.ui.ChildFragment
 import com.github.corentinc.notificoin.ui.adList.AdListFragment.Companion.LEBONCOIN_URL
 import com.github.corentinc.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor) : ChildFragment(),
@@ -71,17 +67,12 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                     SearchStatus(SEARCH_SAVED)
                 )
             )
-            runBlocking {
-                CoroutineScope(Dispatchers.IO).launch {
-                    editSearchInteractor.onSave(
-                        editSearchFragmentArgs.id,
-                        editSearchTitleEditText.text.toString(),
-                        editSearchUrlEditText.text.toString()
-                    )
-                }.join()
-            }
+            editSearchInteractor.onSave(
+                editSearchFragmentArgs.id,
+                editSearchTitleEditText.text.toString(),
+                editSearchUrlEditText.text.toString()
+            )
 
-            findNavController().navigateUp()
         }
         editSearchUrlInfoButton.setOnClickListener {
             editSearchInteractor.onUrlInfoButtonClicked()
@@ -95,14 +86,8 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                     SearchStatus(SEARCH_DELETED)
                 )
             )
-            editSearchInteractor.deleteSearch(editSearchFragmentArgs.id)
-            findNavController().navigate(
-                EditSearchFragmentDirections.editSearchToHomeAction(
-                    editSearchFragmentArgs.id,
-                    editSearchTitleEditText.text.toString(),
-                    editSearchUrlEditText.text.toString()
-                )
-            )
+            editSearchInteractor.onDeleteButtonClicked(editSearchFragmentArgs.id)
+
         }
         clipboardManager = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
         editSearchUrlPasteButton.setOnClickListener {
@@ -289,5 +274,19 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
 
     override fun displayUrlButtonDisplayedChild(displayedChildIndex: Int) {
         editSearchViewModel.UrlButtonDisplayedChild.value = displayedChildIndex
+    }
+
+    override fun displayNavigateUp() {
+        findNavController().navigateUp()
+    }
+
+    override fun displayNavigateHomeAfterDeletion() {
+        findNavController().navigate(
+            EditSearchFragmentDirections.editSearchToHomeAction(
+                editSearchFragmentArgs.id,
+                editSearchTitleEditText.text.toString(),
+                editSearchUrlEditText.text.toString()
+            )
+        )
     }
 }

@@ -8,6 +8,7 @@ import com.github.corentinc.core.ui.editSearch.EditSearchPresenter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class EditSearchInteractor(
     private val searchRepository: SearchRepository,
@@ -26,10 +27,13 @@ class EditSearchInteractor(
         }
     }
 
-    fun deleteSearch(id: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
-            searchRepository.delete(id)
+    fun onDeleteButtonClicked(id: Int) {
+        runBlocking {
+            CoroutineScope(Dispatchers.IO).launch {
+                searchRepository.delete(id)
+            }.join()
         }
+        editSearchPresenter.presentNavigateToHomeAfterDeletion()
     }
 
     fun onTitleTextChanged(titleText: CharSequence?, urlText: String, isUrlValid: Boolean) {
@@ -90,11 +94,16 @@ class EditSearchInteractor(
     }
 
     fun onSave(id: Int, title: String, url: String) {
-        if (id == DEFAULT_ID) {
-            searchRepository.addSearch(Search(url = url, title = title))
-        } else {
-            searchRepository.updateSearch(id, title, url)
+        runBlocking {
+            CoroutineScope(Dispatchers.IO).launch {
+                if (id == DEFAULT_ID) {
+                    searchRepository.addSearch(Search(url = url, title = title))
+                } else {
+                    searchRepository.updateSearch(id, title, url)
+                }
+            }.join()
         }
+        editSearchPresenter.presentNavigateUp()
     }
 
     fun onUrlInfoButtonClicked() {

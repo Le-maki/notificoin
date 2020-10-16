@@ -33,4 +33,12 @@ class EditSearchPresenterImpl : EditSearchPresenter {
     override fun presentUrlButtonDisplayedChild(displayedChildIndex: Int) {
         editSearchDisplay.displayUrlButtonDisplayedChild(displayedChildIndex)
     }
+
+    override fun presentNavigateUp() {
+        editSearchDisplay.displayNavigateUp()
+    }
+
+    override fun presentNavigateToHomeAfterDeletion() {
+        editSearchDisplay.displayNavigateHomeAfterDeletion()
+    }
 }

@@ -10,4 +10,6 @@ interface EditSearchDisplay {
     fun displayUrlInfo(isVisible: Boolean)
     fun displayCopiedContent(clipBoardText: String)
     fun displayUrlButtonDisplayedChild(displayedChildIndex: Int)
+    fun displayNavigateUp()
+    fun displayNavigateHomeAfterDeletion()
 }

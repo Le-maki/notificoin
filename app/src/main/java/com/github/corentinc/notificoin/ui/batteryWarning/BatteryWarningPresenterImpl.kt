@@ -19,4 +19,16 @@ class BatteryWarningPresenterImpl(
     override fun presentHuaweiDialog() {
         batteryWarningDisplay.displayHuaweiDialog()
     }
+
+    override fun presentBack() {
+        batteryWarningDisplay.displayBack()
+    }
+
+    override fun presentBatteryWhiteList() {
+        batteryWarningDisplay.displayBatteryWhiteList()
+    }
+
+    override fun presentSpecialIntent() {
+        batteryWarningDisplay.displaySpecialIntent()
+    }
 }

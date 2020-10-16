@@ -10,4 +10,6 @@ interface EditSearchPresenter {
     fun presentUrlInfo(isVisible: Boolean)
     fun presentCopiedContent(clipBoardText: String)
     fun presentUrlButtonDisplayedChild(displayedChildIndex: Int)
+    fun presentNavigateUp()
+    fun presentNavigateToHomeAfterDeletion()
 }
