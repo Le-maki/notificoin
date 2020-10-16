@@ -10,7 +10,7 @@ import java.util.regex.Pattern
 class DocumentToAdJsonArrayTransformer {
     companion object {
         private const val DATA_REGEX = "REDIAL_PROPS__ = (\\[.*)"
-        private const val AD_LIST_REGEX = "(\\{\"list_id(.*?))(?=,\"ads_alu)"
+        private const val AD_LIST_REGEX = "(\\{\"list_id(.*?))((,\"ads_alu.*?\$)|\$)"
         private const val AD_REGEX = "(\\{\"list_id(.*?))(?=,\\{\"list_id)"
         private const val TAG_NAME = "script"
         private const val NODE_SELECTOR = "list_id"
