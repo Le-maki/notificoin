@@ -159,7 +159,7 @@ class HomeFragment(
 
     override fun displayEmptySearches() {
         homeContentViewSwitcher?.displayedChild = 1
-        homeGlowingCircleView.startCircleAnimation()
+        homeGlowingCircleView?.startCircleAnimation()
     }
 
     override fun displaySearches(search: MutableList<Search>) {
@@ -171,7 +171,7 @@ class HomeFragment(
             this.viewLifecycleOwner,
             {
                 homeContentViewSwitcher?.displayedChild = 0
-                homeGlowingCircleView.startCircleAnimation()
+                homeGlowingCircleView?.startCircleAnimation()
                 createRecyclerView(it)
             }
         )
