@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.github.corentinc.core.BatteryWarningInteractor
@@ -27,12 +28,11 @@ import com.github.corentinc.logger.analytics.NotifiCoinEventPopUp.SPECIAL_CONSTR
 import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.BATTERY_WARNING
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
-import com.github.corentinc.notificoin.ui.ChildFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class BatteryWarningFragment(
     val batteryWarningInteractor: BatteryWarningInteractor
-) : ChildFragment(), BatteryWarningDisplay {
+) : Fragment(), BatteryWarningDisplay {
     private val batteryWarningFragmentViewModel: BatteryWarningFragmentViewModel by sharedViewModel()
     private var defaultAlertDialog: AlertDialog? = null
     private var specialAlertDialog: AlertDialog? = null

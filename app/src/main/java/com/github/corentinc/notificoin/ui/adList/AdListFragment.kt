@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.adList.AdListErrorType
@@ -20,14 +21,13 @@ import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.LIST_OF_ADS
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.createChromeIntentFromUrl
-import com.github.corentinc.notificoin.ui.ChildFragment
 import com.github.corentinc.notificoin.ui.adList.adListRecyclerView.AdListAdapter
 import kotlinx.android.synthetic.main.fragment_ad_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class AdListFragment(
     private val adListInteractor: AdListInteractor
-) : ChildFragment(), AdListDisplay {
+) : Fragment(), AdListDisplay {
     private val adListViewModel: AdListViewModel by sharedViewModel()
     private val adapter = AdListAdapter()
 

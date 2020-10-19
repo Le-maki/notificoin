@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -30,13 +31,12 @@ import com.github.corentinc.logger.analytics.NotifiCoinEventSearchStatus.SEARCH_
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.createChromeIntentFromUrl
-import com.github.corentinc.notificoin.ui.ChildFragment
 import com.github.corentinc.notificoin.ui.adList.AdListFragment.Companion.LEBONCOIN_URL
 import com.github.corentinc.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor) : ChildFragment(),
+class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor) : Fragment(),
     EditSearchDisplay {
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
