@@ -8,7 +8,7 @@ class SettingsPresenterImpl : SettingsPresenter {
         settingsDisplay.displayAboutFragment()
     }
 
-    override fun presentAccurateNotificationClicked() {
+    override fun presentBatteryWarningFragment() {
         settingsDisplay.displayBatteryWarningFragment()
     }
 
