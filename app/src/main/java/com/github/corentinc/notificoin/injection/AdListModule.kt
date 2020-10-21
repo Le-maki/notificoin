@@ -1,8 +1,8 @@
 package com.github.corentinc.notificoin.injection
 
+import androidx.lifecycle.MutableLiveData
 import com.github.corentinc.core.adList.AdListInteractor
 import com.github.corentinc.core.ui.adList.AdListPresenter
-import com.github.corentinc.notificoin.ui.SingleLiveEvent
 import com.github.corentinc.notificoin.ui.adList.AdListPresenterImpl
 import com.github.corentinc.notificoin.ui.adList.AdListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -17,8 +17,8 @@ val adListModule = module {
     }
     viewModel {
         AdListViewModel(
-            adViewDataList = SingleLiveEvent(),
-            errorType = SingleLiveEvent()
+            adViewDataList = MutableLiveData(),
+            errorType = MutableLiveData()
         )
     }
 }

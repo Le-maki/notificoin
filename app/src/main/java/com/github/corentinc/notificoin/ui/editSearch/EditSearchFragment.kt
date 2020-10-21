@@ -2,7 +2,6 @@ package com.github.corentinc.notificoin.ui.editSearch
 
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -34,13 +33,13 @@ import com.github.corentinc.notificoin.createChromeIntentFromUrl
 import com.github.corentinc.notificoin.ui.adList.AdListFragment.Companion.LEBONCOIN_URL
 import com.github.corentinc.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor) : Fragment(),
     EditSearchDisplay {
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
-    private val editSearchViewModel: EditSearchViewModel by sharedViewModel()
+    private val editSearchViewModel: EditSearchViewModel by viewModel()
     private var clipboardManager: ClipboardManager? = null
 
     companion object {
@@ -59,6 +58,12 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
             )
         )
         super.onStart()
+
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         bindViewModel()
         addOnDestinationChangedListener()
         editSearchSaveButton.setOnClickListener {
@@ -97,22 +102,21 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                 )?.coerceToText(context).toString()
             )
         }
-        if (oldOrientationBit and ActivityInfo.CONFIG_ORIENTATION != ActivityInfo.CONFIG_ORIENTATION) {
+        editSearchViewModel.title.value?.let {
+            editSearchInteractor.onTextChanged(
+                it,
+                editSearchTitleEditText.text.toString()
+            )
+        } ?: run {
             editSearchInteractor.onStart(
                 editSearchFragmentArgs.id,
                 editSearchFragmentArgs.title,
                 editSearchFragmentArgs.url,
                 clipboardManager?.primaryClip?.getItemAt(0)?.coerceToText(context).toString()
             )
-        } else {
-            editSearchInteractor.onTextChanged(
-                editSearchUrlEditText.text,
-                editSearchTitleEditText.text.toString()
-            )
         }
         initializeUrlEditText()
         initializeTitleEditText()
-
     }
 
     private fun startChromeIntent() {
@@ -137,6 +141,8 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
 
     override fun onPause() {
         findNavController().removeOnDestinationChangedListener(onDestinationChangedListener)
+        editSearchViewModel.title.value = editSearchTitleEditText.text.toString()
+        editSearchViewModel.url.value = editSearchUrlEditText.text.toString()
         super.onPause()
     }
 

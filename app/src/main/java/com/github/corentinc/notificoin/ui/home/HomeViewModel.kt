@@ -1,10 +1,10 @@
 package com.github.corentinc.notificoin.ui.home
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.corentinc.core.search.Search
-import com.github.corentinc.notificoin.ui.SingleLiveEvent
 
 data class HomeViewModel(
-    val shouldShowBatteryWhiteListAlertDialog: SingleLiveEvent<Boolean>,
-    val searchAdsPositionList: SingleLiveEvent<MutableList<Search>>
+    val shouldShowBatteryWhiteListAlertDialog: MutableLiveData<Boolean>,
+    val searchAdsPositionList: MutableLiveData<MutableList<Search>>
 ): ViewModel()

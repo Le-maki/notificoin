@@ -1,14 +1,15 @@
 package com.github.corentinc.notificoin.ui.editSearch
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.corentinc.core.editSearch.UrlError
-import com.github.corentinc.notificoin.ui.SingleLiveEvent
 
 data class EditSearchViewModel(
-    val title: SingleLiveEvent<String>,
-    val url: SingleLiveEvent<String>,
-    val isSaveButtonEnabled: SingleLiveEvent<Boolean>,
-    val urlError: SingleLiveEvent<UrlError?>,
-    val isUrlInfoTextVisible: SingleLiveEvent<Boolean>,
-    val UrlButtonDisplayedChild: SingleLiveEvent<Int>
+    val savedTitle: MutableLiveData<String>,
+    val title: MutableLiveData<String>,
+    val url: MutableLiveData<String>,
+    val isSaveButtonEnabled: MutableLiveData<Boolean>,
+    val urlError: MutableLiveData<UrlError?>,
+    val isUrlInfoTextVisible: MutableLiveData<Boolean>,
+    val UrlButtonDisplayedChild: MutableLiveData<Int>
 ): ViewModel()
