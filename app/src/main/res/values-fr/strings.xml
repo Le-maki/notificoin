@@ -45,7 +45,7 @@
     <string name="aboutDevelopedWith">Développé avec</string>
     <string name="homeEmptySearch">Vous n\'avez pas encore de recherche, vous pouvez en ajouter une en utilisant le bouton jaune juste en dessous</string>
     <string name="EditSearchUrlInfoButtonContentDescription">Ou touver cette url</string>
-    <string name="editSearchUrlHelpBubble">Ouvrez Leboncoin sur Chrome et accédez à votre recherche pour copier l\'url, cliquez ici !</string>
+    <string name="editSearchUrlHelpBubble">Cliquez ici pour ourvir Leboncoin sur Chrome, puis accédez à votre recherche pour copier l\'URL</string>
     <string name="batteryWarningDetectedSpecialConstructor">Le constructeur de votre téléphone utilise aussi une application spéciale pour gérer la batterie, autorisez NotifiCoin à rester en arrière plan dans celle-ci</string>
     <string name="batteryWarningDetectedHuawei">HUAWEI utilise aussi une application spéciale pour gérer la batterie, désactivez la gestion automatique pour NotifiCoin et autorisez tout manuellement</string>
 </resources>
