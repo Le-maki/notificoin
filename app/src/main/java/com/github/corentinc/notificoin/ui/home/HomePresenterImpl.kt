@@ -31,4 +31,8 @@ class HomePresenterImpl : HomePresenter {
     override fun presentEmptySearches() {
         homeDisplay.displayEmptySearches()
     }
+
+    override fun presentProgressBar() {
+        homeDisplay.displayProgressBar()
+    }
 }

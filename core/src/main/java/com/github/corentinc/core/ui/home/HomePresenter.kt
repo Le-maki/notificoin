@@ -9,4 +9,5 @@ interface HomePresenter {
     fun presentUndoDeleteSearch(search: Search)
     fun presentBatteryWarningFragment(shouldDisplayDefaultDialog: Boolean)
     fun presentEmptySearches()
+    fun presentProgressBar()
 }

@@ -42,10 +42,9 @@ class EditSearchInteractor(
 
     fun onTextChanged(urlText: CharSequence?, titleText: String) {
         val regex = REGEX.toRegex()
-        val isUrlNotEmpty = urlText?.isBlank() == false
         var isUrlValid = false
-        if (isUrlNotEmpty) {
-            urlText.let { regex.find(it!!) }?.let { matchResult ->
+        if (!urlText.isNullOrBlank()) {
+            urlText.let { regex.find(it) }?.let { matchResult ->
                 isUrlValid = if (matchResult.groupValues.getOrNull(2) == SEARCH_PATH) {
                     editSearchPresenter.presentValidUrl()
                     true
@@ -61,12 +60,27 @@ class EditSearchInteractor(
             editSearchPresenter.presentValidUrl()
             isUrlValid = true
         }
-        editSearchPresenter.presentSaveButton(isUrlNotEmpty && !titleText.isBlank() && isUrlValid)
+        editSearchPresenter.presentSaveButton(!urlText.isNullOrBlank() && !titleText.isBlank() && isUrlValid)
     }
 
-    fun onStart(id: Int, title: String, url: String, clipBoardText: String) {
-        if (id != DEFAULT_ID) {
-            editSearchPresenter.presentEditSearch(title, url)
+    fun onStart(
+        id: Int,
+        title: String,
+        url: String,
+        clipBoardText: String,
+        alreadyStarted: Boolean?,
+        savedTitle: String?,
+        savedUrl: String?
+    ) {
+        alreadyStarted?.let {
+            onTextChanged(
+                savedUrl,
+                savedTitle ?: ""
+            )
+        } ?: run {
+            if (id != DEFAULT_ID) {
+                editSearchPresenter.presentEditSearch(title, url)
+            }
         }
         onClipBoardTextChanged(clipBoardText)
     }
@@ -78,10 +92,9 @@ class EditSearchInteractor(
                 regex.find(
                     it
                 )
-            }
-                ?.let { matchResult ->
-                    matchResult.groupValues.getOrNull(2) == SEARCH_PATH
-                } ?: run {
+            }?.let { matchResult ->
+                matchResult.groupValues.getOrNull(2) == SEARCH_PATH
+            } ?: run {
                 false
             }
         editSearchPresenter.presentUrlButtonDisplayedChild(

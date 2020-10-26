@@ -42,10 +42,6 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
     private val editSearchViewModel: EditSearchViewModel by viewModel()
     private var clipboardManager: ClipboardManager? = null
 
-    companion object {
-        private var oldOrientationBit = 0
-    }
-
     init {
         (editSearchInteractor.editSearchPresenter as EditSearchPresenterImpl).editSearchDisplay =
             this
@@ -58,8 +54,6 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
             )
         )
         super.onStart()
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -102,19 +96,16 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                 )?.coerceToText(context).toString()
             )
         }
-        editSearchViewModel.title.value?.let {
-            editSearchInteractor.onTextChanged(
-                it,
-                editSearchTitleEditText.text.toString()
-            )
-        } ?: run {
-            editSearchInteractor.onStart(
-                editSearchFragmentArgs.id,
-                editSearchFragmentArgs.title,
-                editSearchFragmentArgs.url,
-                clipboardManager?.primaryClip?.getItemAt(0)?.coerceToText(context).toString()
-            )
-        }
+        editSearchInteractor.onStart(
+            editSearchFragmentArgs.id,
+            editSearchFragmentArgs.title,
+            editSearchFragmentArgs.url,
+            clipboardManager?.primaryClip?.getItemAt(0)?.coerceToText(context).toString(),
+            editSearchViewModel.isViewModelIntialized.value,
+            editSearchViewModel.title.value,
+            editSearchViewModel.url.value
+        )
+        editSearchViewModel.isViewModelIntialized.value = true
         initializeUrlEditText()
         initializeTitleEditText()
     }
@@ -144,11 +135,6 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
         editSearchViewModel.title.value = editSearchTitleEditText.text.toString()
         editSearchViewModel.url.value = editSearchUrlEditText.text.toString()
         super.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        oldOrientationBit = activity?.changingConfigurations ?: 0
     }
 
     private fun bindViewModel() {

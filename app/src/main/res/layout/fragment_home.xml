@@ -33,14 +33,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ViewSwitcher
-                android:id="@+id/homeContentViewSwitcher"
+            <ViewFlipper
+                android:id="@+id/homeContentViewFlipper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:measureAllChildren="false"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/homeFragmentRecyclerViewTitle">
+
+                <ProgressBar
+                    android:id="@+id/homeFragmentProgressBar"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="@dimen/defaultMargin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/homeFragmentSearchesRecyclerView"
@@ -62,7 +72,8 @@
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
-            </ViewSwitcher>
+
+            </ViewFlipper>
 
             <com.github.corentinc.notificoin.ui.GlowingCircleView
                 android:id="@+id/homeGlowingCircleView"
@@ -79,7 +90,7 @@
                 android:layout_marginEnd="16dp"
                 android:alpha="0.25"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/homeContentViewSwitcher" />
+                app:layout_constraintTop_toBottomOf="@id/homeContentViewFlipper" />
 
             <ImageButton
                 android:id="@+id/homeFragmentCreateAdButton"

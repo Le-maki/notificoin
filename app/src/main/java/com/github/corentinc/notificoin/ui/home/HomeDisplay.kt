@@ -9,4 +9,5 @@ interface HomeDisplay {
     fun displayBatteryWarningFragment(shouldDisplayDefaultDialog: Boolean)
     fun displayEmptySearches()
     fun displaySearches(search: MutableList<Search>)
+    fun displayProgressBar()
 }

@@ -32,6 +32,7 @@ class HomeInteractor(
         title: String,
         url: String
     ) {
+        homePresenter.presentProgressBar()
         val shouldDisplayDefaultDialog = !isBatteryWhiteListAlreadyGranted
         if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && !wasBatteryWhiteListDialogAlreadyShown && (shouldDisplaySpecialConstructorDialog || shouldDisplayDefaultDialog)) {
             homePresenter.presentBatteryWarningFragment(shouldDisplayDefaultDialog)

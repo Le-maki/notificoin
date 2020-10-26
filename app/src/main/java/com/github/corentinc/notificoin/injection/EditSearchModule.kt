@@ -14,6 +14,7 @@ val editSearchModule = module {
 
     viewModel {
         EditSearchViewModel(
+            isViewModelIntialized = MutableLiveData(),
             savedTitle = MutableLiveData(),
             title = MutableLiveData(),
             url = MutableLiveData(),

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.github.corentinc.core.editSearch.UrlError
 
 data class EditSearchViewModel(
+    val isViewModelIntialized: MutableLiveData<Boolean>,
     val savedTitle: MutableLiveData<String>,
     val title: MutableLiveData<String>,
     val url: MutableLiveData<String>,

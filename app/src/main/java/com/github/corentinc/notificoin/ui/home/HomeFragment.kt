@@ -35,6 +35,12 @@ class HomeFragment(
     private val homeViewModel: HomeViewModel by sharedViewModel()
     private lateinit var onDestinationChangedListener: NavController.OnDestinationChangedListener
 
+    companion object {
+        private const val SEARCHES_INDEX = 1
+        private const val ERROR_INDEX = 2
+        private const val PROGRESS_INDEX = 0
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -158,7 +164,7 @@ class HomeFragment(
     }
 
     override fun displayEmptySearches() {
-        homeContentViewSwitcher?.displayedChild = 1
+        homeContentViewFlipper?.displayedChild = ERROR_INDEX
         homeGlowingCircleView?.startCircleAnimation()
     }
 
@@ -166,11 +172,15 @@ class HomeFragment(
         homeViewModel.searchAdsPositionList.value = search
     }
 
+    override fun displayProgressBar() {
+        homeContentViewFlipper.displayedChild = PROGRESS_INDEX
+    }
+
     private fun bindViewModel() {
         homeViewModel.searchAdsPositionList.observe(
             this.viewLifecycleOwner,
             {
-                homeContentViewSwitcher?.displayedChild = 0
+                homeContentViewFlipper?.displayedChild = SEARCHES_INDEX
                 homeGlowingCircleView?.startCircleAnimation()
                 createRecyclerView(it)
             }
