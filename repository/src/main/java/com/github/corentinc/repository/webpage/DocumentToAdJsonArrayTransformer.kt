@@ -1,10 +1,11 @@
 package com.github.corentinc.repository.webpage
 
+import com.github.corentinc.core.adList.WebPageParsingException
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import org.jsoup.nodes.Document
-import java.text.ParseException
+import org.jsoup.nodes.Node
 import java.util.regex.Pattern
 
 class DocumentToAdJsonArrayTransformer {
@@ -18,34 +19,44 @@ class DocumentToAdJsonArrayTransformer {
     }
 
     fun transform(document: Document): JsonArray? {
-        val dataNode = document.getElementsByTag(TAG_NAME)
+        getData(document)?.let { data ->
+            getAdListString(data)?.let { adListString ->
+                return transformAdListStringToJsonArray(adListString)
+            } ?: throw WebPageParsingException()
+        } ?: throw WebPageParsingException()
+    }
+
+    private fun getDataNode(document: Document): Node? {
+        return document.getElementsByTag(TAG_NAME)
             ?.find {
                 it.childNodeSize() > 0 && it.childNode(0).toString().contains(NODE_SELECTOR)
             }?.childNode(0)
-        val adJsonArray = JsonArray()
+    }
+
+    private fun getData(document: Document): String? {
+        val dataNode = getDataNode(document)
         val dataMatcher = Pattern.compile(DATA_REGEX).matcher(dataNode.toString())
         dataMatcher.find()
-        dataMatcher.group(1)?.let { data ->
-            val adListMatcher = Pattern.compile(AD_LIST_REGEX).matcher(data)
-            adListMatcher.find()
-            val adList = adListMatcher.group(1)
-            adList?.let {
-                val adMatcher = Pattern.compile(AD_REGEX).matcher(it)
-                while (adMatcher.find()) {
-                    try {
-                        adJsonArray.add(
-                            Gson().fromJson(
-                                adMatcher.group(1),
-                                JsonElement::class.java
-                            )
-                        )
-                    } catch (exception: Exception) {
-                        println()
-                    }
+        return dataMatcher.group(1)
+    }
 
-                }
-            } ?: throw ParseException("Unable to parse the webpage", 0)
-        } ?: throw ParseException("Unable to parse the webpage", 0)
+    private fun getAdListString(data: String): String? {
+        val adListMatcher = Pattern.compile(AD_LIST_REGEX).matcher(data)
+        adListMatcher.find()
+        return adListMatcher.group(1)
+    }
+
+    private fun transformAdListStringToJsonArray(adListString: String): JsonArray {
+        val adJsonArray = JsonArray()
+        val adMatcher = Pattern.compile(AD_REGEX).matcher(adListString)
+        while (adMatcher.find()) {
+            adJsonArray.add(
+                Gson().fromJson(
+                    adMatcher.group(1),
+                    JsonElement::class.java
+                )
+            )
+        }
         return adJsonArray
     }
 }

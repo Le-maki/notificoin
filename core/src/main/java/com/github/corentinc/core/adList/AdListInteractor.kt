@@ -8,7 +8,6 @@ import kotlinx.coroutines.*
 import org.jsoup.HttpStatusException
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
-import java.text.ParseException
 
 class AdListInteractor(
     val adListPresenter: AdListPresenter,
@@ -50,7 +49,7 @@ class AdListInteractor(
                             adListPresenter.presentConnectionError()
                         }
                     }
-                    is ParseException -> {
+                    is WebPageParsingException -> {
                         NotifiCoinLogger.e("error parsing ads:  $error ", error)
                         withContext(Dispatchers.Main) {
                             adListPresenter.presentParsingError()

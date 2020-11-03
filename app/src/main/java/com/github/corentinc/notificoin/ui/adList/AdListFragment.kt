@@ -132,6 +132,7 @@ class AdListFragment(
     private fun refresh() {
         displayErrorMessage(false)
         val adListFragmentArgs: AdListFragmentArgs by navArgs()
+        adListViewModel.adViewDataList.value = mutableListOf()
         adListInteractor.onRefresh(adListFragmentArgs.searchId)
     }
 
