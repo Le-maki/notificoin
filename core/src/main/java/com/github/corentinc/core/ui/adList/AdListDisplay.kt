@@ -1,4 +1,4 @@
-package com.github.corentinc.notificoin.ui.adList
+package com.github.corentinc.core.ui.adList
 
 interface AdListDisplay {
     fun displayConnectionError()

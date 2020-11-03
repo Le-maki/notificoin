@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.github.corentinc.core.BatteryWarningInteractor
+import com.github.corentinc.core.ui.batteryWarning.BatteryWarningDisplay
 import com.github.corentinc.logger.NotifiCoinLogger
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.*
 import com.github.corentinc.logger.analytics.NotifiCoinEventButtonName.*
@@ -36,6 +37,7 @@ class BatteryWarningFragment(
     private val batteryWarningFragmentViewModel: BatteryWarningFragmentViewModel by sharedViewModel()
     private var defaultAlertDialog: AlertDialog? = null
     private var specialAlertDialog: AlertDialog? = null
+    private lateinit var dialog: View
 
     init {
         (batteryWarningInteractor.batteryWarningPresenter as BatteryWarningPresenterImpl).batteryWarningDisplay =
@@ -133,7 +135,7 @@ class BatteryWarningFragment(
         }
     }
 
-    override fun displaySpecialConstructorDialog(): View {
+    override fun displaySpecialConstructorDialog() {
         val context = requireContext()
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         val view: View = View.inflate(context, R.layout.battery_whitelist_special_alertdialog, null)
@@ -154,7 +156,7 @@ class BatteryWarningFragment(
         setSpecialStopAskingButtonListener(view)
         setSpecialMaybeButtonListener(view)
         setSpecialOKButtonListener(view)
-        return view
+        dialog = view
     }
 
     private fun setSpecialOKButtonListener(dialog: View) {
@@ -198,13 +200,12 @@ class BatteryWarningFragment(
     }
 
     override fun displayHuaweiDialog() {
-        val view = displaySpecialConstructorDialog()
-        view.findViewById<ImageView>(R.id.batteryWhiteListGif).isVisible = true
-        view.findViewById<TextView>(R.id.batteryWhiteListSpecialTitle).text =
+        dialog.findViewById<ImageView>(R.id.batteryWhiteListGif).isVisible = true
+        dialog.findViewById<TextView>(R.id.batteryWhiteListSpecialTitle).text =
             resources.getString(R.string.batteryWarningDetectedHuawei)
         Glide.with(requireContext())
             .load(R.raw.huawei_battery)
-            .into(view.findViewById(R.id.batteryWhiteListGif))
+            .into(dialog.findViewById(R.id.batteryWhiteListGif))
     }
 
     private fun goToBatteryWhiteListOfTheApp(context: Context) {

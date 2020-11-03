@@ -1,4 +1,4 @@
-package com.github.corentinc.core.ui
+package com.github.corentinc.core.ui.batteryWarning
 
 interface BatteryWarningPresenter {
     fun presentBatteryWhitelistRequestAlertDialog(shouldDisplaySpecialConstructorDialog: Boolean)

@@ -1,6 +1,7 @@
 package com.github.corentinc.notificoin.ui.editSearch
 
 import com.github.corentinc.core.editSearch.UrlError
+import com.github.corentinc.core.ui.editSearch.EditSearchDisplay
 import com.github.corentinc.core.ui.editSearch.EditSearchPresenter
 
 class EditSearchPresenterImpl : EditSearchPresenter {

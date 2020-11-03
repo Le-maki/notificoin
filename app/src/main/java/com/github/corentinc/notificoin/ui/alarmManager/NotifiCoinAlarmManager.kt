@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
+import com.github.corentinc.core.ui.alarmManager.AlarmManagerDisplay
 
 class NotifiCoinAlarmManager(private val context: Context): AlarmManagerDisplay {
     override fun updateAlarm(minutes: Int) {

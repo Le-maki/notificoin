@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.home.HomeInteractor
 import com.github.corentinc.core.search.Search
+import com.github.corentinc.core.ui.home.HomeDisplay
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ButtonClicked
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
 import com.github.corentinc.logger.analytics.NotifiCoinEventButtonName.ADD_SEARCH

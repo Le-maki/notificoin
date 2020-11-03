@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.adList.AdListErrorType
 import com.github.corentinc.core.adList.AdListErrorType.*
 import com.github.corentinc.core.adList.AdListInteractor
+import com.github.corentinc.core.ui.adList.AdListDisplay
+import com.github.corentinc.core.ui.adList.AdViewData
 import com.github.corentinc.logger.analytics.NotifiCoinEvent
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
 import com.github.corentinc.logger.analytics.NotifiCoinEventException

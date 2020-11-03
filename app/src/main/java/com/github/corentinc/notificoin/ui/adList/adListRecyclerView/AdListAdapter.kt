@@ -3,7 +3,7 @@ package com.github.corentinc.notificoin.ui.adList.adListRecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.Adapter
-import com.github.corentinc.notificoin.ui.adList.AdViewData
+import com.github.corentinc.core.ui.adList.AdViewData
 
 class AdListAdapter: Adapter<AdViewHolder>() {
     lateinit var adViewDataList: MutableList<AdViewData>

@@ -1,9 +1,8 @@
-package com.github.corentinc.notificoin.ui.batteryWarning
-import android.view.View
+package com.github.corentinc.core.ui.batteryWarning
 
 interface BatteryWarningDisplay {
     fun displayBatteryWhitelistRequestAlertDialog(shouldDisplaySpecialConstructorDialog: Boolean)
-    fun displaySpecialConstructorDialog(): View
+    fun displaySpecialConstructorDialog()
     fun displayHuaweiDialog()
     fun displayBack()
     fun displayBatteryWhiteList()

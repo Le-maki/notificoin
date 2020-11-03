@@ -20,6 +20,7 @@ import com.github.corentinc.core.EditSearchInteractor
 import com.github.corentinc.core.editSearch.UrlError
 import com.github.corentinc.core.editSearch.UrlError.INVALID_FORMAT
 import com.github.corentinc.core.editSearch.UrlError.NOT_A_SEARCH
+import com.github.corentinc.core.ui.editSearch.EditSearchDisplay
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.SearchChanged
 import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen

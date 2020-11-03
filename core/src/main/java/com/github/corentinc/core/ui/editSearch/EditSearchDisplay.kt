@@ -1,4 +1,4 @@
-package com.github.corentinc.notificoin.ui.editSearch
+package com.github.corentinc.core.ui.editSearch
 
 import com.github.corentinc.core.editSearch.UrlError
 

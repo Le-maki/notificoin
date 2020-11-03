@@ -1,4 +1,4 @@
-package com.github.corentinc.notificoin.ui.home
+package com.github.corentinc.core.ui.home
 
 import com.github.corentinc.core.search.Search
 

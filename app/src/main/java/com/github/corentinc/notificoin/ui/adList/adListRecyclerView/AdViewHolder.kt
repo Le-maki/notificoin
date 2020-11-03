@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.github.corentinc.core.ui.adList.AdViewData
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.createIntentFromUrl
-import com.github.corentinc.notificoin.ui.adList.AdViewData
 
 class AdViewHolder(inflater: LayoutInflater, parent: ViewGroup): RecyclerView.ViewHolder(
     inflater.inflate(

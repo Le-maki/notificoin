@@ -1,4 +1,4 @@
-package com.github.corentinc.notificoin.ui.alarmManager
+package com.github.corentinc.core.ui.alarmManager
 
 interface AlarmManagerDisplay {
     fun updateAlarm(minutes: Int)

@@ -1,6 +1,7 @@
 package com.github.corentinc.notificoin.ui.adList
 
 import com.github.corentinc.core.SearchAdsPosition
+import com.github.corentinc.core.ui.adList.AdListDisplay
 import com.github.corentinc.core.ui.adList.AdListPresenter
 
 class AdListPresenterImpl(
