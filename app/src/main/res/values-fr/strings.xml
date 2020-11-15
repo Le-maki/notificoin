@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="appName">NotifiCoin</string>
     <string name="titleHome">Recherches</string>
     <string name="titleAdList">Liste des annonces</string>
     <string name="titleSettings">Paramètres</string>

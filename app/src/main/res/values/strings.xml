@@ -1,5 +1,4 @@
 <resources>
-    <string name="appName">NotifiCoin</string>
     <string name="titleHome">Home</string>
     <string name="titleAdList">Ad List</string>
     <string name="titleSettings">Settings</string>
