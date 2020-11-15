@@ -1,8 +1,8 @@
 package com.github.corentinc.notificoin.injection
 
+import androidx.lifecycle.MutableLiveData
 import com.github.corentinc.core.home.HomeInteractor
 import com.github.corentinc.core.ui.home.HomePresenter
-import com.github.corentinc.notificoin.ui.SingleLiveEvent
 import com.github.corentinc.notificoin.ui.home.HomePresenterImpl
 import com.github.corentinc.notificoin.ui.home.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -24,8 +24,8 @@ val homeModule = module {
     single<HomePresenter> { HomePresenterImpl() }
     viewModel {
         HomeViewModel(
-            shouldShowBatteryWhiteListAlertDialog = SingleLiveEvent(),
-            searchAdsPositionList = SingleLiveEvent()
+            shouldShowBatteryWhiteListAlertDialog = MutableLiveData(),
+            searchAdsPositionList = MutableLiveData()
         )
     }
 }

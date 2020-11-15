@@ -7,6 +7,7 @@ import androidx.preference.DropDownPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.github.corentinc.core.SettingsInteractor
+import com.github.corentinc.core.ui.settings.SettingsDisplay
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
 import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen
 import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.SETTINGS

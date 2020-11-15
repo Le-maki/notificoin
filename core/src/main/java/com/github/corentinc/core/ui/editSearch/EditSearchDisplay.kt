@@ -1,4 +1,4 @@
-package com.github.corentinc.notificoin.ui.editSearch
+package com.github.corentinc.core.ui.editSearch
 
 import com.github.corentinc.core.editSearch.UrlError
 
@@ -10,4 +10,6 @@ interface EditSearchDisplay {
     fun displayUrlInfo(isVisible: Boolean)
     fun displayCopiedContent(clipBoardText: String)
     fun displayUrlButtonDisplayedChild(displayedChildIndex: Int)
+    fun displayNavigateUp()
+    fun displayNavigateHomeAfterDeletion()
 }

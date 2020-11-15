@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="appName">NotifiCoin</string>
     <string name="titleHome">Recherches</string>
     <string name="titleAdList">Liste des annonces</string>
     <string name="titleSettings">Paramètres</string>
@@ -19,7 +18,7 @@
     <string name="alertDialogStopAsking">Ne plus me demander</string>
     <string name="alertDialogMaybeLater">Plus tard</string>
     <string name="editThisSearch">Modifier cette recherche</string>
-    <string name="editSearchUrlHint">https://www.leboncoin.fr/recherche/…</string>
+    <string name="editSearchUrlHint">https://www.leboncoin.fr/recherche…</string>
     <string name="EditSearchTitleHint">Votre titre</string>
     <string name="editSearchTitle">Titre</string>
     <string name="editSearchUrl">Url de la recherche sur Leboncoin</string>
@@ -36,8 +35,8 @@
     <string name="settingsNotificationIntervalTitle">Rechercher de nouvelles annonces :&#160;</string>
     <string name="adListEmpty">Pas de nouvelle annonce trouvée, vérifiez l\'url des vos recherches ou essayez d\'en ajouter d\'autres</string>
     <string name="adListImageViewContentDescription">canard triste</string>
-    <string name="edtiSearchInvalidUrlError">L\'url n\'est pas valide, elle doit respecter le format : https://www.leboncoin.fr/recherche/…</string>
-    <string name="editSearchNotASearchUrlError">L\'url provient de Leboncoin mais n\'est pas une recherche, elle doit respecter le format : https://www.leboncoin.fr/recherche/…</string>
+    <string name="edtiSearchInvalidUrlError">L\'url n\'est pas valide, elle doit respecter le format : https://www.leboncoin.fr/recherche…</string>
+    <string name="editSearchNotASearchUrlError">L\'url provient de Leboncoin mais n\'est pas une recherche, elle doit respecter le format : https://www.leboncoin.fr/recherche…</string>
     <string name="aboutAppDescription"> Cette application est faite bénévolement sur mon temps personnel, elle ne représente pas et n\'a aucune affiliation avec Leboncoin.fr</string>
     <string name="aboutConnectWithUsGroup">Contactez nous</string>
     <string name="aboutEmailTitle">Par mail</string>
@@ -45,7 +44,7 @@
     <string name="aboutDevelopedWith">Développé avec</string>
     <string name="homeEmptySearch">Vous n\'avez pas encore de recherche, vous pouvez en ajouter une en utilisant le bouton jaune juste en dessous</string>
     <string name="EditSearchUrlInfoButtonContentDescription">Ou touver cette url</string>
-    <string name="editSearchUrlHelpBubble">Ouvrez Leboncoin sur Chrome et accédez à votre recherche pour copier l\'url, cliquez ici !</string>
+    <string name="editSearchUrlHelpBubble">Cliquez ici pour ourvir Leboncoin sur Chrome, puis accédez à votre recherche pour copier l\'URL</string>
     <string name="batteryWarningDetectedSpecialConstructor">Le constructeur de votre téléphone utilise aussi une application spéciale pour gérer la batterie, autorisez NotifiCoin à rester en arrière plan dans celle-ci</string>
     <string name="batteryWarningDetectedHuawei">HUAWEI utilise aussi une application spéciale pour gérer la batterie, désactivez la gestion automatique pour NotifiCoin et autorisez tout manuellement</string>
 </resources>

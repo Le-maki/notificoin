@@ -1,6 +1,7 @@
 package com.github.corentinc.notificoin.ui.batteryWarning
 
-import com.github.corentinc.core.ui.BatteryWarningPresenter
+import com.github.corentinc.core.ui.batteryWarning.BatteryWarningDisplay
+import com.github.corentinc.core.ui.batteryWarning.BatteryWarningPresenter
 
 class BatteryWarningPresenterImpl(
 ): BatteryWarningPresenter {
@@ -18,5 +19,17 @@ class BatteryWarningPresenterImpl(
 
     override fun presentHuaweiDialog() {
         batteryWarningDisplay.displayHuaweiDialog()
+    }
+
+    override fun presentBack() {
+        batteryWarningDisplay.displayBack()
+    }
+
+    override fun presentBatteryWhiteList() {
+        batteryWarningDisplay.displayBatteryWhiteList()
+    }
+
+    override fun presentSpecialIntent() {
+        batteryWarningDisplay.displaySpecialIntent()
     }
 }

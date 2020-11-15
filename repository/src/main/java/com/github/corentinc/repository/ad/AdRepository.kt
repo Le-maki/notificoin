@@ -1,12 +1,12 @@
 package com.github.corentinc.repository.ad
 
 import com.github.corentinc.core.ad.Ad
+import com.github.corentinc.core.adList.WebPageParsingException
 import com.github.corentinc.core.search.Search
 import com.github.corentinc.logger.NotifiCoinLogger
 import com.github.corentinc.repository.webpage.DocumentToAdJsonArrayTransformer
 import com.github.corentinc.repository.webpage.WebPageRepository
 import org.joda.time.format.DateTimeFormat
-import java.text.ParseException
 
 class AdRepository(
     private val webPageRepository: WebPageRepository,
@@ -48,7 +48,7 @@ class AdRepository(
                     jsonElement.asJsonObject.get(PRICE_ATTRIBUTE)?.asInt,
                     jsonElement.asJsonObject[URL_ATTRIBUTE].asString
                 )
-            }?.sortedWith(adComparator) ?: throw ParseException("Unable to parse $url", 0)
+            }?.sortedWith(adComparator) ?: throw WebPageParsingException()
         } catch (exception: IllegalStateException) {
             NotifiCoinLogger.i("Empty search : $url")
             emptyList()

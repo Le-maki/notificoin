@@ -1,4 +1,4 @@
-package com.github.corentinc.notificoin.ui.home
+package com.github.corentinc.core.ui.home
 
 import com.github.corentinc.core.search.Search
 
@@ -9,4 +9,5 @@ interface HomeDisplay {
     fun displayBatteryWarningFragment(shouldDisplayDefaultDialog: Boolean)
     fun displayEmptySearches()
     fun displaySearches(search: MutableList<Search>)
+    fun displayProgressBar()
 }

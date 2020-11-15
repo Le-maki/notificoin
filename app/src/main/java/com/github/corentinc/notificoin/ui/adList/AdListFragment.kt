@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.adList.AdListErrorType
 import com.github.corentinc.core.adList.AdListErrorType.*
 import com.github.corentinc.core.adList.AdListInteractor
+import com.github.corentinc.core.ui.adList.AdListDisplay
+import com.github.corentinc.core.ui.adList.AdViewData
 import com.github.corentinc.logger.analytics.NotifiCoinEvent
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
 import com.github.corentinc.logger.analytics.NotifiCoinEventException
@@ -20,14 +23,13 @@ import com.github.corentinc.logger.analytics.NotifiCoinEventScreen.LIST_OF_ADS
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.createChromeIntentFromUrl
-import com.github.corentinc.notificoin.ui.ChildFragment
 import com.github.corentinc.notificoin.ui.adList.adListRecyclerView.AdListAdapter
 import kotlinx.android.synthetic.main.fragment_ad_list.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class AdListFragment(
     private val adListInteractor: AdListInteractor
-) : ChildFragment(), AdListDisplay {
+) : Fragment(), AdListDisplay {
     private val adListViewModel: AdListViewModel by sharedViewModel()
     private val adapter = AdListAdapter()
 
@@ -66,25 +68,22 @@ class AdListFragment(
     }
 
     override fun onDestroyView() {
-        adapter.adViewModelList = mutableListOf()
+        adapter.adViewDataList = mutableListOf()
+        adListInteractor.stopRefresh()
         super.onDestroyView()
     }
 
     private fun bindViewModel() {
-        adListViewModel.adViewModelList.observe(
+        adListViewModel.adViewDataList.observe(
             this.viewLifecycleOwner,
             {
-                if (!adapter.isListInitialised() || (adapter.isListInitialised() && adapter.adViewModelList != it)) {
-                    adapter.adViewModelList = it
+                if (!adapter.isListInitialised() || (adapter.isListInitialised() && adapter.adViewDataList != it)) {
+                    adapter.adViewDataList = it
                     adListFragmentRecyclerView.apply {
                         layoutManager = LinearLayoutManager(context)
                         adapter = this@AdListFragment.adapter
                     }
                 }
-                hideProgressBar()
-                hideErrorMessage()
-                showAdsRecyclerView()
-                stopRefreshing()
             })
         adListViewModel.errorType.observe(
             this.viewLifecycleOwner,
@@ -111,43 +110,31 @@ class AdListFragment(
                         EMPTY -> getString(R.string.adListEmpty)
                     }
                     textAdsFragment?.text = text
-                    hideProgressBar()
-                    hideAdsRecyclerView()
-                    showErrorMessage()
-                    stopRefreshing()
                 }
             })
     }
 
-    private fun hideProgressBar() {
+    override fun hideProgressBar() {
         adListFragmentProgressBar?.isVisible = false
     }
 
-    private fun stopRefreshing() {
+    override fun stopRefreshing() {
         adListFragmentSwipeRefresh.isRefreshing = false
     }
 
-    private fun showErrorMessage() {
-        textAdsFragment?.isVisible = true
-        adListImageView?.isVisible = true
+    override fun displayErrorMessage(isVisible: Boolean) {
+        textAdsFragment?.isVisible = isVisible
+        adListImageView?.isVisible = isVisible
     }
 
-    private fun hideErrorMessage() {
-        textAdsFragment?.isVisible = false
-        adListImageView?.isVisible = false
-    }
-
-    private fun showAdsRecyclerView() {
-        adListFragmentRecyclerView.isVisible = true
-    }
-
-    private fun hideAdsRecyclerView() {
-        adListFragmentRecyclerView.isVisible = false
+    override fun displayAdsRecyclerView(isVisible: Boolean) {
+        adListFragmentRecyclerView?.isVisible = isVisible
     }
 
     private fun refresh() {
-        hideErrorMessage()
+        displayErrorMessage(false)
         val adListFragmentArgs: AdListFragmentArgs by navArgs()
+        adListViewModel.adViewDataList.value = mutableListOf()
         adListInteractor.onRefresh(adListFragmentArgs.searchId)
     }
 
@@ -176,8 +163,8 @@ class AdListFragment(
         displayErrorAndSendEvent(UNKNOWN, NotifiCoinEventException.UNKNOWN)
     }
 
-    override fun displayAdList(adViewModelList: MutableList<AdViewModel>) {
-        adListViewModel.adViewModelList.value = adViewModelList
+    override fun displayAdList(adViewDataList: MutableList<AdViewData>) {
+        adListViewModel.adViewDataList.value = adViewDataList
     }
 
     override fun displayForbiddenError() {

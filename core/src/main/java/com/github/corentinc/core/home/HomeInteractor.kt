@@ -32,6 +32,7 @@ class HomeInteractor(
         title: String,
         url: String
     ) {
+        homePresenter.presentProgressBar()
         val shouldDisplayDefaultDialog = !isBatteryWhiteListAlreadyGranted
         if (sharedPreferencesRepository.shouldShowBatteryWhiteListDialog && !wasBatteryWhiteListDialogAlreadyShown && (shouldDisplaySpecialConstructorDialog || shouldDisplayDefaultDialog)) {
             homePresenter.presentBatteryWarningFragment(shouldDisplayDefaultDialog)
@@ -56,32 +57,32 @@ class HomeInteractor(
     }
 
     fun onCreateAdButtonPressed() {
-        CoroutineScope(Dispatchers.IO).launch {
-            withContext(Dispatchers.Main) {
-                homePresenter.presentEditSearchScreen()
-            }
-        }
+        homePresenter.presentEditSearchScreen()
     }
 
     fun onSearchDeleted(search: Search) {
-        CoroutineScope(Dispatchers.IO).launch {
-            searchAdsPositionRepository.delete(search.id)
-            var searchAdsPosition = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
-            searchAdsPosition = searchAdsPosition.sortedWith(searchAdsPostionDefaultSorter)
-            withContext(Dispatchers.Main) {
-                if (searchAdsPosition.isEmpty()) {
-                    homePresenter.presentEmptySearches()
-                }
+        lateinit var searchAdsPositionList: List<SearchAdsPosition>
+        runBlocking {
+            CoroutineScope(Dispatchers.IO).launch {
+                searchAdsPositionRepository.delete(search.id)
+                searchAdsPositionList = searchAdsPositionRepository.getAllSortedSearchAdsPosition()
+                searchAdsPositionList =
+                    searchAdsPositionList.sortedWith(searchAdsPostionDefaultSorter)
+            }.join()
+            if (searchAdsPositionList.isEmpty()) {
+                homePresenter.presentEmptySearches()
             }
         }
         homePresenter.presentUndoDeleteSearch(search)
     }
 
     fun beforeFragmentPause(searchList: MutableList<Search>) {
-        CoroutineScope(Dispatchers.IO).launch {
-            searchList.forEachIndexed { index, search ->
-                searchPositionRepository.updateSearchPosition(search.id, index)
-            }
+        runBlocking {
+            CoroutineScope(Dispatchers.IO).launch {
+                searchList.forEachIndexed { index, search ->
+                    searchPositionRepository.updateSearchPosition(search.id, index)
+                }
+            }.join()
         }
     }
 

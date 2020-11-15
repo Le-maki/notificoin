@@ -1,4 +1,4 @@
-package com.github.corentinc.notificoin.ui.settings
+package com.github.corentinc.core.ui.settings
 
 interface SettingsDisplay {
     fun displayAboutFragment()

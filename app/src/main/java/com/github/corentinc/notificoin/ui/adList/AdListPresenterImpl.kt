@@ -1,6 +1,7 @@
 package com.github.corentinc.notificoin.ui.adList
 
 import com.github.corentinc.core.SearchAdsPosition
+import com.github.corentinc.core.ui.adList.AdListDisplay
 import com.github.corentinc.core.ui.adList.AdListPresenter
 
 class AdListPresenterImpl(
@@ -35,4 +36,22 @@ class AdListPresenterImpl(
     override fun presentEmptyList() {
         adListDisplay.displayEmptyList()
     }
+
+    override fun hideProgressBar() {
+        adListDisplay.hideProgressBar()
+    }
+
+    override fun presentErrorMessage(isVisible: Boolean) {
+        adListDisplay.displayErrorMessage(isVisible)
+    }
+
+    override fun presentAdsRecyclerView(isVisible: Boolean) {
+        adListDisplay.displayAdsRecyclerView(isVisible)
+    }
+
+    override fun stopRefreshing() {
+        adListDisplay.stopRefreshing()
+    }
+
+
 }

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.corentinc.core.home.HomeInteractor
 import com.github.corentinc.core.search.Search
+import com.github.corentinc.core.ui.home.HomeDisplay
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ButtonClicked
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
 import com.github.corentinc.logger.analytics.NotifiCoinEventButtonName.ADD_SEARCH
@@ -34,6 +35,12 @@ class HomeFragment(
 ): Fragment(), HomeDisplay {
     private val homeViewModel: HomeViewModel by sharedViewModel()
     private lateinit var onDestinationChangedListener: NavController.OnDestinationChangedListener
+
+    companion object {
+        private const val SEARCHES_INDEX = 1
+        private const val ERROR_INDEX = 2
+        private const val PROGRESS_INDEX = 0
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -158,20 +165,24 @@ class HomeFragment(
     }
 
     override fun displayEmptySearches() {
-        homeContentViewSwitcher.displayedChild = 1
-        homeGlowingCircleView.startCircleAnimation()
+        homeContentViewFlipper?.displayedChild = ERROR_INDEX
+        homeGlowingCircleView?.startCircleAnimation()
     }
 
     override fun displaySearches(search: MutableList<Search>) {
         homeViewModel.searchAdsPositionList.value = search
     }
 
+    override fun displayProgressBar() {
+        homeContentViewFlipper.displayedChild = PROGRESS_INDEX
+    }
+
     private fun bindViewModel() {
         homeViewModel.searchAdsPositionList.observe(
             this.viewLifecycleOwner,
             {
-                homeContentViewSwitcher.displayedChild = 0
-                homeGlowingCircleView.startCircleAnimation()
+                homeContentViewFlipper?.displayedChild = SEARCHES_INDEX
+                homeGlowingCircleView?.startCircleAnimation()
                 createRecyclerView(it)
             }
         )

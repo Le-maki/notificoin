@@ -1,6 +1,7 @@
 package com.github.corentinc.notificoin.ui.home
 
 import com.github.corentinc.core.search.Search
+import com.github.corentinc.core.ui.home.HomeDisplay
 import com.github.corentinc.core.ui.home.HomePresenter
 
 class HomePresenterImpl : HomePresenter {
@@ -30,5 +31,9 @@ class HomePresenterImpl : HomePresenter {
 
     override fun presentEmptySearches() {
         homeDisplay.displayEmptySearches()
+    }
+
+    override fun presentProgressBar() {
+        homeDisplay.displayProgressBar()
     }
 }

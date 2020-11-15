@@ -1,16 +1,17 @@
 package com.github.corentinc.core
 
 import com.github.corentinc.core.repository.SharedPreferencesRepository
-import com.github.corentinc.core.ui.BatteryWarningPresenter
 import com.github.corentinc.core.ui.SpecialConstructor
 import com.github.corentinc.core.ui.SpecialConstructor.HUAWEI
+import com.github.corentinc.core.ui.batteryWarning.BatteryWarningPresenter
 
 class BatteryWarningInteractor(
     val batteryWarningPresenter: BatteryWarningPresenter,
     private val sharedPreferencesRepository: SharedPreferencesRepository
 ) {
-    fun onBatteryWhiteListAlertDialogNeutralButtonPressed() {
+    fun onStopAskingButtonPressed() {
         sharedPreferencesRepository.shouldShowBatteryWhiteListDialog = false
+        batteryWarningPresenter.presentBack()
     }
 
     fun onStart(
@@ -33,5 +34,33 @@ class BatteryWarningInteractor(
                 shouldDisplaySpecialConstructorDialog
             )
         }
+    }
+
+    fun onDefaultDialogCanceled() {
+        batteryWarningPresenter.presentBack()
+    }
+
+    fun onDefaultMaybeButtonClicked() {
+        batteryWarningPresenter.presentBack()
+    }
+
+    fun onDefaultOKButtonClicked(shouldDisplaySpecialConstructorDialog: Boolean) {
+        batteryWarningPresenter.presentBatteryWhiteList()
+        if (!shouldDisplaySpecialConstructorDialog) {
+            batteryWarningPresenter.presentBack()
+        }
+    }
+
+    fun onSpecialOkButtonClicked() {
+        batteryWarningPresenter.presentSpecialIntent()
+        batteryWarningPresenter.presentBack()
+    }
+
+    fun onSpecialMaybeButtonClicked() {
+        batteryWarningPresenter.presentBack()
+    }
+
+    fun onSpecialCanceled() {
+        batteryWarningPresenter.presentBack()
     }
 }

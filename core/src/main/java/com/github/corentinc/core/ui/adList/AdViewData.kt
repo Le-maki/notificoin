@@ -1,6 +1,6 @@
-package com.github.corentinc.notificoin.ui.adList
+package com.github.corentinc.core.ui.adList
 
-data class AdViewModel(
+data class AdViewData(
     val adTitle: String,
     val searchTitle: String,
     val hour: String,

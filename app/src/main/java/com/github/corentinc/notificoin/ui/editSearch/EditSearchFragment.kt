@@ -2,7 +2,6 @@ package com.github.corentinc.notificoin.ui.editSearch
 
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -13,6 +12,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController.OnDestinationChangedListener
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,6 +20,7 @@ import com.github.corentinc.core.EditSearchInteractor
 import com.github.corentinc.core.editSearch.UrlError
 import com.github.corentinc.core.editSearch.UrlError.INVALID_FORMAT
 import com.github.corentinc.core.editSearch.UrlError.NOT_A_SEARCH
+import com.github.corentinc.core.ui.editSearch.EditSearchDisplay
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.ScreenStarted
 import com.github.corentinc.logger.analytics.NotifiCoinEvent.SearchChanged
 import com.github.corentinc.logger.analytics.NotifiCoinEventParameter.Screen
@@ -30,26 +31,17 @@ import com.github.corentinc.logger.analytics.NotifiCoinEventSearchStatus.SEARCH_
 import com.github.corentinc.notificoin.AnalyticsEventSender
 import com.github.corentinc.notificoin.R
 import com.github.corentinc.notificoin.createChromeIntentFromUrl
-import com.github.corentinc.notificoin.ui.ChildFragment
 import com.github.corentinc.notificoin.ui.adList.AdListFragment.Companion.LEBONCOIN_URL
 import com.github.corentinc.notificoin.ui.hideKeyboard
 import kotlinx.android.synthetic.main.fragment_edit_search.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor) : ChildFragment(),
+class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor) : Fragment(),
     EditSearchDisplay {
     private val editSearchFragmentArgs: EditSearchFragmentArgs by navArgs()
     private lateinit var onDestinationChangedListener: OnDestinationChangedListener
-    private val editSearchViewModel: EditSearchViewModel by sharedViewModel()
+    private val editSearchViewModel: EditSearchViewModel by viewModel()
     private var clipboardManager: ClipboardManager? = null
-
-    companion object {
-        private var oldOrientationBit = 0
-    }
 
     init {
         (editSearchInteractor.editSearchPresenter as EditSearchPresenterImpl).editSearchDisplay =
@@ -63,6 +55,10 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
             )
         )
         super.onStart()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         bindViewModel()
         addOnDestinationChangedListener()
         editSearchSaveButton.setOnClickListener {
@@ -71,17 +67,12 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                     SearchStatus(SEARCH_SAVED)
                 )
             )
-            runBlocking {
-                CoroutineScope(Dispatchers.IO).launch {
-                    editSearchInteractor.onSave(
-                        editSearchFragmentArgs.id,
-                        editSearchTitleEditText.text.toString(),
-                        editSearchUrlEditText.text.toString()
-                    )
-                }.join()
-            }
+            editSearchInteractor.onSave(
+                editSearchFragmentArgs.id,
+                editSearchTitleEditText.text.toString(),
+                editSearchUrlEditText.text.toString()
+            )
 
-            findNavController().navigateUp()
         }
         editSearchUrlInfoButton.setOnClickListener {
             editSearchInteractor.onUrlInfoButtonClicked()
@@ -95,14 +86,8 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                     SearchStatus(SEARCH_DELETED)
                 )
             )
-            editSearchInteractor.deleteSearch(editSearchFragmentArgs.id)
-            findNavController().navigate(
-                EditSearchFragmentDirections.editSearchToHomeAction(
-                    editSearchFragmentArgs.id,
-                    editSearchTitleEditText.text.toString(),
-                    editSearchUrlEditText.text.toString()
-                )
-            )
+            editSearchInteractor.onDeleteButtonClicked(editSearchFragmentArgs.id)
+
         }
         clipboardManager = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
         editSearchUrlPasteButton.setOnClickListener {
@@ -112,22 +97,18 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
                 )?.coerceToText(context).toString()
             )
         }
-        if (oldOrientationBit and ActivityInfo.CONFIG_ORIENTATION != ActivityInfo.CONFIG_ORIENTATION) {
-            editSearchInteractor.onStart(
-                editSearchFragmentArgs.id,
-                editSearchFragmentArgs.title,
-                editSearchFragmentArgs.url,
-                clipboardManager?.primaryClip?.getItemAt(0)?.coerceToText(context).toString()
-            )
-        } else {
-            editSearchInteractor.onTextChanged(
-                editSearchUrlEditText.text,
-                editSearchTitleEditText.text.toString()
-            )
-        }
+        editSearchInteractor.onStart(
+            editSearchFragmentArgs.id,
+            editSearchFragmentArgs.title,
+            editSearchFragmentArgs.url,
+            clipboardManager?.primaryClip?.getItemAt(0)?.coerceToText(context).toString(),
+            editSearchViewModel.isViewModelIntialized.value,
+            editSearchViewModel.title.value,
+            editSearchViewModel.url.value
+        )
+        editSearchViewModel.isViewModelIntialized.value = true
         initializeUrlEditText()
         initializeTitleEditText()
-
     }
 
     private fun startChromeIntent() {
@@ -152,12 +133,9 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
 
     override fun onPause() {
         findNavController().removeOnDestinationChangedListener(onDestinationChangedListener)
+        editSearchViewModel.title.value = editSearchTitleEditText.text.toString()
+        editSearchViewModel.url.value = editSearchUrlEditText.text.toString()
         super.onPause()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        oldOrientationBit = activity?.changingConfigurations ?: 0
     }
 
     private fun bindViewModel() {
@@ -289,5 +267,19 @@ class EditSearchFragment(private val editSearchInteractor: EditSearchInteractor)
 
     override fun displayUrlButtonDisplayedChild(displayedChildIndex: Int) {
         editSearchViewModel.UrlButtonDisplayedChild.value = displayedChildIndex
+    }
+
+    override fun displayNavigateUp() {
+        findNavController().navigateUp()
+    }
+
+    override fun displayNavigateHomeAfterDeletion() {
+        findNavController().navigate(
+            EditSearchFragmentDirections.editSearchToHomeAction(
+                editSearchFragmentArgs.id,
+                editSearchTitleEditText.text.toString(),
+                editSearchUrlEditText.text.toString()
+            )
+        )
     }
 }

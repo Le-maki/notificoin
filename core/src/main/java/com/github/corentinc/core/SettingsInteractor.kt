@@ -12,7 +12,7 @@ class SettingsInteractor(
     }
 
     fun onAccurateNotificationsClicked() {
-        settingsPresenter.presentAccurateNotificationClicked()
+        settingsPresenter.presentBatteryWarningFragment()
     }
 
     fun onNotificationIntervalPreferenceChanged(minutes: Int, entry: CharSequence) {

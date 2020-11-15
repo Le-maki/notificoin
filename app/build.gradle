@@ -32,10 +32,15 @@ android {
         minSdkVersion parent.ext.minSdkVersion
         targetSdkVersion parent.ext.targetSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        versionCode = 13
-        versionName = "1.1.0"
+        versionCode = 14
+        versionName = "1.2.0"
+        resValue "string", "appName", "NotifiCoin"
     }
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+            resValue "string", "appName", "NotifiCoin DEBUG"
+        }
         release {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -72,7 +77,7 @@ dependencies {
 
     // Android
     implementation parent.ext.appCompat
-    
+
     // Kotlin
     implementation parent.ext.kotlinStdLib
     implementation parent.ext.kotlinCore

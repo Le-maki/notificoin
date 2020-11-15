@@ -1,5 +1,4 @@
 <resources>
-    <string name="appName">NotifiCoin</string>
     <string name="titleHome">Home</string>
     <string name="titleAdList">Ad List</string>
     <string name="titleSettings">Settings</string>
@@ -18,7 +17,7 @@
     <string name="alertDialogStopAsking">Stop asking</string>
     <string name="alertDialogMaybeLater">Maybe later</string>
     <string name="editThisSearch">Edit this search</string>
-    <string name="editSearchUrlHint">https://www.leboncoin.fr/recherche/…</string>
+    <string name="editSearchUrlHint">https://www.leboncoin.fr/recherche…</string>
     <string name="EditSearchTitleHint">Your title</string>
     <string name="editSearchTitle">Title</string>
     <string name="editSearchUrl">Url of the search from Leboncoin</string>
@@ -35,8 +34,8 @@
     <string name="settingsNotificationIntervalTitle">Check for new ads :&#160;</string>
     <string name="adListEmpty">No ads found, check the url of your searches or try to add new ones</string>
     <string name="adListImageViewContentDescription">sad duck</string>
-    <string name="edtiSearchInvalidUrlError">Url is not valid, it should respect the pattern : https://www.leboncoin.fr/recherche/…</string>
-    <string name="editSearchNotASearchUrlError">Url is from leboncoin but is not a search, it should respect the pattern : https://www.leboncoin.fr/recherche/…</string>
+    <string name="edtiSearchInvalidUrlError">Url is not valid, it should respect the pattern : https://www.leboncoin.fr/recherche…</string>
+    <string name="editSearchNotASearchUrlError">Url is from leboncoin but is not a search, it should respect the pattern : https://www.leboncoin.fr/recherche…</string>
     <string name="aboutAppDescription">This app was made voluntarily during my free time, it does not represent nor have any affiliation with Leboncoin.fr</string>
     <string name="aboutConnectWithUsGroup">Connect with us</string>
     <string name="aboutEmail" translatable="false">notificoin@gmail.com</string>
@@ -52,7 +51,7 @@
     <string name="aboutBubbleView" translatable="false">BubbleView</string>
     <string name="homeEmptySearch">You have no search yet, you can add one by clicking on the yellow button just bellow</string>
     <string name="EditSearchUrlInfoButtonContentDescription">Where to find this url</string>
-    <string name="editSearchUrlHelpBubble">Open Leboncoin on Chrome and go to your search to copy the url, click here !</string>
+    <string name="editSearchUrlHelpBubble">Click here to open Leboncoin on Chrome, then go to your search to copy the url</string>
     <string name="batteryWarningDetectedSpecialConstructor">The constructor of your phone is also using a special app to manage battery, allow NotifiCoin to run in the background in this app</string>
     <string name="batteryWarningDetectedHuawei">HUAWEI is also using a special app to manage battery, disable automatic battery management for Notificoin and allow everything manually</string>
 </resources>

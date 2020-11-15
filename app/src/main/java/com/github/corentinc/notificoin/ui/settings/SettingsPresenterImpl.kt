@@ -1,5 +1,6 @@
 package com.github.corentinc.notificoin.ui.settings
 
+import com.github.corentinc.core.ui.settings.SettingsDisplay
 import com.github.corentinc.core.ui.settings.SettingsPresenter
 
 class SettingsPresenterImpl : SettingsPresenter {
@@ -8,7 +9,7 @@ class SettingsPresenterImpl : SettingsPresenter {
         settingsDisplay.displayAboutFragment()
     }
 
-    override fun presentAccurateNotificationClicked() {
+    override fun presentBatteryWarningFragment() {
         settingsDisplay.displayBatteryWarningFragment()
     }
 
