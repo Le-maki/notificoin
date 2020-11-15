@@ -10,7 +10,6 @@ import java.util.regex.Pattern
 
 class DocumentToAdJsonArrayTransformer {
     companion object {
-        private const val DATA_REGEX = "REDIAL_PROPS__ = (\\[.*)"
         private const val AD_LIST_REGEX = "(\\{\"list_id(.*?))((,\"ads_alu)|(,\"ads_shippable)|$)"
         private const val AD_REGEX =
             "(\\{\"list_id(.*?))(?=(,\\{\"list_id)|(,\"ads_shippable)|(,\"ads_alu))"
@@ -19,8 +18,8 @@ class DocumentToAdJsonArrayTransformer {
     }
 
     fun transform(document: Document): JsonArray? {
-        getData(document)?.let { data ->
-            getAdListString(data)?.let { adListString ->
+        getDataNode(document)?.let { data ->
+            getAdListString(data.toString())?.let { adListString ->
                 return transformAdListStringToJsonArray(adListString)
             } ?: throw WebPageParsingException()
         } ?: throw WebPageParsingException()
@@ -31,13 +30,6 @@ class DocumentToAdJsonArrayTransformer {
             ?.find {
                 it.childNodeSize() > 0 && it.childNode(0).toString().contains(NODE_SELECTOR)
             }?.childNode(0)
-    }
-
-    private fun getData(document: Document): String? {
-        val dataNode = getDataNode(document)
-        val dataMatcher = Pattern.compile(DATA_REGEX).matcher(dataNode.toString())
-        dataMatcher.find()
-        return dataMatcher.group(1)
     }
 
     private fun getAdListString(data: String): String? {

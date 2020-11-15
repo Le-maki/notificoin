@@ -15,8 +15,8 @@ class EditSearchInteractor(
     val editSearchPresenter: EditSearchPresenter
 ) {
     companion object {
-        private const val REGEX = "^(http://|https://)www\\.leboncoin\\.fr/(recherche/)?.+"
-        private const val SEARCH_PATH = "recherche/"
+        private const val REGEX = "^(http://|https://)www\\.leboncoin\\.fr/(recherche)?([?/])?.+"
+        private const val SEARCH_PATH = "recherche"
         private const val DEFAULT_CLIPBOARD_VALUE = "null"
         const val DEFAULT_ID = -1
     }
@@ -112,7 +112,7 @@ class EditSearchInteractor(
                 if (id == DEFAULT_ID) {
                     searchRepository.addSearch(Search(url = url, title = title))
                 } else {
-                    searchRepository.updateSearch(id, title, url)
+                    searchRepository.updateSearch(id, url, title)
                 }
             }.join()
         }

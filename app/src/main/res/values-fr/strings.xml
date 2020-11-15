@@ -18,7 +18,7 @@
     <string name="alertDialogStopAsking">Ne plus me demander</string>
     <string name="alertDialogMaybeLater">Plus tard</string>
     <string name="editThisSearch">Modifier cette recherche</string>
-    <string name="editSearchUrlHint">https://www.leboncoin.fr/recherche/…</string>
+    <string name="editSearchUrlHint">https://www.leboncoin.fr/recherche…</string>
     <string name="EditSearchTitleHint">Votre titre</string>
     <string name="editSearchTitle">Titre</string>
     <string name="editSearchUrl">Url de la recherche sur Leboncoin</string>
@@ -35,8 +35,8 @@
     <string name="settingsNotificationIntervalTitle">Rechercher de nouvelles annonces :&#160;</string>
     <string name="adListEmpty">Pas de nouvelle annonce trouvée, vérifiez l\'url des vos recherches ou essayez d\'en ajouter d\'autres</string>
     <string name="adListImageViewContentDescription">canard triste</string>
-    <string name="edtiSearchInvalidUrlError">L\'url n\'est pas valide, elle doit respecter le format : https://www.leboncoin.fr/recherche/…</string>
-    <string name="editSearchNotASearchUrlError">L\'url provient de Leboncoin mais n\'est pas une recherche, elle doit respecter le format : https://www.leboncoin.fr/recherche/…</string>
+    <string name="edtiSearchInvalidUrlError">L\'url n\'est pas valide, elle doit respecter le format : https://www.leboncoin.fr/recherche…</string>
+    <string name="editSearchNotASearchUrlError">L\'url provient de Leboncoin mais n\'est pas une recherche, elle doit respecter le format : https://www.leboncoin.fr/recherche…</string>
     <string name="aboutAppDescription"> Cette application est faite bénévolement sur mon temps personnel, elle ne représente pas et n\'a aucune affiliation avec Leboncoin.fr</string>
     <string name="aboutConnectWithUsGroup">Contactez nous</string>
     <string name="aboutEmailTitle">Par mail</string>
