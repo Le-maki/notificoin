@@ -200,6 +200,7 @@ class BatteryWarningFragment(
     }
 
     override fun displayHuaweiDialog() {
+        displaySpecialConstructorDialog()
         dialog.findViewById<ImageView>(R.id.batteryWhiteListGif).isVisible = true
         dialog.findViewById<TextView>(R.id.batteryWhiteListSpecialTitle).text =
             resources.getString(R.string.batteryWarningDetectedHuawei)
