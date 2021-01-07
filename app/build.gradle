@@ -32,8 +32,8 @@ android {
         minSdkVersion parent.ext.minSdkVersion
         targetSdkVersion parent.ext.targetSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        versionCode = 14
-        versionName = "1.2.0"
+        versionCode = 1_2_01
+        versionName = "1.2.1"
         resValue "string", "appName", "NotifiCoin"
     }
     buildTypes {
