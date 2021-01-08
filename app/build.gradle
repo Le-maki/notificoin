@@ -34,13 +34,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         versionCode = 1_2_01
         versionName = "1.2.1"
-        resValue "string", "appName", "NotifiCoin"
     }
     buildTypes {
-        debug {
-            applicationIdSuffix = ".debug"
-            resValue "string", "appName", "NotifiCoin DEBUG"
-        }
         release {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -137,6 +132,7 @@ dependencies {
     implementation parent.ext.bubbleView
 
     // Firebase
+    implementation platform(parent.ext.firebaseBoM)
     implementation parent.ext.firebaseCrashlytics
     implementation parent.ext.firebaseAnalytics
 }

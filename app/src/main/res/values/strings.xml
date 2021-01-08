@@ -7,7 +7,7 @@
     <string name="settingsBatteryWarningSummary">Allow Notificoin to run in the background to get notifications on time</string>
     <string name="adListConnectionErrorMessage">There was an error while trying to get new ads from the website, check your connection, the url of your searches and retry</string>
     <string name="adListParsingErrorMessage">Unable to parse the webpage, check the url of your searches</string>
-    <string name="adListForbiddenErrorMessage">You have made too many requests and Leboncoin detected that you were a robot, click here to fix this problem</string>
+    <string name="adListForbiddenErrorMessage">You have made too many requests and Leboncoin detected that you were a robot, check for new ads less often in Settings or click here to try to fix this problem</string>
     <string name="adListForbiddenFixMessage">"Chrome not found, go to \"www.leboncoin.fr\" from your mobile's browser to fix this problem"</string>
     <string name="adListUnknownErrorMessage">Unknown error while getting ads from the website</string>
     <string name="channelName">notificoin</string>
@@ -54,4 +54,5 @@
     <string name="editSearchUrlHelpBubble">Click here to open Leboncoin on Chrome, then go to your search to copy the url</string>
     <string name="batteryWarningDetectedSpecialConstructor">The constructor of your phone is also using a special app to manage battery, allow NotifiCoin to run in the background in this app</string>
     <string name="batteryWarningDetectedHuawei">HUAWEI is also using a special app to manage battery, disable automatic battery management for Notificoin and allow everything manually</string>
+    <string name="appName">NotifiCoin</string>
 </resources>
