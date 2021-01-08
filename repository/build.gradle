@@ -30,8 +30,8 @@ android {
                 ]
             }
         }
-        versionCode = 1_2_01
-        versionName = "1.2.1"
+        versionCode = 1_2_02
+        versionName = "1.2.2"
     }
     buildTypes {
         release {
